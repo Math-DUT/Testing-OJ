@@ -4,15 +4,16 @@ import fs from "node:fs";
 test("contest, PDF links, search, timer and persisted records", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/#contest/lncpc-2025");
   await expect(page.locator(".problem-row")).toHaveCount(13);
   await page.getByLabel("搜索题目").fill("Kanon");
   await expect(page.locator(".problem-row")).toHaveCount(1);
   await page.getByLabel("搜索题目").fill("");
   await page.getByRole("button", { name: "开始虚拟比赛" }).click();
-  await expect(page.getByText("进行中", { exact: true })).toBeVisible();
+  await expect(page.locator(".zen-timer")).toBeVisible();
   await page.reload();
-  await expect(page.getByText("进行中", { exact: true })).toBeVisible();
+  await expect(page.locator(".zen-timer")).toBeVisible();
+  await page.getByRole("button", { name: "题目", exact: true }).click();
   for (const id of "ABCDEFGHIJKLM") {
     const response = await page.request.get(`/pdf/${id}.pdf`);
     expect(response.ok()).toBeTruthy();
@@ -39,7 +40,7 @@ test("C++ and Python execute locally; PASS, WA, CE, TLE, persistence", async ({
       "#include <bits/stdc++.h>\nusing namespace std; int main(){string a,b;cin>>a>>b;cout<<(stoi(b)>=stoi(a));}",
     );
   await page.getByRole("button", { name: "提交自测", exact: true }).click();
-  await expect(page.locator(".test-results .verdict.pass")).toHaveCount(3, {
+  await expect(page.locator(".test-results .verdict.pass")).toHaveCount(15, {
     timeout: 180000,
   });
   await page.screenshot({ path: "tmp/preview/editor.png", fullPage: true });
@@ -56,7 +57,7 @@ test("C++ and Python execute locally; PASS, WA, CE, TLE, persistence", async ({
     .locator(".cm-content")
     .fill("a, b = input().split()\nprint(int(int(b[:-1]) >= int(a[:-1])))");
   await page.getByRole("button", { name: "运行", exact: true }).click();
-  await expect(page.locator(".test-results .verdict.pass")).toHaveCount(3, {
+  await expect(page.locator(".test-results .verdict.pass")).toHaveCount(15, {
     timeout: 120000,
   });
   await page.locator(".cm-content").fill("print(0)");

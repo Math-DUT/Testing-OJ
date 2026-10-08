@@ -1,0 +1,29 @@
+# E. Exponent
+
+The exponent of a group is the least common multiple of the orders of all elements in the group, but this has nothing to do with this problem. It's just to make the title start with E.
+
+Little Ma gives you a positive integer $n$.
+
+For each integer $a$ with $1 \le a \le n$, define $\operatorname{ord}_n(a)$ as the smallest positive integer $x$ satisfying:
+
+$$
+a^x \equiv 1 \pmod n
+$$
+
+If no such positive integer $x$ exists, define $\operatorname{ord}_n(a)=0$.
+
+Compute:
+
+$$
+\sum_{a=1}^{n}\operatorname{ord}_n(a)
+$$
+
+## Input
+
+The first line contains an integer $T$ $(1\leq T\leq 10^3)$, the number of test cases.
+
+Each of the next $T$ lines contains one positive integer $n$ $(1\leq n\leq 10^9)$.
+
+## Output
+
+For each test case, output one integer in a single line: the required sum.

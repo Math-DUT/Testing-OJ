@@ -15,6 +15,7 @@ export function execute(
   source: string,
   input: string,
   onPhase: (phase: string) => void,
+  interactive = false,
 ): Promise<RunResult> {
   if (!active || workerLanguage !== language) {
     stopRunner();
@@ -75,6 +76,6 @@ export function execute(
       });
       stopRunner();
     };
-    worker.postMessage({ source, input });
+    worker.postMessage({ source, input, interactive });
   });
 }

@@ -14,6 +14,208 @@ export function checkOutput(
   expected: string,
 ): boolean {
   try {
+    if (checker === "float-1e-9") {
+      const a = tokens(output).map(Number),
+        b = tokens(expected).map(Number);
+      return (
+        a.length === b.length &&
+        a.every(
+          (x, i) =>
+            Number.isFinite(x) &&
+            Math.abs(x - b[i]) <= 1e-9 * Math.max(1, Math.abs(b[i])),
+        )
+      );
+    }
+    if (checker === "recall") {
+      const a = tokens(input),
+        lines = tokens(output);
+      let cursor = 1;
+      if (lines.length !== Number(a[0])) return false;
+      for (const sequence of lines) {
+        const n = Number(a[cursor++]),
+          ops: [string, number][] = [];
+        for (let i = 0; i < n; i++)
+          ops.push([a[cursor++], Number(a[cursor++])]);
+        const stack: number[] = [],
+          present = new Set<number>();
+        let i = 0;
+        for (const char of sequence) {
+          if (char === "-") {
+            if (!stack.length) return false;
+            present.delete(stack.pop()!);
+          } else {
+            if (i >= n) return false;
+            const [op, x] = ops[i++];
+            if (char === "+") {
+              if (op !== "+" || present.has(x)) return false;
+              stack.push(x);
+              present.add(x);
+            } else if (char === "?") {
+              if (!["T", "F"].includes(op) || present.has(x) !== (op === "T"))
+                return false;
+            } else return false;
+          }
+        }
+        if (i !== n) return false;
+      }
+      return cursor === a.length;
+    }
+    if (checker === "lcm-permutation") {
+      const a = integers(input),
+        b = integers(output);
+      let i = 1,
+        j = 0;
+      const gcd = (x: bigint, y: bigint): bigint => (y ? gcd(y, x % y) : x);
+      for (let tc = 0; tc < a[0]; tc++) {
+        const n = a[i++],
+          p = b.slice(j, j + n);
+        j += n;
+        if (
+          p.length !== n ||
+          new Set(p).size !== n ||
+          p.some((x) => x < 1 || x > n)
+        )
+          return false;
+        let value = 1n;
+        for (let k = 0; k < n; k++) {
+          const s = BigInt(p[k] + p[(k + 1) % n]);
+          value = (value / gcd(value, s)) * s;
+          if (value > BigInt(20 * n)) return false;
+        }
+      }
+      return j === b.length;
+    }
+    if (checker === "permutation-inversions") {
+      const a = integers(input),
+        b = integers(output),
+        e = integers(expected);
+      let i = 1,
+        j = 0,
+        k = 0;
+      const inv = (p: number[]) =>
+        p.reduce(
+          (sum, x, i) => sum + p.slice(i + 1).filter((y) => y < x).length,
+          0,
+        );
+      for (let tc = 0; tc < a[0]; tc++) {
+        const n = a[i++],
+          m = a[i++],
+          constraints: number[][] = [];
+        for (let c = 0; c < m; c++) {
+          const l = a[i++],
+            r = a[i++];
+          constraints.push(a.slice(i, i + r - l + 1));
+          i += r - l + 1;
+        }
+        if (e[k] === -1) {
+          k++;
+          if (b[j++] !== -1) return false;
+          continue;
+        }
+        if (b[j] === -1) return false;
+        const p = b.slice(j, j + n),
+          optimal = e.slice(k, k + n);
+        j += n;
+        k += n;
+        if (
+          p.length !== n ||
+          new Set(p).size !== n ||
+          p.some((x) => x < 1 || x > n)
+        )
+          return false;
+        if (
+          constraints.some((q) =>
+            q.some((x, t) => t > 0 && p[q[t - 1] - 1] >= p[x - 1]),
+          )
+        )
+          return false;
+        if (inv(p) !== inv(optimal)) return false;
+      }
+      return j === b.length;
+    }
+    if (checker === "wolf-game") {
+      const a = tokens(input),
+        b = tokens(output),
+        e = tokens(expected);
+      let i = 1,
+        j = 0,
+        k = 0;
+      for (let tc = 0; tc < Number(a[0]); tc++) {
+        const n = Number(a[i++]),
+          d = a[i++],
+          counts = a.slice(i, i + n).map(Number);
+        i += n;
+        if (e[k] === "-1") {
+          k++;
+          if (b[j++] !== "-1") return false;
+          continue;
+        }
+        if (e[k]?.length === n) k++;
+        else k += n;
+        let p: number[];
+        if (b[j]?.length === n && /^[01]+$/.test(b[j]))
+          p = b[j++].split("").map(Number);
+        else {
+          p = b.slice(j, j + n).map(Number);
+          j += n;
+        }
+        if (
+          p.length !== n ||
+          p.some((x) => x !== 0 && x !== 1) ||
+          p.some((x, t) => x === 1 && p[t + 1] === 1)
+        )
+          return false;
+        if (
+          p.some(
+            (x, t) =>
+              x === 0 &&
+              p
+                .slice(d[t] === "L" ? 0 : t + 1, d[t] === "L" ? t : n)
+                .reduce((s, y) => s + y, 0) !== counts[t],
+          )
+        )
+          return false;
+      }
+      return j === b.length;
+    }
+    if (checker === "xor-closed") {
+      const a = integers(input),
+        b = integers(output),
+        e = integers(expected);
+      const n = a[0],
+        m = a[1],
+        count = b[0],
+        added = b.slice(1);
+      if (
+        count !== e[0] ||
+        added.length !== count ||
+        new Set(added).size !== count ||
+        added.some((x) => x < 0 || x >= 2 ** m)
+      )
+        return false;
+      let i = 2;
+      for (let tc = 0; tc < n; tc++) {
+        const len = a[i++],
+          set = new Set([...a.slice(i, i + len), ...added]);
+        i += len;
+        if (!set.has(0)) return false;
+        const basis = Array(m).fill(0);
+        let rank = 0;
+        for (let x of set) {
+          for (let bit = m - 1; bit >= 0; bit--) {
+            if (!((x >> bit) & 1)) continue;
+            if (basis[bit]) x ^= basis[bit];
+            else {
+              basis[bit] = x;
+              rank++;
+              break;
+            }
+          }
+        }
+        if (set.size !== 2 ** rank) return false;
+      }
+      return i === a.length;
+    }
     if (checker === "mex") {
       const a = integers(input),
         b = integers(output);

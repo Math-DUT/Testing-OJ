@@ -30,21 +30,43 @@ import {
   Square,
   Clock,
   PanelLeftClose,
+  Maximize2,
+  Minimize2,
 } from "lucide-react";
-import rawProblems from "./problems.json";
+import { contests, DEFAULT_CONTEST, parseRoute, problemPdf } from "./contests";
 import type {
   Language,
-  Problem,
   Submission,
   Session,
   RunResult,
+  FontSettings,
 } from "./types";
 import { execute, stopRunner } from "./runner";
 import { checkOutput } from "./checkers";
 
-const problems = rawProblems as Problem[];
-const HOURS = 5 * 60 * 60 * 1000;
 const KEY = "testing-oj:v1:";
+const defaultFonts: FontSettings = { ui: 16, statement: 17, code: 16 };
+const fontLimits = { ui: [14, 20], statement: [14, 26], code: [12, 26] };
+function cleanFonts(value: Partial<FontSettings>): FontSettings {
+  return Object.fromEntries(
+    Object.entries(defaultFonts).map(([key, fallback]) => {
+      const k = key as keyof FontSettings,
+        n = Number(value?.[k]);
+      return [
+        k,
+        Number.isFinite(n)
+          ? Math.max(fontLimits[k][0], Math.min(fontLimits[k][1], n))
+          : fallback,
+      ];
+    }),
+  ) as unknown as FontSettings;
+}
+function migrateRecords(records: Submission[]): Submission[] {
+  return records.map((s) => ({
+    ...s,
+    contestId: s.contestId || DEFAULT_CONTEST,
+  }));
+}
 function read<T>(key: string, fallback: T): T {
   try {
     return JSON.parse(localStorage.getItem(KEY + key) || "null") ?? fallback;
@@ -82,7 +104,7 @@ const formatTime = (ms: number) => {
 };
 const codeTheme = EditorView.theme({
   "&": {
-    fontSize: "14px",
+    fontSize: "var(--code-font-size, 16px)",
     height: "100%",
     backgroundColor: "var(--editor)",
     color: "var(--text)",
@@ -110,12 +132,30 @@ const phaseText: Record<string, string> = {
 };
 
 export default function App() {
-  const [route, setRoute] = useState(location.hash.slice(1) || "problems");
+  const [path, setPath] = useState(location.hash);
+  const [selectedContest, setSelectedContest] = useState(
+    read("selected-contest", DEFAULT_CONTEST),
+  );
+  const parsed = parseRoute(path);
+  const route = parsed.view;
+  const contest =
+    contests.find((c) => c.id === (parsed.contestId || selectedContest)) ||
+    contests[0];
+  const problems = contest.problems;
+  const HOURS = contest.duration;
   const [language, setLanguage] = useState<Language>(read("language", "cpp"));
   const [submissions, setSubmissions] = useState<Submission[]>(
-    read("submissions", []),
+    migrateRecords(read("submissions", [])),
   );
-  const [session, setSession] = useState<Session | null>(read("session", null));
+  const [sessions, setSessions] = useState<Record<string, Session | null>>(
+    read("sessions", { [DEFAULT_CONTEST]: read("session", null) }),
+  );
+  const session = sessions[contest.id] || null;
+  const setSession = (value: Session | null) =>
+    setSessions((s) => ({ ...s, [contest.id]: value }));
+  const [fonts, setFonts] = useState<FontSettings>(() =>
+    cleanFonts(read("fonts", defaultFonts)),
+  );
   const [profile, setProfile] = useState<string>(read("profile", "Math-DUT"));
   const [theme, setTheme] = useState(read("theme", "dark"));
   const [query, setQuery] = useState("");
@@ -130,18 +170,30 @@ export default function App() {
   const [testMode, setTestMode] = useState<"samples" | "custom">("samples");
   const [result, setResult] = useState<RunResult[] | null>(null);
   const [busy, setBusy] = useState("");
+  const [testProgress, setTestProgress] = useState({ current: 0, total: 0 });
   const [collapsed, setCollapsed] = useState(false);
+  const [zen, setZen] = useState(read("zen", false));
   const upload = useRef<HTMLInputElement>(null);
   const runRef = useRef<(submit: boolean) => void>(() => {});
   const problem = problems.find((p) => route === `problem/${p.id}`);
+  const history = submissions.filter((s) => s.contestId === contest.id);
+  const draftKey = (id: string, lang: Language, cid = contest.id) =>
+    `code:${cid}:${id}:${lang}`;
+  const readCode = (id: string, lang: Language) =>
+    read(
+      draftKey(id, lang),
+      contest.id === DEFAULT_CONTEST
+        ? read(`code:${id}:${lang}`, template[lang])
+        : template[lang],
+    );
   const remaining = session
     ? Math.max(0, (session.end ?? session.start + HOURS) - now)
     : HOURS;
   const contestActive = !!session && !session.end && remaining > 0;
   const passed = new Set(
-    submissions.filter((s) => s.status === "PASS").map((s) => s.problem),
+    history.filter((s) => s.status === "PASS").map((s) => s.problem),
   );
-  const contestSubmissions = submissions.filter(
+  const contestSubmissions = history.filter(
     (s) =>
       session &&
       s.contestStart === session.start &&
@@ -151,8 +203,11 @@ export default function App() {
   const contestPassed = new Set(
     contestSubmissions.filter((s) => s.status === "PASS").map((s) => s.problem),
   );
-  const nav = (path: string) => {
-    location.hash = path;
+  const nav = (view: string, id = contest.id) => {
+    location.hash =
+      view === "contests"
+        ? "contests"
+        : `contest/${id}${view === "problems" ? "" : "/" + view}`;
   };
   const notify = (message: string) => {
     setToast(message);
@@ -162,7 +217,7 @@ export default function App() {
     const handler = () => {
       stopRunner();
       setBusy("");
-      setRoute(location.hash.slice(1) || "problems");
+      setPath(location.hash);
       setResult(null);
       setView("statement");
     };
@@ -174,6 +229,42 @@ export default function App() {
     };
   }, []);
   useEffect(() => {
+    if (parsed.contestId && contests.some((c) => c.id === parsed.contestId)) {
+      setSelectedContest(parsed.contestId);
+    }
+    setQuery("");
+  }, [parsed.contestId]);
+  useEffect(() => save("selected-contest", selectedContest), [selectedContest]);
+  useEffect(() => save("zen", zen), [zen]);
+  useEffect(() => {
+    if (problem) {
+      setView(problem.statementFormat === "pdf" ? "pdf" : "statement");
+      save(`last-problem:${contest.id}`, problem.id);
+    }
+  }, [contest.id, problem?.id]);
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if (settings) setSettings(false);
+      else if (detail) setDetail(null);
+      else setZen(false);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [settings, detail]);
+  useEffect(() => {
+    document.documentElement.style.fontSize = `${fonts.ui}px`;
+    document.documentElement.style.setProperty(
+      "--statement-font-size",
+      `${fonts.statement}px`,
+    );
+    document.documentElement.style.setProperty(
+      "--code-font-size",
+      `${fonts.code}px`,
+    );
+    save("fonts", fonts);
+  }, [fonts]);
+  useEffect(() => {
     document.documentElement.dataset.theme = theme;
     save("theme", theme);
   }, [theme]);
@@ -181,20 +272,29 @@ export default function App() {
     save("submissions", submissions);
   }, [submissions]);
   useEffect(() => {
-    save("session", session);
-  }, [session]);
+    save("sessions", sessions);
+  }, [sessions]);
   useEffect(() => {
     save("profile", profile);
   }, [profile]);
   useEffect(() => {
     save("language", language);
     if (problem) {
-      setCode(read(`code:${problem.id}:${language}`, template[language]));
-      setInput(problem.samples[0].input);
-      setExpected(problem.samples[0].output);
+      setCode(readCode(problem.id, language));
+      setInput(
+        (problem.checker === "hidden-track"
+          ? problem.tests?.[0]
+          : problem.samples[0]
+        )?.input || "",
+      );
+      setExpected(
+        problem.checker === "hidden-track"
+          ? ""
+          : problem.samples[0]?.output || "",
+      );
       setResult(null);
     }
-  }, [problem?.id, language]);
+  }, [contest.id, problem?.id, language]);
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "Enter" && problem) {
@@ -215,8 +315,10 @@ export default function App() {
     }
   }, []);
   const startContest = () => {
+    setZen(true);
     setSession({ start: Date.now(), end: null });
-    notify("虚拟比赛已开始，时长 5 小时。");
+    notify(`${contest.shortTitle} · 虚拟比赛已开始`);
+    nav(`problem/${problems[0].id}`);
   };
   const endContest = () => {
     if (session) setSession({ ...session, end: Date.now() });
@@ -225,19 +327,29 @@ export default function App() {
   const run = async (submit: boolean) => {
     if (!problem || busy) return;
     const tests =
-      testMode === "samples" ? problem.samples : [{ input, output: expected }];
+      testMode === "samples"
+        ? problem.tests || problem.samples
+        : [{ input, output: expected }];
     if (submit && testMode === "custom") {
-      notify("提交自测使用全部公开样例；自定义输入请使用运行。");
+      notify("提交自测使用全部测试点；自定义输入请使用运行。");
       return;
     }
     setResult(null);
     setBusy("loading");
+    setTestProgress({ current: 0, total: tests.length });
     const results: RunResult[] = [];
     const startedAt = Date.now(),
       contestStart = contestActive ? session!.start : null;
     try {
       for (const test of tests) {
-        const answer = await execute(language, code, test.input, setBusy);
+        setTestProgress({ current: results.length + 1, total: tests.length });
+        const answer = await execute(
+          language,
+          code,
+          test.input,
+          setBusy,
+          problem.checker === "hidden-track",
+        );
         if (answer.status === "CANCELLED") return;
         if (answer.status === "OK")
           answer.status =
@@ -252,6 +364,16 @@ export default function App() {
                 ? "PASS"
                 : "WA";
         results.push(answer);
+        if (["CE", "RE", "TLE", "OLE", "ERROR"].includes(answer.status)) {
+          while (results.length < tests.length)
+            results.push({
+              status: "SKIP",
+              output: "",
+              time: 0,
+              error: "前面的测试发生运行错误，后续测试未执行。",
+            });
+          break;
+        }
       }
       setResult(results);
       if (submit) {
@@ -260,6 +382,7 @@ export default function App() {
           results.find((x) => x.status !== "PASS")?.status ?? "PASS";
         const record: Submission = {
           id: crypto.randomUUID(),
+          contestId: contest.id,
           problem: problem.id,
           language,
           source: code,
@@ -274,7 +397,7 @@ export default function App() {
         setSubmissions((previous) => [record, ...previous].slice(0, 500));
         notify(
           status === "PASS"
-            ? "全部公开样例通过，已保存自测记录。"
+            ? "全部自测点通过，已保存记录。"
             : "自测记录已保存。",
         );
       }
@@ -310,9 +433,10 @@ export default function App() {
       "testing-oj-backup.json",
       JSON.stringify(
         {
-          version: 1,
+          version: 2,
           profile,
-          session,
+          sessions,
+          fonts,
           submissions,
           codes: Object.fromEntries(
             Object.keys(localStorage)
@@ -329,17 +453,21 @@ export default function App() {
     try {
       const data = JSON.parse(await file.text());
       if (
-        data.version !== 1 ||
+        ![1, 2].includes(data.version) ||
         !Array.isArray(data.submissions) ||
         data.submissions.length > 500 ||
         typeof data.profile !== "string"
       )
         throw Error();
-      const records = data.submissions as Submission[];
+      const records = migrateRecords(data.submissions as Submission[]);
       if (
         records.some(
           (s) =>
-            !problems.some((p) => p.id === s.problem) ||
+            !contests.some(
+              (c) =>
+                c.id === s.contestId &&
+                c.problems.some((p) => p.id === s.problem),
+            ) ||
             !["cpp", "python"].includes(s.language) ||
             typeof s.source !== "string" ||
             !Number.isFinite(s.at) ||
@@ -347,24 +475,36 @@ export default function App() {
         )
       )
         throw Error();
+      const importedSessions =
+        data.version === 1
+          ? { [DEFAULT_CONTEST]: data.session ?? null }
+          : (data.sessions ?? {});
       if (
-        data.session &&
-        (!Number.isFinite(data.session.start) ||
-          !(data.session.end === null || Number.isFinite(data.session.end)))
+        Object.entries(importedSessions).some(([id, value]) => {
+          const s = value as Session | null;
+          return (
+            !contests.some((c) => c.id === id) ||
+            (s &&
+              (!Number.isFinite(s.start) ||
+                !(s.end === null || Number.isFinite(s.end))))
+          );
+        })
       )
         throw Error();
       setProfile(data.profile.slice(0, 32));
       setSubmissions(records);
-      setSession(data.session ?? null);
+      setSessions(importedSessions);
+      if (data.fonts) setFonts(cleanFonts(data.fonts));
       for (const [key, value] of Object.entries(data.codes ?? {})) {
         if (
-          /^testing-oj:v1:code:[A-M]:(cpp|python)$/.test(key) &&
+          /^testing-oj:v1:code:(?:(lncpc-2025|icpc-online-2026-[12]):)?[A-N]:(cpp|python)$/.test(
+            key,
+          ) &&
           typeof value === "string"
         )
           localStorage.setItem(key, value);
       }
-      if (problem)
-        setCode(read(`code:${problem.id}:${language}`, template[language]));
+      if (problem) setCode(readCode(problem.id, language));
       notify("本地记录已导入。");
     } catch {
       notify("备份文件格式不正确。");
@@ -373,16 +513,22 @@ export default function App() {
   };
   const badge = (status: string) => (
     <span
-      className={`verdict ${status === "PASS" ? "pass" : status === "RUN" ? "neutral" : "fail"}`}
+      className={`verdict ${status === "PASS" ? "pass" : ["RUN", "SKIP"].includes(status) ? "neutral" : "fail"}`}
     >
       {status === "PASS" ? (
         <Check size={13} />
-      ) : status === "RUN" ? (
+      ) : ["RUN", "SKIP"].includes(status) ? (
         <Terminal size={13} />
       ) : (
         <X size={13} />
       )}{" "}
-      {status === "PASS" ? "Passed" : status === "RUN" ? "Executed" : status}
+      {status === "PASS"
+        ? "Passed"
+        : status === "RUN"
+          ? "Executed"
+          : status === "SKIP"
+            ? "Skipped"
+            : status}
     </span>
   );
   const timerCard = (
@@ -416,17 +562,20 @@ export default function App() {
     </div>
   );
   return (
-    <div className={`app ${collapsed ? "collapsed" : ""}`}>
+    <div
+      className={`app ${route === "contests" ? "hub-layout" : ""} ${collapsed ? "collapsed" : ""} ${zen && route !== "contests" ? "zen" : ""}`}
+    >
       <aside className="activity">
         <button
           className="brand"
-          onClick={() => nav("problems")}
+          onClick={() => nav("contests")}
           title="Testing OJ"
         >
           <Code2 size={27} />
         </button>
         <div className="activity-top">
           {[
+            { path: "contests", icon: Trophy, label: "比赛" },
             { path: "problems", icon: BookOpen, label: "题目" },
             { path: "submissions", icon: History, label: "提交记录" },
             { path: "standings", icon: Trophy, label: "自测榜" },
@@ -500,20 +649,32 @@ export default function App() {
         <button className="tree-heading" onClick={() => nav("problems")}>
           <ChevronDown size={14} />
           <Trophy size={15} />
-          LNCPC 2025<span>13</span>
+          {contest.shortTitle}
+          <span>{problems.length}</span>
         </button>
         <div className="tree-problems">
-          {problems.map((p) => (
-            <button
-              key={p.id}
-              className={problem?.id === p.id ? "active" : ""}
-              onClick={() => nav(`problem/${p.id}`)}
-            >
-              <span className="file-id">{p.id}</span>
-              <span>{p.title}</span>
-              {passed.has(p.id) && <Check size={13} className="green" />}
-            </button>
-          ))}
+          {route === "contests"
+            ? contests.map((c) => (
+                <button
+                  key={c.id}
+                  className={c.id === contest.id ? "active" : ""}
+                  onClick={() => setSelectedContest(c.id)}
+                >
+                  <Trophy size={15} />
+                  <span>{c.shortTitle}</span>
+                </button>
+              ))
+            : problems.map((p) => (
+                <button
+                  key={p.id}
+                  className={problem?.id === p.id ? "active" : ""}
+                  onClick={() => nav(`problem/${p.id}`)}
+                >
+                  <span className="file-id">{p.id}</span>
+                  <span>{p.title}</span>
+                  {passed.has(p.id) && <Check size={13} className="green" />}
+                </button>
+              ))}
         </div>
         <div className="explorer-footer">
           <span className="connection-dot" />
@@ -530,9 +691,11 @@ export default function App() {
             )}
             <span>Testing OJ</span>
             <ChevronRight size={13} />
-            <span>比赛</span>
+            <button className="breadcrumb-link" onClick={() => nav("contests")}>
+              比赛
+            </button>
             <ChevronRight size={13} />
-            <strong>LNCPC 2025</strong>
+            <strong>{contest.shortTitle}</strong>
             {problem && (
               <>
                 <ChevronRight size={13} />
@@ -541,38 +704,59 @@ export default function App() {
             )}
           </div>
           <span className="topbar-right">
+            <button
+              className="font-settings-button"
+              aria-label="字体设置"
+              title="字体设置"
+              onClick={() => setSettings(true)}
+            >
+              Aa
+            </button>
             <span className="local-tag">LOCAL</span>
             <span>{profile}</span>
           </span>
         </header>
         <div className="tabs">
           <button
-            className={!problem && route === "problems" ? "tab active" : "tab"}
-            onClick={() => nav("problems")}
+            className={route === "contests" ? "tab active" : "tab"}
+            onClick={() => nav("contests")}
           >
             <Trophy size={15} />
-            比赛题目
+            比赛
           </button>
-          {problem && (
-            <button className="tab active">
-              <FileText size={15} />
-              {problem.id}. {problem.title}
-            </button>
+          {route !== "contests" && (
+            <>
+              <button
+                className={
+                  !problem && route === "problems" ? "tab active" : "tab"
+                }
+                onClick={() => nav("problems")}
+              >
+                <Trophy size={15} />
+                比赛题目
+              </button>
+              {problem && (
+                <button className="tab active">
+                  <FileText size={15} />
+                  {problem.id}. {problem.title}
+                </button>
+              )}
+              <button
+                className={route === "submissions" ? "tab active" : "tab"}
+                onClick={() => nav("submissions")}
+              >
+                <History size={15} />
+                提交记录<span className="tab-count">{history.length}</span>
+              </button>
+              <button
+                className={route === "standings" ? "tab active" : "tab"}
+                onClick={() => nav("standings")}
+              >
+                <Trophy size={15} />
+                自测榜
+              </button>
+            </>
           )}
-          <button
-            className={route === "submissions" ? "tab active" : "tab"}
-            onClick={() => nav("submissions")}
-          >
-            <History size={15} />
-            提交记录<span className="tab-count">{submissions.length}</span>
-          </button>
-          <button
-            className={route === "standings" ? "tab active" : "tab"}
-            onClick={() => nav("standings")}
-          >
-            <Trophy size={15} />
-            自测榜
-          </button>
           <div className="tabs-end">
             {contestActive && (
               <span className="mini-timer">
@@ -580,22 +764,114 @@ export default function App() {
                 {formatTime(remaining)}
               </span>
             )}
-            <span>2025 / 01</span>
           </div>
         </div>
         <main className={problem ? "problem-main" : "overview-main"}>
+          {route === "contests" && (
+            <section className="contest-hub">
+              <div className="hub-heading">
+                <h1>比赛</h1>
+                <span className="muted">虚拟自测</span>
+              </div>
+              <div
+                className="contest-switcher"
+                role="tablist"
+                aria-label="选择比赛"
+              >
+                {contests.map((c) => (
+                  <button
+                    key={c.id}
+                    id={`tab-${c.id}`}
+                    role="tab"
+                    aria-selected={c.id === contest.id}
+                    aria-controls={`panel-${contest.id}`}
+                    className={c.id === contest.id ? "selected" : ""}
+                    onClick={() => setSelectedContest(c.id)}
+                  >
+                    {c.shortTitle}
+                  </button>
+                ))}
+              </div>
+              <div
+                className="contest-preview"
+                id={`panel-${contest.id}`}
+                role="tabpanel"
+                aria-labelledby={`tab-${contest.id}`}
+              >
+                <div className="eyebrow">ICPC · {contest.date.slice(0, 4)}</div>
+                <h2>{contest.title}</h2>
+                <p className="contest-english">{contest.englishTitle}</p>
+                <div className="contest-facts">
+                  <span>
+                    <Clock size={16} />5 小时
+                  </span>
+                  <span>
+                    <BookOpen size={16} />
+                    {problems.length} 道题
+                  </span>
+                  <span>{contest.date.replaceAll("-", ".")}</span>
+                  {contestActive && (
+                    <span className="live-text">
+                      进行中 · {formatTime(remaining)}
+                    </span>
+                  )}
+                </div>
+                <div className="contest-actions">
+                  <button
+                    className="button primary"
+                    onClick={
+                      contestActive
+                        ? () => {
+                            setZen(true);
+                            const last = read(
+                              `last-problem:${contest.id}`,
+                              problems[0].id,
+                            );
+                            nav(
+                              `problem/${problems.some((p) => p.id === last) ? last : problems[0].id}`,
+                            );
+                          }
+                        : startContest
+                    }
+                  >
+                    <Play size={16} />
+                    {contestActive ? "继续虚拟比赛" : "开启虚拟比赛"}
+                  </button>
+                  <button
+                    className="button quiet"
+                    onClick={() => nav("problems")}
+                  >
+                    浏览题目
+                    <ChevronRight size={16} />
+                  </button>
+                  <a
+                    className="button quiet"
+                    href={contest.pdf}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Download size={16} />
+                    题面 PDF
+                  </a>
+                </div>
+                <div className="contest-preview-footer">
+                  <span>自测进度</span>
+                  <span>
+                    {passed.size} / {problems.length}
+                  </span>
+                </div>
+              </div>
+            </section>
+          )}
           {!problem && route === "problems" && (
             <>
               <div className="contest-heading">
                 <div>
                   <div className="eyebrow">
                     <span className="purple-line" />
-                    THE 6TH LIAONING PROVINCIAL CONTEST
+                    {contest.englishTitle}
                   </div>
-                  <h1>
-                    辽宁省赛 <span>2025</span>
-                  </h1>
-                  <p>第六届辽宁省大学生程序设计竞赛</p>
+                  <h1>{contest.title}</h1>
                 </div>
                 <span className="outline-pill">
                   <Terminal size={14} />
@@ -607,7 +883,7 @@ export default function App() {
                   <div className="list-toolbar">
                     <div>
                       <span className="section-title">题目</span>
-                      <span className="counter">13</span>
+                      <span className="counter">{problems.length}</span>
                     </div>
                     <label className="search">
                       <Search size={15} />
@@ -670,7 +946,7 @@ export default function App() {
                     ) && <div className="empty-search">没有匹配的题目</div>}
                   </div>
                   <div className="table-footer">
-                    <span>13 problems</span>
+                    <span>{problems.length} problems</span>
                     <span>标准输入 / 标准输出</span>
                   </div>
                 </section>
@@ -678,11 +954,14 @@ export default function App() {
                   {timerCard}
                   <div className="progress-card">
                     <div className="card-label">
-                      自测进度<span className="mono">{passed.size} / 13</span>
+                      自测进度
+                      <span className="mono">
+                        {passed.size} / {problems.length}
+                      </span>
                     </div>
                     <div className="progress-number">
                       {passed.size}
-                      <small> / 13</small>
+                      <small> / {problems.length}</small>
                     </div>
                     <div className="progress-blocks">
                       {problems.map((p) => (
@@ -695,31 +974,33 @@ export default function App() {
                         </span>
                       ))}
                     </div>
-                    <div className="progress-meta">公开样例通过数</div>
+                    <div className="progress-meta">测试点通过数</div>
                   </div>
                   <div className="resource-card">
                     <div className="card-label">比赛资料</div>
                     <a
                       className="resource-link"
-                      href="./pdf/LNCPC-2025.pdf"
+                      href={contest.pdf}
                       target="_blank"
                       rel="noreferrer"
                     >
                       <FileText size={18} />
                       <span>
-                        完整题面<small>13 题 · ICPC 格式 PDF</small>
+                        完整题面
+                        <small>{problems.length} 题 · ICPC 格式 PDF</small>
                       </span>
                       <Download size={16} />
                     </a>
                     <a
                       className="resource-link"
-                      href="https://codeforces.com/gym/106380"
+                      href={contest.source}
                       target="_blank"
                       rel="noreferrer"
                     >
                       <Trophy size={18} />
                       <span>
-                        Codeforces Gym<small>106380 · 完整数据评测</small>
+                        {contest.sourceLabel}
+                        <small>原比赛题目</small>
                       </span>
                       <ChevronRight size={16} />
                     </a>
@@ -728,7 +1009,7 @@ export default function App() {
                     <span className="connection-dot" />
                     代码在你的浏览器内运行
                     <br />
-                    自测采用公开样例，可添加自定义数据。
+                    每题 15 个自测点，其中 3 个 trick。
                   </p>
                 </aside>
               </div>
@@ -748,11 +1029,17 @@ export default function App() {
                   <span>{problem.id}.</span> {problem.title}
                 </strong>
                 <div className="problem-limits">
+                  {contestActive && (
+                    <span className="zen-timer">
+                      <Clock size={14} />
+                      {formatTime(remaining)}
+                    </span>
+                  )}
                   <span>{problem.timeLimit / 1000} s</span>
                   <span>{problem.memoryLimit} MB</span>
                   <a
                     className="button quiet"
-                    href={`./pdf/${problem.id}.pdf`}
+                    href={problemPdf(contest, problem)}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -760,26 +1047,57 @@ export default function App() {
                     PDF
                   </a>
                 </div>
+                {zen && (
+                  <div className="zen-tools">
+                    <button
+                      className="icon-button"
+                      aria-label="字体设置"
+                      title="字体设置"
+                      onClick={() => setSettings(true)}
+                    >
+                      Aa
+                    </button>
+                    <button
+                      className="icon-button"
+                      aria-label="退出禅模式"
+                      title="退出禅模式 · Esc"
+                      onClick={() => setZen(false)}
+                    >
+                      <Minimize2 size={18} />
+                    </button>
+                  </div>
+                )}
               </div>
               <div className="workbench">
                 <section className="statement-pane">
                   <div className="pane-header">
                     <button
                       className={
-                        view === "statement" ? "pane-tab active" : "pane-tab"
+                        view === "statement" ||
+                        (problem.statementFormat === "pdf" && view === "pdf")
+                          ? "pane-tab active"
+                          : "pane-tab"
                       }
-                      onClick={() => setView("statement")}
+                      onClick={() =>
+                        setView(
+                          problem.statementFormat === "pdf"
+                            ? "pdf"
+                            : "statement",
+                        )
+                      }
                     >
                       题面
                     </button>
-                    <button
-                      className={
-                        view === "pdf" ? "pane-tab active" : "pane-tab"
-                      }
-                      onClick={() => setView("pdf")}
-                    >
-                      PDF
-                    </button>
+                    {problem.statementFormat !== "pdf" && (
+                      <button
+                        className={
+                          view === "pdf" ? "pane-tab active" : "pane-tab"
+                        }
+                        onClick={() => setView("pdf")}
+                      >
+                        PDF
+                      </button>
+                    )}
                     <a
                       href={problem.qoj}
                       target="_blank"
@@ -793,14 +1111,16 @@ export default function App() {
                   {view === "pdf" ? (
                     <iframe
                       title={`${problem.id} 题面 PDF`}
-                      src={`./pdf/${problem.id}.pdf`}
+                      src={`${problemPdf(contest, problem)}#zoom=${Math.round((fonts.statement / 17) * 100)}`}
                     />
                   ) : (
                     <article className="statement">
                       <div className="paper-heading">
                         <small>Problem {problem.id}</small>
                         <h2>{problem.title}</h2>
-                        <p>{problem.englishTitle}</p>
+                        {problem.englishTitle !== problem.title && (
+                          <p>{problem.englishTitle}</p>
+                        )}
                       </div>
                       <Markdown
                         remarkPlugins={[remarkMath, remarkGfm]}
@@ -815,14 +1135,24 @@ export default function App() {
                             Sample {i + 1}
                             <button
                               onClick={() => {
-                                setInput(s.input);
-                                setExpected(s.output);
+                                setInput(
+                                  problem.checker === "hidden-track"
+                                    ? problem.tests![0].input
+                                    : s.input,
+                                );
+                                setExpected(
+                                  problem.checker === "hidden-track"
+                                    ? ""
+                                    : s.output,
+                                );
                                 setTestMode("custom");
                                 setResult(null);
                               }}
                             >
                               <Play size={12} />
-                              载入
+                              {problem.checker === "hidden-track"
+                                ? "交互自测"
+                                : "载入"}
                             </button>
                           </div>
                           <div className="sample-grid">
@@ -858,16 +1188,23 @@ export default function App() {
                           target="_blank"
                           rel="noreferrer"
                         >
-                          洛谷官方重现赛
+                          {contest.id === DEFAULT_CONTEST
+                            ? "洛谷官方重现赛"
+                            : "QOJ"}
                         </a>{" "}
-                        ·{" "}
-                        <a
-                          href={problem.codeforces}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Codeforces
-                        </a>
+                        {problem.codeforces && (
+                          <>
+                            {" "}
+                            ·{" "}
+                            <a
+                              href={problem.codeforces}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Codeforces
+                            </a>
+                          </>
+                        )}
                       </div>
                     </article>
                   )}
@@ -913,7 +1250,7 @@ export default function App() {
                       ]}
                       onChange={(value) => {
                         setCode(value);
-                        save(`code:${problem.id}:${language}`, value);
+                        save(draftKey(problem.id, language), value);
                       }}
                       basicSetup={{
                         foldGutter: false,
@@ -956,7 +1293,7 @@ export default function App() {
                             setResult(null);
                           }}
                         >
-                          全部样例
+                          全部测试点
                         </button>
                         <button
                           disabled={!!busy}
@@ -974,14 +1311,25 @@ export default function App() {
                       <div className="running">
                         <span className="spinner" />
                         {phaseText[busy]}
+                        <span className="mono">
+                          {testProgress.current} / {testProgress.total}
+                        </span>
                         <small>首次加载 C++ 约 60 MB，Python 约 12 MB。</small>
                       </div>
                     ) : result ? (
                       <div className="test-results">
                         {result.map((r, i) => (
-                          <details key={i} open={r.status !== "PASS"}>
+                          <details
+                            key={i}
+                            open={!["PASS", "SKIP"].includes(r.status)}
+                          >
                             <summary>
-                              <span>Test {i + 1}</span>
+                              <span title={problem.tests?.[i]?.label}>
+                                Test {i + 1}
+                                {problem.tests?.[i]?.kind === "trick" && (
+                                  <small className="trick-tag">trick</small>
+                                )}
+                              </span>
                               {badge(r.status)}
                               <span className="mono timing">
                                 {r.time.toFixed(1)} ms
@@ -993,16 +1341,18 @@ export default function App() {
                             {r.error && (
                               <pre className="error-output">{r.error}</pre>
                             )}
-                            {r.status === "WA" && (
-                              <>
-                                <div className="output-label">预期输出</div>
-                                <pre>
-                                  {testMode === "samples"
-                                    ? problem.samples[i].output
-                                    : expected}
-                                </pre>
-                              </>
-                            )}
+                            {r.status === "WA" &&
+                              problem.checker !== "hidden-track" && (
+                                <>
+                                  <div className="output-label">预期输出</div>
+                                  <pre>
+                                    {testMode === "samples"
+                                      ? (problem.tests || problem.samples)[i]
+                                          .output
+                                      : expected}
+                                  </pre>
+                                </>
+                              )}
                           </details>
                         ))}
                         <p className="test-scope">
@@ -1012,7 +1362,9 @@ export default function App() {
                     ) : testMode === "custom" ? (
                       <div className="custom-inputs">
                         <label>
-                          标准输入
+                          {problem.checker === "hidden-track"
+                            ? "隐藏排列 · T，n，排列（0 起始）"
+                            : "标准输入"}
                           <textarea
                             aria-label="标准输入"
                             value={input}
@@ -1020,29 +1372,41 @@ export default function App() {
                             spellCheck={false}
                           />
                         </label>
-                        <label>
-                          预期输出 <span>可留空</span>
-                          <textarea
-                            aria-label="预期输出"
-                            value={expected}
-                            onChange={(e) => setExpected(e.target.value)}
-                            spellCheck={false}
-                          />
-                        </label>
+                        {problem.checker !== "hidden-track" && (
+                          <label>
+                            预期输出 <span>可留空</span>
+                            <textarea
+                              aria-label="预期输出"
+                              value={expected}
+                              onChange={(e) => setExpected(e.target.value)}
+                              spellCheck={false}
+                            />
+                          </label>
+                        )}
                       </div>
                     ) : (
                       <div className="test-placeholder">
                         <div className="test-cases">
-                          {problem.samples.map((_, i) => (
-                            <span key={i}>
-                              Sample {i + 1}
+                          {(problem.tests || problem.samples).map((test, i) => (
+                            <span
+                              key={i}
+                              title={
+                                "label" in test
+                                  ? String(test.label)
+                                  : `Sample ${i + 1}`
+                              }
+                            >
+                              {"kind" in test && test.kind === "trick"
+                                ? "Trick"
+                                : "Test"}{" "}
+                              {i + 1}
                               <span className="dash">—</span>
                             </span>
                           ))}
                         </div>
                         <p>
-                          运行全部 {problem.samples.length} 组公开样例{" "}
-                          <kbd>Ctrl + Enter</kbd>
+                          运行全部 {(problem.tests || problem.samples).length}{" "}
+                          个测试点 <kbd>Ctrl + Enter</kbd>
                         </p>
                       </div>
                     )}
@@ -1062,13 +1426,13 @@ export default function App() {
                 <div className="history-head">
                   <span>题目</span>
                   <span>结果</span>
-                  <span>样例</span>
+                  <span>测试点</span>
                   <span>语言</span>
                   <span>用时</span>
                   <span>提交时间</span>
                 </div>
-                {submissions.length ? (
-                  submissions.map((s) => (
+                {history.length ? (
+                  history.map((s) => (
                     <button
                       key={s.id}
                       className="history-row"
@@ -1115,7 +1479,7 @@ export default function App() {
               <div className="page-heading">
                 <div className="eyebrow">VIRTUAL CONTEST</div>
                 <h1>自测榜</h1>
-                <p>本次虚拟比赛 · 仅统计公开样例自测</p>
+                <p>本次虚拟比赛 · 仅统计本站自测数据</p>
               </div>
               <div className="standings-toolbar">
                 <span className="outline-pill">
@@ -1179,7 +1543,7 @@ export default function App() {
               <div className="standings-legend">
                 <span>
                   <i className="legend solved" />
-                  样例通过
+                  自测通过
                 </span>
                 <span>
                   <i className="legend attempted" />
@@ -1189,7 +1553,9 @@ export default function App() {
             </>
           )}
           {!problem &&
-            !["problems", "submissions", "standings"].includes(route) && (
+            !["contests", "problems", "submissions", "standings"].includes(
+              route,
+            ) && (
               <div className="empty-state">
                 <FileText size={30} />
                 <h3>页面不存在</h3>
@@ -1207,7 +1573,7 @@ export default function App() {
             <span className="connection-dot" />
             Browser runtime
           </span>
-          <span className="status-scope">公开样例 + 自定义测试</span>
+          <span className="status-scope">15 个自测点 · 3 个 trick</span>
           <span className="status-spacer" />
           <span>{language === "cpp" ? "C++17" : "Python"}</span>
           <span>UTF-8</span>
@@ -1217,6 +1583,28 @@ export default function App() {
           </button>
         </footer>
       </div>
+      {route !== "contests" && !(zen && problem) && (
+        <div className="zen-floating">
+          {zen && (
+            <button
+              className="icon-button"
+              aria-label="字体设置"
+              title="字体设置"
+              onClick={() => setSettings(true)}
+            >
+              Aa
+            </button>
+          )}
+          <button
+            className={`zen-toggle ${zen ? "is-zen" : ""}`}
+            aria-label={zen ? "退出禅模式" : "进入禅模式"}
+            onClick={() => setZen((v) => !v)}
+          >
+            {zen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+            {zen ? "退出禅模式" : "禅模式"}
+          </button>
+        </div>
+      )}
       {toast && (
         <div className="toast" role="status">
           <Check size={16} />
@@ -1240,6 +1628,41 @@ export default function App() {
               <button aria-label="关闭设置" onClick={() => setSettings(false)}>
                 <X size={20} />
               </button>
+            </div>
+            <div className="font-controls">
+              <div className="font-controls-heading">
+                <span>字体大小</span>
+                <button
+                  className="button quiet"
+                  onClick={() => setFonts(defaultFonts)}
+                >
+                  重置
+                </button>
+              </div>
+              {(
+                [
+                  ["ui", "界面"],
+                  ["statement", "题面"],
+                  ["code", "代码"],
+                ] as const
+              ).map(([key, label]) => (
+                <label className="font-control" key={key}>
+                  <span>{label}</span>
+                  <input
+                    type="range"
+                    aria-label={`${label}字体大小`}
+                    min={fontLimits[key][0]}
+                    max={fontLimits[key][1]}
+                    step="1"
+                    value={fonts[key]}
+                    onChange={(e) =>
+                      setFonts((f) => ({ ...f, [key]: Number(e.target.value) }))
+                    }
+                  />
+                  <output>{fonts[key]} px</output>
+                </label>
+              ))}
+              <div className="font-preview">Aa · 辽宁省赛 · ICPC 2026</div>
             </div>
             <label className="setting-label">
               选手名称
@@ -1273,13 +1696,13 @@ export default function App() {
               />
             </div>
             <div className="setting-shortcuts">
-              <span>运行样例</span>
+              <span>运行自测点</span>
               <kbd>Ctrl + Enter</kbd>
               <span>提交自测</span>
               <kbd>Ctrl + Shift + Enter</kbd>
             </div>
             <p className="modal-note">
-              代码只在当前设备的浏览器里执行。清除浏览器数据前，请先导出备份。样例通过不代表官方完整数据通过。
+              代码只在当前设备的浏览器里执行。清除浏览器数据前，请先导出备份。自测通过不代表官方完整数据通过。
             </p>
             <button
               className="button primary full"
@@ -1308,7 +1731,7 @@ export default function App() {
             <div className="detail-meta">
               {badge(detail.status)}
               <span>
-                {detail.passed}/{detail.total} 样例
+                {detail.passed}/{detail.total} 测试点
               </span>
               <span>{detail.language === "cpp" ? "C++17" : "Python"}</span>
             </div>
@@ -1318,7 +1741,7 @@ export default function App() {
                 className="button quiet"
                 onClick={() =>
                   download(
-                    `${detail.problem}.${detail.language === "cpp" ? "cpp" : "py"}`,
+                    `${detail.contestId}-${detail.problem}.${detail.language === "cpp" ? "cpp" : "py"}`,
                     detail.source,
                   )
                 }
@@ -1331,10 +1754,10 @@ export default function App() {
                 onClick={() => {
                   setLanguage(detail.language);
                   save(
-                    `code:${detail.problem}:${detail.language}`,
+                    draftKey(detail.problem, detail.language, detail.contestId),
                     detail.source,
                   );
-                  nav(`problem/${detail.problem}`);
+                  nav(`problem/${detail.problem}`, detail.contestId);
                   setCode(detail.source);
                   setDetail(null);
                 }}

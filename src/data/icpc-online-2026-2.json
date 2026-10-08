@@ -1,0 +1,1366 @@
+[
+  {
+    "id": "A",
+    "title": "All Closed",
+    "englishTitle": "All Closed",
+    "timeLimit": 1000,
+    "memoryLimit": 512,
+    "source": "https://qoj.ac/problem/20236",
+    "qoj": "https://qoj.ac/problem/20236",
+    "codeforces": "",
+    "markdown": "Sulfox the fennec fox gives you $n$ sets $S_1,S_2,\\ldots,S_n$, each containing distinct integers between $0$ and $2^m-1$.\n\nYou may perform the following operation any number (possibly zero) of times: choose an integer $x$ with $0\\le x< 2^m$, and for every $i=1,2,\\ldots,n$, insert $x$ into $S_i$ if it is not already present.\n\nA set $S$ is called **XOR-closed** if, for every $x,y\\in S$, we have $x\\oplus y\\in S$, where $\\oplus$ denotes the bitwise exclusive-OR operation.\n\nFind the minimum number of operations required to make all $S_i$ XOR-closed, and construct any sequence of operations achieving this minimum.\n\n## Input\n\nThe first line contains two integers $n$ ($1\\le n\\le 2 \\times 10^5$) and $m$ ($1\\le m\\le 20$).\n\nThe $i$-th of the next $n$ lines contains an integer $c_i$ ($c_i \\ge 1$), followed by $c_i$ distinct integers $a_{i,1},a_{i,2},\\ldots,a_{i,c_i}$ ($0\\le a_{i,j}< 2^m$), representing the elements of $S_i$.\n\nIt is guaranteed that the sum of $c_i$ does not exceed $10^6$.\n\n## Output\n\nOn the first line, print the minimum number of operations $k$.\n\nOn the second line, print $k$ integers $x_1,x_2,\\ldots,x_k$, where $x_i$ denotes the integer chosen in the $i$-th operation.\n\nIf there are multiple optimal solutions, output any of them.\n\n## Note\n\nFor the first example, after performing the shown operations, $S_1$ and $S_2$ become $\\{0,1,6,7\\}$, while $S_3$ becomes $\\{0,1,2,3,4,5,6,7\\}$. It can be proved that it is impossible to make all sets XOR-closed using less than $3$ operations.\n\nFor the second example, the only set is already XOR-closed, so no operation is needed.",
+    "samples": [
+      {
+        "input": "3 3\n1 1\n3 0 1 7\n6 1 2 3 4 5 7\n",
+        "output": "3\n0 7 6\n"
+      },
+      {
+        "input": "1 4\n4 11 5 14 0\n",
+        "output": "0\n"
+      }
+    ],
+    "checker": "xor-closed",
+    "pdf": "./pdf/icpc-online-2026-2/A.pdf",
+    "statementFormat": "markdown",
+    "tests": [
+      {
+        "input": "3 3\n1 1\n3 0 1 7\n6 1 2 3 4 5 7\n",
+        "output": "3\n0 7 6\n",
+        "label": "公开样例 1",
+        "kind": "sample"
+      },
+      {
+        "input": "1 4\n4 11 5 14 0\n",
+        "output": "0\n",
+        "label": "公开样例 2",
+        "kind": "sample"
+      },
+      {
+        "input": "3 2\n1 0\n2 3 0\n2 0 3\n",
+        "output": "0\n\n",
+        "label": "随机场景 1",
+        "kind": "regular"
+      },
+      {
+        "input": "3 2\n4 1 0 3 2\n3 1 2 3\n4 1 3 2 0\n",
+        "output": "1\n0\n",
+        "label": "随机场景 2",
+        "kind": "regular"
+      },
+      {
+        "input": "3 1\n2 1 0\n1 0\n1 1\n",
+        "output": "1\n0\n",
+        "label": "随机场景 3",
+        "kind": "regular"
+      },
+      {
+        "input": "2 3\n3 2 4 5\n8 3 6 0 2 4 1 7 5\n",
+        "output": "5\n0 1 3 6 7\n",
+        "label": "随机场景 4",
+        "kind": "regular"
+      },
+      {
+        "input": "2 3\n1 6\n5 0 6 7 1 5\n",
+        "output": "7\n0 1 2 3 4 5 7\n",
+        "label": "随机场景 5",
+        "kind": "regular"
+      },
+      {
+        "input": "2 3\n6 3 1 2 5 4 6\n4 5 1 4 2\n",
+        "output": "4\n0 3 6 7\n",
+        "label": "随机场景 6",
+        "kind": "regular"
+      },
+      {
+        "input": "1 3\n6 4 7 1 0 2 3\n",
+        "output": "2\n5 6\n",
+        "label": "随机场景 7",
+        "kind": "regular"
+      },
+      {
+        "input": "2 3\n6 0 6 1 4 3 2\n6 0 3 4 7 1 2\n",
+        "output": "3\n5 6 7\n",
+        "label": "随机场景 8",
+        "kind": "regular"
+      },
+      {
+        "input": "4 2\n2 0 1\n1 3\n1 3\n4 2 3 0 1\n",
+        "output": "1\n0\n",
+        "label": "随机场景 9",
+        "kind": "regular"
+      },
+      {
+        "input": "1 2\n2 3 1\n",
+        "output": "2\n0 2\n",
+        "label": "随机场景 10",
+        "kind": "regular"
+      },
+      {
+        "input": "3 3\n1 2\n3 0 2 7\n6 1 2 3 4 6 7\n",
+        "output": "3\n0 5 7\n",
+        "label": "加入元素影响所有集合",
+        "kind": "trick"
+      },
+      {
+        "input": "2 3\n4 0 1 2 3\n2 0 4\n",
+        "output": "0\n\n",
+        "label": "集合已经 XOR 闭合",
+        "kind": "trick"
+      },
+      {
+        "input": "3 3\n1 1\n1 2\n1 4\n",
+        "output": "1\n0\n",
+        "label": "缺少零与多集合相互限制",
+        "kind": "trick"
+      }
+    ]
+  },
+  {
+    "id": "B",
+    "title": "Bread",
+    "englishTitle": "Bread",
+    "timeLimit": 1000,
+    "memoryLimit": 512,
+    "source": "https://qoj.ac/problem/20237",
+    "qoj": "https://qoj.ac/problem/20237",
+    "codeforces": "",
+    "markdown": "![problem_20237_1.png](./images/icpc-online-2026-2-B-problem_20237_1.png)\n\nNatsu is eating bread at Sensei's café when a piece of bread falls onto the floor and starts rolling.\n\nThe fallen bread can be regarded as a convex polygon in a two-dimensional plane. Its $n$ vertices, listed in counterclockwise order, are $A_1,A_2,\\ldots,A_n$. The vertices are pairwise distinct, and no three vertices are collinear. The floor can be regarded as the horizontal line $y=0$.\n\nInitially, the bread touches the floor along edge $(A_n,A_1)$. Let the position of vertex $A_n$ at this moment be the origin. The bread rolls in the positive direction of the $x$-axis; that is, $A_n=(0,0)$ and $A_1=(x_1,0)$, where $x_1>0$. The bread then starts rolling. The rolling process can be abstracted as an infinite sequence of rotations performed in order. In the $i$-th rotation, the entire bread is rotated clockwise about the current position of vertex $A_{((i-1)\\bmod n)+1}$ until $A_{(i\\bmod n)+1}$ touches the floor for the first time, that is, until its $y$-coordinate becomes $0$ for the first time.\n\nAs a romantic philosopher, Natsu considers the rolling of the bread to be a coincidental and romantic event. For the sake of this romance, after the $k$-th rotation, Natsu records the distance $L(k)$ rolled by the bread and the area $S(k)$ swept out by the bread. You need to calculate their ratio as $k$ tends to infinity, namely:\n\n$$\n\\lim_{k\\to +\\infty}\\frac{S(k)}{L(k)}\n$$\n\nThe distance $L(k)$ rolled by the bread after the $k$-th rotation is defined as the distance from the origin to the position of vertex $A_{(k\\bmod n)+1}$ when the $k$-th rotation ends. The area $S(k)$ swept out by the bread after the $k$-th rotation is defined as the area of the union of all regions covered by the convex-polygon bread at all moments from the beginning of the first rotation to the end of the $k$-th rotation.\n\n## Input\n\nThe first line contains one positive integer $T$ $(1\\leq T\\leq 10^3)$, denoting the number of test cases.\n\nFor each test case, the first line contains one integer $n$ $(3\\leq n\\leq 10^5)$, denoting the number of vertices of the convex-polygon bread.\n\nThe next $n$ lines each contain two integers $x_i,y_i$ $(0\\leq |x_i|,y_i\\leq 10^9)$. The $i$-th line denotes the coordinates of vertex $A_i$ when the bread has just fallen onto the floor.\n\nIt is guaranteed that $y_1$, $x_n$, and $y_n$ are all $0$, and that $x_1>0$.\n\nIt is guaranteed that vertices $A_1,A_2,\\ldots,A_n$ are pairwise distinct, no three vertices are collinear, and they form a convex polygon in counterclockwise order.\n\nIt is guaranteed that the sum of $n$ over all test cases in one test file does not exceed $3\\times 10^5$.\n\n## Output\n\nFor each test case, output one floating-point number on one line, denoting the answer. Your answer is considered correct if and only if its relative or absolute error compared with the standard answer does not exceed $10^{-9}$.\n\nSuppose that your answer is $a$ and the standard answer is $b$. Your answer is considered correct if\n\n$$\n\\frac{|a-b|}{\\max\\{b,1\\}}\\leq 10^{-9}\n$$\n\n## Note\n\nFor the first test case, the process from the beginning of the first rotation to the end of the fourth rotation is shown below:\n\n![problem_20237_2.png](./images/icpc-online-2026-2-B-problem_20237_2.png)\n\nWhen $k=4$, we have:\n\n$$\n\\begin{aligned}\nL(k)&=4+3\\sqrt{26}\\approx19.297058541 \\\\\nS(k)&=\\frac{120}{13}+13\\sqrt3+\\frac{91\\pi}{6}\n+43\\arctan\\frac15\n\\approx87.882927382\n\\end{aligned}\n$$",
+    "samples": [
+      {
+        "input": "2\n3\n2 0\n1 5\n0 0\n4\n1 0\n1 1\n0 1\n0 0\n",
+        "output": "4.908664519941197\n1.384172075579563\n"
+      }
+    ],
+    "checker": "float-1e-9",
+    "pdf": "./pdf/icpc-online-2026-2/B.pdf",
+    "statementFormat": "markdown",
+    "tests": [
+      {
+        "input": "2\n3\n2 0\n1 5\n0 0\n4\n1 0\n1 1\n0 1\n0 0\n",
+        "output": "4.908664519941197\n1.384172075579563\n",
+        "label": "公开样例 1",
+        "kind": "sample"
+      },
+      {
+        "input": "1\n4\n479 0\n479 998\n0 998\n0 0\n",
+        "output": "1078.012084177380302\n",
+        "label": "随机场景 1",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n564 0\n564 659\n0 659\n0 0\n",
+        "output": "848.736168172409293\n",
+        "label": "随机场景 2",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n933 0\n933 829\n0 829\n0 0\n",
+        "output": "1221.382344815146325\n",
+        "label": "随机场景 3",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n938 0\n938 222\n0 222\n0 0\n",
+        "output": "931.553577126027335\n",
+        "label": "随机场景 4",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n493 0\n493 392\n0 392\n0 0\n",
+        "output": "616.106518257744028\n",
+        "label": "随机场景 5",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n312 0\n312 39\n0 39\n0 0\n",
+        "output": "302.473530990253323\n",
+        "label": "随机场景 6",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n108 0\n108 536\n0 536\n0 0\n",
+        "output": "527.680639578909449\n",
+        "label": "随机场景 7",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n191 0\n191 231\n0 231\n0 0\n",
+        "output": "293.248934416696557\n",
+        "label": "随机场景 8",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n567 0\n567 430\n0 430\n0 0\n",
+        "output": "695.898788455167278\n",
+        "label": "随机场景 9",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n764 0\n764 883\n0 883\n0 0\n",
+        "output": "1142.563430284379137\n",
+        "label": "随机场景 10",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n338 0\n338 812\n0 812\n0 0\n",
+        "output": "855.119141056823878\n",
+        "label": "随机场景 11",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n1 0\n1 1\n0 1\n0 0\n",
+        "output": "1.384172075579563\n",
+        "label": "单位正方形",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n4\n1000000000 0\n1000000000 1000000000\n0 1000000000\n0 0\n",
+        "output": "1384172075.579563379287720\n",
+        "label": "最大坐标的正方形",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n4\n1000000000 0\n1000000000 1\n0 1\n0 0\n",
+        "output": "956611477.533906817436218\n",
+        "label": "极薄长方形的浮点精度",
+        "kind": "trick"
+      }
+    ]
+  },
+  {
+    "id": "C",
+    "title": "Cut Tree",
+    "englishTitle": "Cut Tree",
+    "timeLimit": 10000,
+    "memoryLimit": 512,
+    "source": "https://qoj.ac/problem/20238",
+    "qoj": "https://qoj.ac/problem/20238",
+    "codeforces": "",
+    "markdown": "You are given a tree with $n$ vertices. Vertex $i$ has a weight $z_i$. The $n-1$ edges are numbered from $1$ to $n-1$ in the order they are given in the input.\n\nYou have to answer $q$ independent queries. A query is given by three integers $l$, $r$, $f$ with $1 \\le l \\le f \\le r \\le n-1$. For this query, build a graph on the $n$ vertices that contains exactly the edges whose index lies in $[l, r]$, **except** that edge number $f$ is deleted. Formally, the edge set is $\\{\\, i : l \\le i \\le r,\\ i \\neq f \\,\\}$.\n\nThis graph is a forest. The weight of a connected component is the sum of the weights of the vertices it contains (an isolated vertex forms a component of weight equal to its own weight). For each query output the maximum component weight.\n\n## Input\n\nThe first line contains one integer $T$ ($1 \\le T \\le 10^5$), denoting the number of test cases. The description of the test cases follows.\n\nThe first line of each test case contains one integer $n$ ($2 \\le n \\le 2 \\times 10^5$).\n\nEach of the next $n-1$ lines contains two integers $u_i$ and $v_i$ ($1 \\le u_i, v_i \\le n$, $u_i \\neq v_i$), denoting the two endpoints of edge $i$.\n\nThe next line contains $n$ integers $z_1, z_2, \\dots, z_n$ ($1 \\le z_i \\le 100$), denoting the vertex weights.\n\nThe next line contains one integer $q$ ($1 \\le q \\le 2 \\times 10^5$), denoting the number of queries.\n\nEach of the next $q$ lines contains three integers $l$, $r$, $f$ ($1 \\le l \\le f \\le r \\le n-1$) describing one query.\n\nIt is guaranteed that, within a single test file, the sum of $n$ over all test cases does not exceed $2 \\times 10^5$, and the sum of $q$ over all test cases does not exceed $2 \\times 10^5$.\n\n## Output\n\nFor each test case print $q$ lines. The $i$-th of them must contain a single integer, denoting the answer to the $i$-th query of that test case.\n\n## Note\n\nIn the first test case the tree is a path $1-2-3-4-5$; edge $i$ connects $i$ and $i+1$, and the weights are $10, 20, 30, 40, 50$.\n\n* Query $(1,4,2)$: keep edges $\\{1,3,4\\}$. The component $\\{1,2\\}$ has weight $30$, and the component $\\{3,4,5\\}$ has weight $120$; therefore, the maximum component weight is $120$.\n* Query $(2,4,4)$: keep edges $\\{2,3\\}$. The components $\\{2,3,4\\}$, $\\{1\\}$, and $\\{5\\}$ have weights $90$, $10$, and $50$, respectively; therefore, the maximum component weight is $90$.\n* Query $(1,1,1)$: no edge is kept, every vertex is isolated; the answer is the largest weight $50$.\n\nIn the second test case the only edge is deleted by the query, so both vertices are isolated and the answer is $\\max(7,5) = 7$.",
+    "samples": [
+      {
+        "input": "2\n5\n1 2\n2 3\n3 4\n4 5\n10 20 30 40 50\n3\n1 4 2\n2 4 4\n1 1 1\n2\n1 2\n7 5\n1\n1 1 1\n",
+        "output": "120\n90\n50\n7\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-online-2026-2/C.pdf",
+    "statementFormat": "markdown",
+    "tests": [
+      {
+        "input": "2\n5\n1 2\n2 3\n3 4\n4 5\n10 20 30 40 50\n3\n1 4 2\n2 4 4\n1 1 1\n2\n1 2\n7 5\n1\n1 1 1\n",
+        "output": "120\n90\n50\n7\n",
+        "label": "公开样例 1",
+        "kind": "sample"
+      },
+      {
+        "input": "1\n6\n6 2\n4 1\n2 1\n3 1\n5 1\n16 38 14 69 22 74\n12\n3 3 3\n4 5 5\n1 4 3\n4 4 4\n3 5 3\n4 5 5\n4 4 4\n1 1 1\n1 2 1\n5 5 5\n1 5 4\n4 4 4\n",
+        "output": "74\n74\n112\n74\n74\n74\n74\n74\n85\n74\n219\n74\n",
+        "label": "随机场景 1",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n9\n8 4\n7 5\n9 2\n2 1\n6 5\n4 1\n5 4\n3 1\n84 94 93 19 49 44 71 16 51\n12\n5 8 5\n4 8 7\n2 4 2\n5 7 7\n5 6 6\n4 6 6\n8 8 8\n2 3 3\n1 1 1\n2 6 5\n7 7 7\n5 5 5\n",
+        "output": "245\n290\n229\n103\n94\n178\n94\n120\n94\n248\n94\n94\n",
+        "label": "随机场景 2",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n12\n9 3\n12 1\n10 8\n2 1\n7 1\n5 1\n6 3\n11 5\n3 2\n8 7\n4 2\n56 35 67 18 71 76 29 87 84 9 24 56\n12\n5 5 5\n5 9 7\n11 11 11\n5 10 9\n7 11 8\n7 8 8\n4 6 6\n5 5 5\n9 9 9\n9 9 9\n7 7 7\n3 4 3\n",
+        "output": "87\n180\n87\n267\n196\n143\n120\n87\n87\n87\n87\n91\n",
+        "label": "随机场景 3",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n7\n5 3\n4 3\n2 1\n3 2\n7 5\n6 1\n60 58 7 24 73 100 83\n12\n6 6 6\n5 5 5\n4 6 6\n6 6 6\n1 5 1\n4 5 4\n2 4 4\n4 6 6\n2 2 2\n3 4 4\n5 6 5\n5 5 5\n",
+        "output": "100\n100\n156\n100\n156\n156\n118\n156\n100\n118\n160\n100\n",
+        "label": "随机场景 4",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n10\n10 6\n6 2\n3 1\n4 3\n7 2\n9 2\n5 1\n2 1\n8 4\n76 61 81 58 99 6 74 89 92 60\n12\n6 7 7\n2 3 3\n7 7 7\n2 9 8\n5 9 6\n4 5 5\n1 5 4\n5 7 7\n3 4 3\n9 9 9\n6 8 8\n5 8 7\n",
+        "output": "153\n99\n99\n403\n310\n139\n201\n227\n139\n99\n175\n303\n",
+        "label": "随机场景 5",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n11\n11 10\n5 1\n9 5\n7 4\n3 2\n8 7\n6 1\n2 1\n10 8\n4 2\n100 29 9 77 28 97 16 37 76 87 55\n12\n1 3 2\n8 9 8\n3 8 7\n2 6 6\n6 8 8\n7 8 7\n8 9 8\n8 8 8\n9 9 9\n9 9 9\n2 3 2\n2 6 4\n",
+        "output": "142\n124\n138\n204\n197\n129\n124\n100\n100\n100\n104\n204\n",
+        "label": "随机场景 6",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n4 2\n2 1\n3 2\n75 50 85 32\n12\n1 1 1\n2 2 2\n3 3 3\n2 2 2\n2 2 2\n2 2 2\n1 1 1\n2 3 3\n3 3 3\n3 3 3\n2 2 2\n2 3 3\n",
+        "output": "85\n85\n85\n85\n85\n85\n85\n125\n85\n85\n85\n125\n",
+        "label": "随机场景 7",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n5\n3 2\n5 3\n2 1\n4 2\n78 28 84 32 1\n12\n2 2 2\n1 1 1\n3 4 4\n1 1 1\n2 3 2\n2 4 2\n3 4 4\n1 3 3\n4 4 4\n1 4 3\n3 4 4\n3 3 3\n",
+        "output": "84\n84\n106\n84\n106\n138\n106\n113\n84\n145\n106\n84\n",
+        "label": "随机场景 8",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n8\n5 2\n3 2\n4 1\n6 3\n2 1\n8 5\n7 1\n2 77 91 8 68 17 95 21\n12\n2 4 4\n3 6 4\n2 4 4\n5 5 5\n5 7 7\n1 3 3\n5 6 5\n3 4 3\n3 3 3\n2 2 2\n3 6 5\n2 7 4\n",
+        "output": "168\n95\n168\n95\n95\n236\n95\n108\n95\n95\n108\n273\n",
+        "label": "随机场景 9",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n11\n9 6\n4 1\n5 2\n7 6\n11 6\n8 2\n6 2\n2 1\n10 6\n3 1\n63 16 83 34 73 13 82 4 75 44 14\n12\n6 10 6\n8 8 8\n10 10 10\n5 8 7\n6 6 6\n8 9 9\n9 9 9\n3 6 6\n6 6 6\n5 8 7\n1 3 2\n7 10 8\n",
+        "output": "219\n83\n83\n83\n83\n83\n83\n109\n83\n83\n89\n146\n",
+        "label": "随机场景 10",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n5\n3 2\n5 1\n2 1\n4 2\n81 94 68 79 36\n12\n3 4 4\n4 4 4\n3 3 3\n3 3 3\n4 4 4\n4 4 4\n2 3 3\n4 4 4\n3 3 3\n3 3 3\n3 4 3\n1 3 1\n",
+        "output": "175\n94\n94\n94\n94\n94\n117\n94\n94\n94\n173\n211\n",
+        "label": "随机场景 11",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n2\n2 1\n10 58\n12\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n",
+        "output": "58\n58\n58\n58\n58\n58\n58\n58\n58\n58\n58\n58\n",
+        "label": "两点树删除唯一边",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n3\n3 2\n2 1\n98 94 52\n12\n2 2 2\n1 1 1\n2 2 2\n2 2 2\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n2 2 2\n1 1 1\n2 2 2\n",
+        "output": "98\n98\n98\n98\n98\n98\n98\n98\n98\n98\n98\n98\n",
+        "label": "区间只含被删除的边",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n7\n3 1\n5 4\n6 1\n4 3\n7 3\n2 1\n60 96 32 44 51 1 34\n12\n1 6 6\n1 6 3\n1 6 5\n1 6 4\n1 6 3\n1 6 2\n1 6 5\n1 6 4\n1 6 5\n1 6 6\n1 6 5\n1 6 4\n",
+        "output": "222\n317\n284\n223\n317\n267\n284\n223\n284\n222\n284\n223\n",
+        "label": "全树删除边切成两部分",
+        "kind": "trick"
+      }
+    ]
+  },
+  {
+    "id": "D",
+    "title": "Divide and Conquer",
+    "englishTitle": "Divide and Conquer",
+    "timeLimit": 2000,
+    "memoryLimit": 512,
+    "source": "https://qoj.ac/problem/20239",
+    "qoj": "https://qoj.ac/problem/20239",
+    "codeforces": "",
+    "markdown": "Segment tree is a data structure based on the divide-and-conquer algorithm, but this has nothing to do with this problem---it's just to make the title start with D.\n\nFor this problem, a segment tree is a perfect binary tree. A segment tree of depth $n$ has exactly $2^{n+1}-1$ nodes. Note that the root has depth $0$, so a segment tree of depth $n$ has $n+1$ levels.\n\nTo make the structure of a segment tree easier to describe, we assign indices to its nodes. The root is assigned index $1$. Every non-leaf node is assigned an index $k$ satisfying $1\\leq k< 2^n$. It has exactly two children: its left child has index $2k$, and its right child has index $2k+1$.\n\nEach node of a segment tree also has a value. Let $a_k$ denote the value of node $k$. For every non-leaf node $k$, its value $a_k$ must be the maximum of the values of its two children; that is,\n$$\na_k=\\max\\{a_{2k},a_{2k+1}\\}.\n$$\n\nThe leaf nodes have indices $2^n,2^n+1,\\ldots,2^{n+1}-1$, and their values must form a permutation of $1,2,\\ldots,2^n$. In other words, the elements of the sequence $a_{2^n},a_{2^n+1},\\ldots,a_{2^{n+1}-1}$ must be pairwise distinct integers, and $1\\leq a_{2^n+i}\\leq 2^n$ must hold for every $0\\leq i< 2^n$.\n\nThere are now $q$ constraints. The $i$-th constraint is of the form $(u_i,x_i)$. Here, $u_i$ is a node index and $x_i$ is a specified value; the constraint requires the value $a_{u_i}$ of node $u_i$ to be equal to $x_i$. Calculate the number of segment trees satisfying all $q$ constraints, or equivalently, the number of distinct valid sequences $a_1,a_2,\\ldots,a_{2^{n+1}-1}$. Output the answer modulo $998244353$.\n\n## Input\n\nThe first line contains two integers $n$ $(1\\le n\\le 18)$ and $q$ $(0\\le q\\le 2^{n+1}-1)$.\n\nEach of the next $q$ lines contains two integers $u_i$ $(1\\le u_i< 2^{n+1})$ and $x_i$ $(1\\le x_i\\le 2^n)$, meaning that the value $a_{u_i}$ of node $u_i$ is required to be equal to $x_i$.\n\n## Output\n\nOutput one integer: the number of valid leaf permutations modulo $998244353$.",
+    "samples": [
+      {
+        "input": "2 1\n2 2\n",
+        "output": "4\n"
+      },
+      {
+        "input": "2 2\n1 4\n2 4\n",
+        "output": "12\n"
+      },
+      {
+        "input": "2 2\n2 3\n4 4\n",
+        "output": "0\n"
+      },
+      {
+        "input": "4 2\n1 2\n1 3\n",
+        "output": "0\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-online-2026-2/D.pdf",
+    "statementFormat": "markdown",
+    "tests": [
+      {
+        "input": "2 1\n2 2\n",
+        "output": "4\n",
+        "label": "公开样例 1",
+        "kind": "sample"
+      },
+      {
+        "input": "2 2\n1 4\n2 4\n",
+        "output": "12\n",
+        "label": "公开样例 2",
+        "kind": "sample"
+      },
+      {
+        "input": "2 2\n2 3\n4 4\n",
+        "output": "0\n",
+        "label": "公开样例 3",
+        "kind": "sample"
+      },
+      {
+        "input": "4 2\n1 2\n1 3\n",
+        "output": "0\n",
+        "label": "公开样例 4",
+        "kind": "sample"
+      },
+      {
+        "input": "1 0\n",
+        "output": "2\n",
+        "label": "随机场景 1",
+        "kind": "regular"
+      },
+      {
+        "input": "2 2\n3 3\n3 2\n",
+        "output": "0\n",
+        "label": "随机场景 2",
+        "kind": "regular"
+      },
+      {
+        "input": "2 2\n2 1\n4 3\n",
+        "output": "0\n",
+        "label": "随机场景 3",
+        "kind": "regular"
+      },
+      {
+        "input": "3 2\n3 2\n6 8\n",
+        "output": "0\n",
+        "label": "随机场景 4",
+        "kind": "regular"
+      },
+      {
+        "input": "2 2\n4 3\n5 1\n",
+        "output": "2\n",
+        "label": "随机场景 5",
+        "kind": "regular"
+      },
+      {
+        "input": "1 2\n3 1\n1 1\n",
+        "output": "0\n",
+        "label": "随机场景 6",
+        "kind": "regular"
+      },
+      {
+        "input": "3 0\n",
+        "output": "40320\n",
+        "label": "随机场景 7",
+        "kind": "regular"
+      },
+      {
+        "input": "2 0\n",
+        "output": "24\n",
+        "label": "随机场景 8",
+        "kind": "regular"
+      },
+      {
+        "input": "18 0\n",
+        "output": "546362027\n",
+        "label": "没有限制，十八层阶乘取模",
+        "kind": "trick"
+      },
+      {
+        "input": "3 1\n1 7\n",
+        "output": "0\n",
+        "label": "根节点值必须是最大叶值",
+        "kind": "trick"
+      },
+      {
+        "input": "2 2\n4 1\n4 2\n",
+        "output": "0\n",
+        "label": "同一节点相互矛盾的约束",
+        "kind": "trick"
+      }
+    ]
+  },
+  {
+    "id": "E",
+    "title": "Exponent",
+    "englishTitle": "Exponent",
+    "timeLimit": 1000,
+    "memoryLimit": 512,
+    "source": "https://qoj.ac/problem/20240",
+    "qoj": "https://qoj.ac/problem/20240",
+    "codeforces": "",
+    "markdown": "The exponent of a group is the least common multiple of the orders of all elements in the group, but this has nothing to do with this problem. It's just to make the title start with E.\n\nLittle Ma gives you a positive integer $n$.\n\nFor each integer $a$ with $1 \\le a \\le n$, define $\\operatorname{ord}_n(a)$ as the smallest positive integer $x$ satisfying:\n\n$$\na^x \\equiv 1 \\pmod n\n$$\n\nIf no such positive integer $x$ exists, define $\\operatorname{ord}_n(a)=0$.\n\nCompute:\n\n$$\n\\sum_{a=1}^{n}\\operatorname{ord}_n(a)\n$$\n\n## Input\n\nThe first line contains an integer $T$ $(1\\leq T\\leq 10^3)$, the number of test cases.\n\nEach of the next $T$ lines contains one positive integer $n$ $(1\\leq n\\leq 10^9)$.\n\n## Output\n\nFor each test case, output one integer in a single line: the required sum.",
+    "samples": [
+      {
+        "input": "5\n1\n5\n8\n54\n9653618\n",
+        "output": "1\n11\n7\n183\n9856882167209\n"
+      },
+      {
+        "input": "5\n48\n2\n4\n8\n16\n",
+        "output": "47\n1\n3\n7\n23\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-online-2026-2/E.pdf",
+    "statementFormat": "markdown",
+    "tests": [
+      {
+        "input": "5\n1\n5\n8\n54\n9653618\n",
+        "output": "1\n11\n7\n183\n9856882167209\n",
+        "label": "公开样例 1",
+        "kind": "sample"
+      },
+      {
+        "input": "5\n48\n2\n4\n8\n16\n",
+        "output": "47\n1\n3\n7\n23\n",
+        "label": "公开样例 2",
+        "kind": "sample"
+      },
+      {
+        "input": "5\n241\n69\n140\n57\n249\n",
+        "output": "25137\n777\n329\n427\n11487\n",
+        "label": "随机场景 1",
+        "kind": "regular"
+      },
+      {
+        "input": "5\n193\n209\n125\n204\n117\n",
+        "output": "19117\n8967\n5731\n687\n575\n",
+        "label": "随机场景 2",
+        "kind": "regular"
+      },
+      {
+        "input": "5\n144\n165\n246\n10\n123\n",
+        "output": "329\n987\n1827\n11\n1827\n",
+        "label": "随机场景 3",
+        "kind": "regular"
+      },
+      {
+        "input": "5\n151\n194\n147\n221\n67\n",
+        "output": "10941\n4781\n2107\n4865\n2331\n",
+        "label": "随机场景 4",
+        "kind": "regular"
+      },
+      {
+        "input": "5\n106\n8\n97\n37\n44\n",
+        "output": "1727\n7\n4781\n671\n147\n",
+        "label": "随机场景 5",
+        "kind": "regular"
+      },
+      {
+        "input": "5\n60\n158\n204\n116\n233\n",
+        "output": "47\n3297\n687\n989\n34959\n",
+        "label": "随机场景 6",
+        "kind": "regular"
+      },
+      {
+        "input": "5\n128\n76\n234\n135\n207\n",
+        "output": "1367\n427\n575\n1403\n5439\n",
+        "label": "随机场景 7",
+        "kind": "regular"
+      },
+      {
+        "input": "5\n139\n166\n145\n8\n226\n",
+        "output": "10647\n4923\n2365\n7\n7353\n",
+        "label": "随机场景 8",
+        "kind": "regular"
+      },
+      {
+        "input": "5\n10\n243\n129\n120\n29\n",
+        "output": "11\n14763\n2107\n95\n473\n",
+        "label": "随机场景 9",
+        "kind": "regular"
+      },
+      {
+        "input": "5\n114\n118\n25\n30\n94\n",
+        "output": "427\n2439\n231\n23\n1521\n",
+        "label": "随机场景 10",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n1\n",
+        "output": "1\n",
+        "label": "模数 1 的定义",
+        "kind": "trick"
+      },
+      {
+        "input": "4\n8\n16\n32\n64\n",
+        "output": "7\n23\n87\n343\n",
+        "label": "二的幂的非循环单位群",
+        "kind": "trick"
+      },
+      {
+        "input": "4\n6\n12\n30\n60\n",
+        "output": "3\n7\n23\n47\n",
+        "label": "非互素元素阶为零",
+        "kind": "trick"
+      }
+    ]
+  },
+  {
+    "id": "F",
+    "title": "Folding Game of Ohto Ai",
+    "englishTitle": "Folding Game of Ohto Ai",
+    "timeLimit": 3000,
+    "memoryLimit": 512,
+    "source": "https://qoj.ac/problem/20241",
+    "qoj": "https://qoj.ac/problem/20241",
+    "codeforces": "",
+    "markdown": "Ohto Ai has an unrooted tree with $N$ vertices. Let the current tree be $G=(V,E)$.\n\nA **path** in a tree is a sequence of distinct vertices $v_1,v_2,\\ldots,v_k$ such that $\\{v_i,v_{i+1}\\}\\in E$ for every $1\\le i< k$.\n\nA **diameter** of a tree is a path containing the maximum possible number of vertices.\n\nWhile $|V|>1$, Ohto Ai may perform the following **fold operation**: Choose any diameter $d_1,d_2,\\ldots,d_k$ of the current tree, listed in order from one endpoint to the other.\n\nDefine a function $f:V\\to V$ by:\n\n$$\nf(v)=\n\\begin{cases}\nd_{\\min\\{i,k-i+1\\}}, & \\text{if }v=d_i\\text{ for some }1\\le i\\le k\\\\\nv, & \\text{otherwise}\n\\end{cases}\n$$\n\nThe tree after the fold is $G'=(V',E')$, where:\n\n$$\n\\begin{aligned}\nV'&=\\{f(v)\\mid v\\in V\\} \\\\\nE'&=\n\\bigl\\{\n\\{f(u),f(v)\\}\n\\mid\n\\{u,v\\}\\in E,\\ f(u)\\ne f(v)\n\\bigr\\}\n\\end{aligned}\n$$\n\nIn other words, vertices at symmetric positions on the chosen diameter are merged. Edges whose endpoints are merged into the same vertex disappear, and if multiple edges become edges between the same pair of vertices, only one copy is kept.\n\nIt can be shown that $G'$ is still a tree.\n\nOhto Ai repeatedly performs fold operations until $|V|=1$. Find the maximum possible number of operations.\n\n## Input\n\nThe first line contains an integer $T$ ($1 \\leq T \\leq 3\\times 10^3$), denoting the number of test cases.\n\nFor each test case, the first line contains an integer $N$ ($1 \\leq N \\leq 5\\times 10^4$), denoting the number of vertices in the tree.\n\nThe next $N-1$ lines each contain two integers $x,y$ ($1 \\leq x,y \\leq N$, $x\\neq y$), denoting an edge of the tree.\n\nIt is guaranteed that the sum of $N$ over all test cases does not exceed $5\\times 10^4$.\n\n## Output\n\nFor each test case, output one line containing an integer: the maximum number of fold operations that can be performed on the tree.\n\n## Note\n\nFor the first test case, the tree with $1$ vertex has no fold operation that can be performed, so the answer is $0$.\n\nFor the second test case, one optimal folding sequence is shown below:\n\n![problem_20241_1.jpg](./images/icpc-online-2026-2-F-problem_20241_1.jpg)\n\nFor the third test case, it can be proven that at most $7$ fold operations can be performed, so the answer is $7$.",
+    "samples": [
+      {
+        "input": "3\n1\n5\n1 2\n1 3\n1 4\n4 5\n13\n1 2\n2 3\n3 4\n2 5\n5 6\n5 7\n1 8\n8 9\n9 10\n8 11\n11 12\n11 13\n",
+        "output": "0\n3\n7\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-online-2026-2/F.pdf",
+    "statementFormat": "markdown",
+    "tests": [
+      {
+        "input": "3\n1\n5\n1 2\n1 3\n1 4\n4 5\n13\n1 2\n2 3\n3 4\n2 5\n5 6\n5 7\n1 8\n8 9\n9 10\n8 11\n11 12\n11 13\n",
+        "output": "0\n3\n7\n",
+        "label": "公开样例 1",
+        "kind": "sample"
+      },
+      {
+        "input": "1\n8\n2 1\n3 2\n4 2\n5 1\n6 1\n7 5\n8 7\n",
+        "output": "4\n",
+        "label": "随机场景 1",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n6\n2 1\n3 1\n4 2\n5 3\n6 1\n",
+        "output": "3\n",
+        "label": "随机场景 2",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n2 1\n3 2\n4 2\n",
+        "output": "3\n",
+        "label": "随机场景 3",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n6\n2 1\n3 1\n4 2\n5 2\n6 3\n",
+        "output": "4\n",
+        "label": "随机场景 4",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n2 1\n3 2\n4 1\n",
+        "output": "2\n",
+        "label": "随机场景 5",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n2\n2 1\n",
+        "output": "1\n",
+        "label": "随机场景 6",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n7\n2 1\n3 1\n4 3\n5 3\n6 5\n7 6\n",
+        "output": "3\n",
+        "label": "随机场景 7",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n8\n2 1\n3 1\n4 1\n5 1\n6 4\n7 6\n8 1\n",
+        "output": "6\n",
+        "label": "随机场景 8",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n3\n2 1\n3 1\n",
+        "output": "2\n",
+        "label": "随机场景 9",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n9\n2 1\n3 2\n4 1\n5 1\n6 4\n7 4\n8 7\n9 2\n",
+        "output": "5\n",
+        "label": "随机场景 10",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n9\n2 1\n3 2\n4 2\n5 1\n6 2\n7 5\n8 2\n9 7\n",
+        "output": "6\n",
+        "label": "随机场景 11",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n1\n",
+        "output": "0\n",
+        "label": "单顶点无需折叠",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n10\n2 1\n3 2\n4 3\n5 4\n6 5\n7 6\n8 7\n9 8\n10 9\n",
+        "output": "4\n",
+        "label": "长链重复折叠",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n10\n1 2\n1 3\n1 4\n1 5\n1 6\n1 7\n1 8\n1 9\n1 10\n",
+        "output": "9\n",
+        "label": "多条直径可选择的星形树",
+        "kind": "trick"
+      }
+    ]
+  },
+  {
+    "id": "G",
+    "title": "Ghost of Tsushima",
+    "englishTitle": "Ghost of Tsushima",
+    "timeLimit": 4000,
+    "memoryLimit": 512,
+    "source": "https://qoj.ac/problem/20242",
+    "qoj": "https://qoj.ac/problem/20242",
+    "codeforces": "",
+    "markdown": "![problem_20242_1.png](./images/icpc-online-2026-2-G-problem_20242_1.png)\n\nBackground. Lately, Iochi Mari has had a small worry on her mind: as Antique Seraphim grows in popularity, her busy performance schedule leaves her little time to visit Schale. Meanwhile, Schale's Sensei misses her just as much. He therefore decides to rearrange her schedule, keeping the group's activities running smoothly while giving her some well-earned rest. Can you help poor Sensei count the schedules satisfying the conditions below?\n\nConsider $n$ vertices arranged in a cycle and $n$ distinct edges $e_1,e_2,\\ldots,e_n$. For each $1\\le i\\le n$, edge $e_i$ connects vertex $i$ to vertex $i+1$, where vertex $n+1$ is identified with vertex $1$. Note that when $n=1$, $e_1$ is a self-loop; when $n=2$, $e_1$ and $e_2$ are two distinct parallel edges.\n\n**Intervals.** For any $l,r\\in\\{1,2,\\ldots,n\\}$, the interval $[l,r]$ is defined as follows:\n\n* If $l< r$, it covers vertices $l,l+1,\\ldots,r$ and edges $e_l,e_{l+1},\\ldots,e_{r-1}$.\n* If $l>r$, it covers vertices $l,l+1,\\ldots,n,1,2,\\ldots,r$ and edges $e_l,e_{l+1},\\ldots,e_n,e_1,e_2,\\ldots,e_{r-1}$.\n* If $l=r$, it covers only vertex $l$ and no edges.\n\nFor example, when $n=4$, the interval $[3,2]$ covers vertices $3,4,1,2$ and edges $e_3,e_4,e_1$.\n\nWe say interval $A$ contains interval $B$ if every vertex and every edge covered by $B$ is also covered by $A$.\n\n**Valid sets.** A set $T$ of intervals is called valid if no interval in $T$ contains another interval in $T$. The empty set is also valid.\n\nYour task is to count valid sets under two different coverage limits. For a valid set $T$, define:\n$$\n\\begin{aligned}\nf(T) &= \\max_{\\text{edge } e}\n\\left|\\{I\\in T \\mid I \\text{ covers } e\\}\\right|,\\\\\ng(T) &= \\max_{\\text{vertex } v}\n\\left|\\{I\\in T \\mid I \\text{ covers } v\\}\\right|.\n\\end{aligned}\n$$\nFor the empty set, define $f(\\varnothing)=g(\\varnothing)=0$.\n\nFor each integer $k$ from $1$ to $n$, compute the following two counts separately:\n\n1. The number of valid sets $T$ satisfying $f(T)\\le k$.\n2. The number of valid sets $T$ satisfying $g(T)\\le k$.\n\nOutput all counts modulo $998244353$.\n\n## Input\n\nThe first line contains a single positive integer $T$ $(1\\leq T\\leq 10^6)$, representing the number of test cases.\n\nEach test case consists of a single line containing one positive integer $n$ $(1\\leq n\\leq 10^6)$.\n\nIt is guaranteed that the sum of $n$ over all test cases in a single test file does not exceed $10^6$.\n\n## Output\n\nFor each test case, print two lines of $n$ integers each.\n\n* The $k$-th integer on the first line is the number of valid sets $T$ satisfying $f(T)\\le k$.\n* The $k$-th integer on the second line is the number of valid sets $T$ satisfying $g(T)\\le k$.\n\nAll answers must be printed modulo $998244353$.\n\n## Note\n\nFor $n=1$, the only interval is $[1,1]$, which covers vertex $1$ and no edges. The two valid sets are $\\varnothing$ and $\\{[1,1]\\}$. Both satisfy $f(T)\\le 1$ and $g(T)\\le 1$, so both answers are $2$.\n\nFor $n=2$, the four intervals are $[1,1]$, $[2,2]$, $[1,2]$, and $[2,1]$. There are exactly $7$ valid sets:\n\n* the empty set;\n* the four sets consisting of a single interval;\n* $\\{[1,1],[2,2]\\}$ and $\\{[1,2],[2,1]\\}$.\n\nAlthough $[1,2]$ and $[2,1]$ cover the same two vertices, they cover different edges: $[1,2]$ covers $e_1$, while $[2,1]$ covers $e_2$. Therefore, neither interval contains the other.\n\nIn every valid set, each edge is covered by at most one interval. Thus, the first output line is 7 7.\n\nThe set $\\{[1,2],[2,1]\\}$ covers each vertex twice. Every other valid set covers each vertex at most once. Thus, the second output line is 6 7.",
+    "samples": [
+      {
+        "input": "3\n1\n2\n4\n",
+        "output": "2\n2\n7 7\n6 7\n77 112 117 117\n46 99 116 117\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-online-2026-2/G.pdf",
+    "statementFormat": "markdown",
+    "tests": [
+      {
+        "input": "3\n1\n2\n4\n",
+        "output": "2\n2\n7 7\n6 7\n77 112 117 117\n46 99 116 117\n",
+        "label": "公开样例 1",
+        "kind": "sample"
+      },
+      {
+        "input": "1\n2\n",
+        "output": "7 7\n6 7\n",
+        "label": "随机场景 1",
+        "kind": "regular"
+      },
+      {
+        "input": "3\n1\n3\n2\n",
+        "output": "2\n2\n24 28 28\n17 27 28\n7 7\n6 7\n",
+        "label": "随机场景 2",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n1\n",
+        "output": "2\n2\n",
+        "label": "随机场景 3",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n",
+        "output": "77 112 117 117\n46 99 116 117\n",
+        "label": "随机场景 4",
+        "kind": "regular"
+      },
+      {
+        "input": "2\n2\n1\n",
+        "output": "7 7\n6 7\n2\n2\n",
+        "label": "随机场景 5",
+        "kind": "regular"
+      },
+      {
+        "input": "2\n1\n1\n",
+        "output": "2\n2\n2\n2\n",
+        "label": "随机场景 6",
+        "kind": "regular"
+      },
+      {
+        "input": "3\n4\n3\n2\n",
+        "output": "77 112 117 117\n46 99 116 117\n24 28 28\n17 27 28\n7 7\n6 7\n",
+        "label": "随机场景 7",
+        "kind": "regular"
+      },
+      {
+        "input": "2\n4\n3\n",
+        "output": "77 112 117 117\n46 99 116 117\n24 28 28\n17 27 28\n",
+        "label": "随机场景 8",
+        "kind": "regular"
+      },
+      {
+        "input": "3\n2\n2\n5\n",
+        "output": "7 7\n6 7\n7 7\n6 7\n238 424 490 496 496\n122 343 469 495 496\n",
+        "label": "随机场景 9",
+        "kind": "regular"
+      },
+      {
+        "input": "2\n1\n5\n",
+        "output": "2\n2\n238 424 490 496 496\n122 343 469 495 496\n",
+        "label": "随机场景 10",
+        "kind": "regular"
+      },
+      {
+        "input": "3\n4\n5\n1\n",
+        "output": "77 112 117 117\n46 99 116 117\n238 424 490 496 496\n122 343 469 495 496\n2\n2\n",
+        "label": "随机场景 11",
+        "kind": "regular"
+      },
+      {
+        "input": "3\n1\n2\n3\n",
+        "output": "2\n2\n7 7\n6 7\n24 28 28\n17 27 28\n",
+        "label": "单点自环和两条平行边",
+        "kind": "trick"
+      },
+      {
+        "input": "3\n3\n2\n1\n",
+        "output": "24 28 28\n17 27 28\n7 7\n6 7\n2\n2\n",
+        "label": "每组重置且边顶点覆盖不同",
+        "kind": "trick"
+      },
+      {
+        "input": "2\n4\n1\n",
+        "output": "77 112 117 117\n46 99 116 117\n2\n2\n",
+        "label": "跨越环尾的区间",
+        "kind": "trick"
+      }
+    ]
+  },
+  {
+    "id": "H",
+    "title": "Hidden Track (Easy Version)",
+    "englishTitle": "Hidden Track (Easy Version)",
+    "timeLimit": 2000,
+    "memoryLimit": 512,
+    "source": "https://qoj.ac/problem/20243",
+    "qoj": "https://qoj.ac/problem/20243",
+    "codeforces": "",
+    "markdown": "![problem_20243_1.jpg](./images/icpc-online-2026-2-H-problem_20243_1.jpg)\n\n**This is an interactive problem.**\n\nBackground. On August 9, Sensei attends the *Hidden Track. Blue Archive 3rd Anniversary Concert* at FEISHENG LIVEHOUSE in Shanghai with Seia on his shoulders. Unfortunately, having arrived late, they are stuck in a remote corner until Seia spots a mysterious pay-to-win passage to the second floor. She knows the only route through the crowd, but the riddle-loving Seia refuses to reveal it directly. Instead, Sensei must find the hidden track by following her query rules within the given time and query limits. Can you help him reach the second floor before the passage disappears?\n\nFor each test case, the interactor hides a permutation $p=(p_1,p_2,\\ldots,p_n)$ of $\\{0,1,\\ldots,n-1\\}$. When $n\\ge 2$, it is guaranteed that $p_1< p_n$. You may think of it as a hidden path, where $p_i$ and $p_{i+1}$ are connected by an edge for every $1\\le i< n$. Your task is to find the hidden permutation using queries.\n\nLet $k=\\lceil\\log_2 n\\rceil$. In each query, you choose two integers $m$ and $v$, where $0\\le m< 2^k$, and either $v=-1$ or $0\\le v< n$. The integer $m$ determines a set of vertices:\n$$\nB(m)=\n\\left\\{\nx\\mid 0\\le x < n,\\\n\\operatorname{popcount}(x\\mathbin{\\&}m)\\text{ is odd}\n\\right\\}\n$$\n\nHere, $\\mathbin{\\&}$ denotes the bitwise AND operation, and $\\operatorname{popcount}(x)$ denotes the number of $1$-bits in the binary representation of $x$.\n\nThe query set $S$ is constructed as follows.\n\nFirst, let $S=B(m)$.\n\nIf $v=-1$, do nothing; otherwise, toggle whether $v$ belongs to $S$: remove $v$ if $v\\in S$, and add $v$ otherwise.\n\nThe interactor then counts the edges of the hidden path with **exactly one endpoint** in $S$. Let this number be:\n$$\nc(S)=\n\\left|\n\\left\\{\ni\\mid\n1\\le i< n,\\\n\\left|\\{p_i,p_{i+1}\\}\\cap S\\right|=1\n\\right\\}\n\\right|\n$$\n\nThe interactor returns $c(S)\\bmod 3$.\n\nFor each test case, you may make at most $nk$ queries, with $k=\\lceil\\log_2 n\\rceil$ as defined above. You must reconstruct the hidden permutation $p$ within this query limit.\n\n**The interactor is non-adaptive:** the hidden permutation for each test case is fixed before the interaction begins and does not change throughout the interaction.\n\n## Input\n\nAt the beginning of the interaction, you are given an integer $T$ ($1\\le T\\le 10^4$), denoting the number of test cases.\n\nFor each test case, the interactor first gives you an integer $n$ ($1\\le n\\le 10^3$). After you output the answer for the current test case, the interaction proceeds to the next test case, if any.\n\nIt is guaranteed that the sum of $n$ over all test cases in one test file does not exceed $10^4$.\n\n## Interaction\n\nFor each test case, you may perform the following two types of operations. The number of queries must not exceed $nk$, with $k=\\lceil\\log_2 n\\rceil$ as defined above.\n\n**Query:** Output a line of the form `? m v`, where $0 \\le m < 2^k$, and either $v=-1$ or $0 \\le v< n$. Here $m,v$ must be integers. Then read an integer $r\\in\\{0,1,2\\}$, whose value is $c(S) \\bmod 3$.\n\n**Answer:** Output a line of the form `!` $q_1\\ q_2\\ \\ldots\\ q_n$, where $(q_1,q_2,\\ldots,q_n)$ must be exactly equal to the hidden permutation $(p_1,p_2,\\ldots,p_n)$.\n\nOnly operations of the form `?` count toward the query limit. If the interactor returns $-1$ at any point, your program must terminate immediately. Continuing the interaction after receiving $-1$ may result in an arbitrary verdict.\n\nAfter printing a query or the answer, do not forget to output the end of the line and flush the output. Otherwise, you will get the verdict *Idleness Limit Exceeded*. To do this, use: `fflush(stdout)` or `cout.flush()` in C++; `System.out.flush()` in Java; `flush(output)` in Pascal; `stdout.flush()` in Python; see the documentation for other languages.\n\n## Note\n\nFor the first test case, the hidden permutation is $p=(1,0,2)$.\nThe path has two edges: $\\{0,1\\}$ and $\\{0,2\\}$.\n\nAll four queries use $m=1$, so each query starts with $B(1)=\\{1\\}$:\n\n* `? 1 -1`: The set remains $S=\\{1\\}$. Only edge $\\{0,1\\}$ has exactly one endpoint in $S$, so the interactor returns $1$.\n* `? 1 0`: Add vertex $0$, giving $S=\\{0,1\\}$. Edge $\\{0,1\\}$ has both endpoints in $S$, while edge $\\{0,2\\}$ has exactly one. Thus, the interactor returns $1$.\n* `? 1 1`: Remove vertex $1$, giving $S=\\varnothing$. Neither edge has an endpoint in $S$, so the interactor returns $0$.\n* `? 1 2`: Add vertex $2$, giving $S=\\{1,2\\}$. Both edges have exactly one endpoint in $S$, so the interactor returns $2$.\n\nThe program then outputs `! 1 0 2`.\nHere, $k=2$, so at most $nk=6$ queries are allowed.\nThe example uses only four queries.\n\nFor the second test case, $n=1$, so the only possible permutation is $(0)$.\nThe program outputs `! 0` without making any queries.",
+    "samples": [
+      {
+        "input": "2\n\n3\n1\n1\n0\n2\n\n1\n",
+        "output": "? 1 -1\n? 1 0\n? 1 1\n? 1 2\n! 1 0 2\n\n! 0\n"
+      }
+    ],
+    "checker": "hidden-track",
+    "pdf": "./pdf/icpc-online-2026-2/H.pdf",
+    "statementFormat": "markdown",
+    "tests": [
+      {
+        "input": "1\n2\n0 1\n",
+        "output": "! 0 1\n",
+        "label": "随机场景 1",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n9\n2 1 4 5 0 8 7 6 3\n",
+        "output": "! 2 1 4 5 0 8 7 6 3\n",
+        "label": "随机场景 2",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n8\n2 6 1 7 3 0 4 5\n",
+        "output": "! 2 6 1 7 3 0 4 5\n",
+        "label": "随机场景 3",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n11\n2 8 5 9 7 1 0 3 10 4 6\n",
+        "output": "! 2 8 5 9 7 1 0 3 10 4 6\n",
+        "label": "随机场景 4",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n9\n0 5 2 6 8 4 1 3 7\n",
+        "output": "! 0 5 2 6 8 4 1 3 7\n",
+        "label": "随机场景 5",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n8\n4 3 7 5 2 0 1 6\n",
+        "output": "! 4 3 7 5 2 0 1 6\n",
+        "label": "随机场景 6",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n12\n1 3 2 6 10 0 8 5 9 4 11 7\n",
+        "output": "! 1 3 2 6 10 0 8 5 9 4 11 7\n",
+        "label": "随机场景 7",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n12\n1 0 4 10 3 7 2 8 5 6 11 9\n",
+        "output": "! 1 0 4 10 3 7 2 8 5 6 11 9\n",
+        "label": "随机场景 8",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n6\n0 2 4 3 1 5\n",
+        "output": "! 0 2 4 3 1 5\n",
+        "label": "随机场景 9",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n11\n0 7 1 4 2 6 3 10 8 9 5\n",
+        "output": "! 0 7 1 4 2 6 3 10 8 9 5\n",
+        "label": "随机场景 10",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n11\n0 3 7 5 2 6 4 10 8 1 9\n",
+        "output": "! 0 3 7 5 2 6 4 10 8 1 9\n",
+        "label": "随机场景 11",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n6\n2 0 5 4 1 3\n",
+        "output": "! 2 0 5 4 1 3\n",
+        "label": "随机场景 12",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n1\n0\n",
+        "output": "! 0\n",
+        "label": "n=1 无需查询",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n3\n0 2 1\n",
+        "output": "! 0 2 1\n",
+        "label": "非二的幂与异或掩码",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n8\n0 1 2 5 6 3 4 7\n",
+        "output": "! 0 1 2 5 6 3 4 7\n",
+        "label": "二的幂与查询上限",
+        "kind": "trick"
+      }
+    ]
+  },
+  {
+    "id": "I",
+    "title": "Island",
+    "englishTitle": "Island",
+    "timeLimit": 2000,
+    "memoryLimit": 512,
+    "source": "https://qoj.ac/problem/20244",
+    "qoj": "https://qoj.ac/problem/20244",
+    "codeforces": "",
+    "markdown": "An ancient island suffered divine punishment, and the roads connecting its various regions were shattered.\n\nThe island can be regarded as an undirected graph containing $n$ vertices, numbered $1,2,\\ldots,n$.\n\nInitially, the roads on the island form an ordered rooted tree rooted at vertex $1$. The children of each vertex have a fixed left-to-right order, which is given in the input. In particular, the root has at least two children.\n\nStarting from the root, perform a depth-first search, always recursively visiting the children of each vertex from left to right. Suppose there are $k$ leaf vertices. In the order in which they are first visited, they are $p_1,p_2,\\ldots,p_k$. Here, a leaf vertex means a vertex of degree $1$; since the root has at least two children, it cannot be a leaf vertex.\n\nBesides the $n-1$ roads in the tree, there are also $k-1$ roads built between consecutive leaves. For every $1\\leq i< k$, the $i$-th road connects leaf vertex $p_i$ and leaf vertex $p_{i+1}$. That is, all leaves are connected consecutively into a chain in the above DFS order, and there are $n+k-2$ roads on the island in total.\n\nWhen the divine punishment occurs, each road is independently destroyed with probability $\\frac{1}{2}$, or retained with probability $\\frac{1}{2}$, while all vertices still exist. The vertices and the remaining roads form several connected components. Let $X$ be the number of connected components of the island. Please calculate the expected value of $X$. Here a connected component is defined as a maximal connected subgraph. Note that an isolated node also counts as a component.\n\nIt can be proven that the answer is a rational number. Suppose the answer in lowest terms is $\\frac{a}{b}$. You only need to output a nonnegative integer $x$ satisfying $0\\leq x< 998244353$ and $bx\\equiv a\\pmod {998244353}$, namely, the answer modulo $998244353$.\n\n## Input\n\nThe first line contains a positive integer $T$ $(1\\leq T\\leq 10^3)$, denoting the number of test cases.\n\nFor each test case, the first line contains an integer $n$ $(3\\leq n\\leq 10^5)$, denoting the number of vertices on the island.\n\nThe next $n$ lines describe the tree. The $i$-th line begins with an integer $c_i$ $(0\\leq c_i< n,\\sum c_i=n-1)$, denoting the number of children of vertex $i$. It is followed by $c_i$ pairwise distinct integers $e_{i,1},e_{i,2},\\ldots,e_{i,c_i}$ $(2\\leq e_{i,j}\\leq n)$, giving the indices of all children of vertex $i$ in order.\n\nIt is guaranteed that, within a single test file, the sum of $n$ over all test cases does not exceed $3\\times 10^5$.\n\n## Output\n\nFor each test case, output one integer on one line, denoting the answer modulo $998244353$.\n\n## Note\n\nFor the first sample, if vertices encountered again while backtracking are listed as well, the depth-first traversal starting from the root is:\n\n$$\n1\\to 2\\to 1\\to 3\\to 1\n$$\n\nThus, the leaves appear in the order $2,3$. Before the divine punishment, the island has the following three roads:\n\n$$\n(1,2),(1,3),(2,3)\n$$\n\nThe answer for the first sample is $\\frac{13}{8}$.\n\nFor the second sample, the corresponding traversal order is:\n\n$$\n1\\to 6\\to 1\\to 2\\to 4\\to 2\\to 5\\to 2\\to 1\\to 3\\to 1\n$$\n\nThe leaves therefore appear in the order $6,4,5,3$. Before the divine punishment, the island has the following eight roads:\n\n$$\n(1,6),(1,2),(1,3),(2,4),(2,5),(6,4),(4,5),(5,3)\n$$\n\nThe answer for the second sample is $\\frac{590}{256}=\\frac{295}{128}$.",
+    "samples": [
+      {
+        "input": "2\n3\n2 2 3\n0\n0\n6\n3 6 2 3\n2 4 5\n0\n0\n0\n0\n",
+        "output": "374341634\n694091779\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-online-2026-2/I.pdf",
+    "statementFormat": "markdown",
+    "tests": [
+      {
+        "input": "2\n3\n2 2 3\n0\n0\n6\n3 6 2 3\n2 4 5\n0\n0\n0\n0\n",
+        "output": "374341634\n694091779\n",
+        "label": "公开样例 1",
+        "kind": "sample"
+      },
+      {
+        "input": "1\n4\n3 2 3 4\n0\n0\n0\n",
+        "output": "218365954\n",
+        "label": "随机场景 1",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n7\n2 2 3\n1 4\n2 5 6\n1 7\n0\n0\n0\n",
+        "output": "853966852\n",
+        "label": "随机场景 2",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n5\n3 2 3 5\n1 4\n0\n0\n0\n",
+        "output": "795475971\n",
+        "label": "随机场景 3",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n8\n5 2 3 4 5 7\n0\n0\n1 6\n0\n0\n1 8\n0\n",
+        "output": "97972227\n",
+        "label": "随机场景 4",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n6\n4 2 3 4 5\n0\n1 6\n0\n0\n0\n",
+        "output": "674594819\n",
+        "label": "随机场景 5",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n6\n3 2 3 5\n1 6\n1 4\n0\n0\n0\n",
+        "output": "382140419\n",
+        "label": "随机场景 6",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n6\n2 2 3\n2 4 5\n0\n0\n1 6\n0\n",
+        "output": "382140419\n",
+        "label": "随机场景 7",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n2 2 3\n1 4\n0\n0\n",
+        "output": "935854083\n",
+        "label": "随机场景 8",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n7\n4 2 3 4 5\n1 7\n1 6\n0\n0\n0\n0\n",
+        "output": "235913219\n",
+        "label": "随机场景 9",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n8\n4 2 3 4 6\n1 5\n1 7\n1 8\n0\n0\n0\n0\n",
+        "output": "829595652\n",
+        "label": "随机场景 10",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n8\n4 2 3 5 8\n1 4\n0\n2 6 7\n0\n0\n0\n0\n",
+        "output": "42405891\n",
+        "label": "随机场景 11",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n3\n2 2 3\n0\n0\n",
+        "output": "374341634\n",
+        "label": "三点树形成三角形",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n6\n3 4 3 2\n1 6\n1 5\n0\n0\n0\n",
+        "output": "382140419\n",
+        "label": "DFS 子节点顺序影响叶链",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n8\n7 2 3 4 5 6 7 8\n0\n0\n0\n0\n0\n0\n0\n",
+        "output": "554566659\n",
+        "label": "所有孩子都是叶子",
+        "kind": "trick"
+      }
+    ]
+  },
+  {
+    "id": "J",
+    "title": "Joker or Judger",
+    "englishTitle": "Joker or Judger",
+    "timeLimit": 1000,
+    "memoryLimit": 512,
+    "source": "https://qoj.ac/problem/20245",
+    "qoj": "https://qoj.ac/problem/20245",
+    "codeforces": "",
+    "markdown": "As the chief judge of The 2026 ICPC Asia EC Regionals Online Contest (II), Mr. J has diligently finished preparing and reviewing all the problems. Today, the contest is finally about to begin!\n\n![](./images/icpc-online-2026-2-J-problem_20245_1.png)\n\nSince last year's contest was harshly criticized, Mr. J cares greatly about this year's reputation. Therefore, he has set himself a goal: this year's contest should not receive too many negative reviews. To quantify the negative impact of these reviews, Mr. J assigns a score to each type of negative review:\n\n$$\n\\begin{array}{|l|c|}\n\\hline\n\\text{Type of negative review} & \\text{Score} \\\\\n\\hline\n\\text{WrongProblem}X & 100 \\\\\n\\text{SameProblem}X & 30 \\\\\n\\text{UnreasonableProblemArrangement} & 10 \\\\\n\\text{UnreasonableLimitForProblem}X & 5 \\\\\n\\text{WeakTestsForProblem}X & 3 \\\\\n\\text{BadProblem}X & 1 \\\\\n\\hline\n\\end{array}\n$$\n\nIf a negative review does not match any of the negative-review types in the table, its score is $0$. Matching is case-sensitive, and the string must exactly match the corresponding form in the table. For a type containing $X$, $X$ is a placeholder; when matching, it must be replaced by exactly one uppercase English letter from $\\{\\texttt{A},\\texttt{B},\\ldots,\\texttt{L}\\}$.\n\nIf you need to copy the concrete string corresponding to a type of negative review, we recommend referring to the first test case in the sample.\n\nMr. J has an expected total negative-review score $P$ in mind. If the total score of all negative reviews is greater than $P$, Mr. J is a Joker; otherwise, Mr. J remains a qualified Judger. You have now collected all $n$ negative reviews. Determine whether Mr. J is a Joker or a Judger.\n\n## Input\n\nThe first line contains a positive integer $T$ $(1\\leq T\\leq 10^3)$, denoting the number of test cases.\n\nFor each test case, the first line contains two integers $n,P$ $(0\\leq n\\leq 10^3,0\\leq P\\leq 10^5)$, denoting the number of negative reviews and the expected total negative-review score, respectively.\n\nThe next $n$ lines each contain a string $S$ $(1\\leq |S|\\leq 50)$ consisting only of uppercase and lowercase English letters, denoting one negative review.\n\nIt is guaranteed that, within a single test file, the sum of $n$ over all test cases does not exceed $10^3$.\n\n## Output\n\nFor each test case, if the total negative-review score is greater than $P$, output the string $\\texttt{Joker}$ on one line; otherwise, output the string $\\texttt{Judger}$ on one line.\n\n## Note\n\nFor the first test case, the scores of the $6$ negative reviews are $100,30,10,5,3,1$, respectively. Their total score is $149>P$.\n\nFor the second test case, the scores of the $6$ negative reviews are $100,1,0,0,0,0$, respectively. Their total score is $101\\leq P$.\n\nFor the third test case, the scores of the $7$ negative reviews are $30,10,5,3,1,0,0$, respectively. Their total score is $49\\leq P$.\n\nFor the fourth test case, the scores of the $4$ negative reviews are $100,30,10,1$, respectively. Their total score is $141>P$.\n\nFor the fifth test case, the scores of the $2$ negative reviews are $1,1$, respectively. Their total score is $2>P$. Note that duplicate negative reviews are also counted.",
+    "samples": [
+      {
+        "input": "5\n6 0\nWrongProblemA\nSameProblemA\nUnreasonableProblemArrangement\nUnreasonableLimitForProblemA\nWeakTestsForProblemA\nBadProblemA\n6 105\nWrongProblemA\nBadProblemC\nwrongProblemB\nWrongProblemN\nWrongProblemAA\nUnreasonableProblemArrangementExtra\n7 49\nSameProblemJ\nUnreasonableProblemArrangement\nUnreasonableLimitForProblemA\nWeakTestsForProblemC\nBadProblemH\nSameProblemj\nBadProblem\n4 140\nWrongProblemJ\nSameProblemA\nUnreasonableProblemArrangement\nBadProblemJ\n2 1\nBadProblemJ\nBadProblemJ\n",
+        "output": "Joker\nJudger\nJudger\nJoker\nJoker\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-online-2026-2/J.pdf",
+    "statementFormat": "markdown",
+    "tests": [
+      {
+        "input": "5\n6 0\nWrongProblemA\nSameProblemA\nUnreasonableProblemArrangement\nUnreasonableLimitForProblemA\nWeakTestsForProblemA\nBadProblemA\n6 105\nWrongProblemA\nBadProblemC\nwrongProblemB\nWrongProblemN\nWrongProblemAA\nUnreasonableProblemArrangementExtra\n7 49\nSameProblemJ\nUnreasonableProblemArrangement\nUnreasonableLimitForProblemA\nWeakTestsForProblemC\nBadProblemH\nSameProblemj\nBadProblem\n4 140\nWrongProblemJ\nSameProblemA\nUnreasonableProblemArrangement\nBadProblemJ\n2 1\nBadProblemJ\nBadProblemJ\n",
+        "output": "Joker\nJudger\nJudger\nJoker\nJoker\n",
+        "label": "公开样例 1",
+        "kind": "sample"
+      },
+      {
+        "input": "1\n13 180\nBadProblem\nBadProblemAA\nUnreasonableProblemArrangementAA\nBadProblemM\nUnreasonableLimitForProblemL\nBadProblemL\nWrongProblemM\nWeakTestsForProblemA\nSameProblem\nSameProblemA\nUnreasonableLimitForProblemA\nUnreasonableProblemArrangement\nBadProblemM\n",
+        "output": "Judger\n",
+        "label": "随机场景 1",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n2 475\nUnreasonableLimitForProblemA\nSameProblem\n",
+        "output": "Judger\n",
+        "label": "随机场景 2",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n1 416\nUnreasonableLimitForProblem\n",
+        "output": "Judger\n",
+        "label": "随机场景 3",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n13 411\nBadProblemA\nSameProblemM\nWeakTestsForProblemA\nSameProblemAA\nUnreasonableLimitForProblema\nWrongProblem\nSameProblemAA\nSameProblemL\nWeakTestsForProblema\nWeakTestsForProblemA\nUnreasonableProblemArrangementAA\nWrongProblem\nUnreasonableProblemArrangementa\n",
+        "output": "Judger\n",
+        "label": "随机场景 4",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n8 468\nBadProblemA\nUnreasonableProblemArrangementL\nWrongProblemA\nSameProblem\nUnreasonableLimitForProblemA\nUnreasonableLimitForProblema\nWeakTestsForProblema\nWeakTestsForProblemA\n",
+        "output": "Judger\n",
+        "label": "随机场景 5",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n14 164\nUnreasonableProblemArrangementA\nSameProblema\nUnreasonableLimitForProblema\nSameProblemL\nUnreasonableProblemArrangementL\nUnreasonableProblemArrangementa\nBadProblemM\nSameProblemM\nSameProblem\nSameProblemM\nUnreasonableProblemArrangementa\nBadProblem\nBadProblemAA\nUnreasonableProblemArrangementL\n",
+        "output": "Judger\n",
+        "label": "随机场景 6",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n13 0\nWeakTestsForProblema\nWeakTestsForProblemL\nSameProblema\nUnreasonableProblemArrangementM\nWrongProblemA\nWrongProblemAA\nWeakTestsForProblemM\nWeakTestsForProblemM\nWeakTestsForProblemA\nWeakTestsForProblemA\nUnreasonableProblemArrangementa\nSameProblemA\nUnreasonableLimitForProblemA\n",
+        "output": "Joker\n",
+        "label": "随机场景 7",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n18 169\nWrongProblemM\nWeakTestsForProblema\nWeakTestsForProblemAA\nUnreasonableProblemArrangementAA\nBadProblema\nSameProblemM\nWeakTestsForProblema\nSameProblemAA\nWeakTestsForProblem\nBadProblemM\nUnreasonableProblemArrangementA\nWrongProblema\nUnreasonableProblemArrangementM\nWeakTestsForProblem\nUnreasonableLimitForProblem\nSameProblemA\nWrongProblem\nUnreasonableLimitForProblemM\n",
+        "output": "Judger\n",
+        "label": "随机场景 8",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n1 223\nWeakTestsForProblemAA\n",
+        "output": "Judger\n",
+        "label": "随机场景 9",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n14 177\nSameProblem\nBadProblema\nWeakTestsForProblem\nWeakTestsForProblemL\nWeakTestsForProblem\nSameProblemM\nUnreasonableProblemArrangementa\nWeakTestsForProblema\nUnreasonableLimitForProblemL\nUnreasonableLimitForProblemM\nUnreasonableLimitForProblemL\nUnreasonableLimitForProblemM\nBadProblem\nWeakTestsForProblemL\n",
+        "output": "Judger\n",
+        "label": "随机场景 10",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n10 304\nUnreasonableLimitForProblemAA\nUnreasonableProblemArrangementa\nSameProblem\nSameProblemAA\nUnreasonableProblemArrangementL\nUnreasonableLimitForProblem\nWeakTestsForProblema\nWeakTestsForProblemAA\nWeakTestsForProblemM\nUnreasonableLimitForProblemL\n",
+        "output": "Judger\n",
+        "label": "随机场景 11",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n0 0\n",
+        "output": "Judger\n",
+        "label": "没有评价",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n4 100\nWrongProblemA\nWrongProblemM\nWrongProblema\nWrongProblemAA\n",
+        "output": "Judger\n",
+        "label": "大小写、题号范围和严格大于",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n9 8\nBadProblemL\nBadProblemL\nBadProblemL\nBadProblemL\nBadProblemL\nBadProblemL\nBadProblemL\nBadProblemL\nBadProblemL\n",
+        "output": "Joker\n",
+        "label": "重复评价每次都计分",
+        "kind": "trick"
+      }
+    ]
+  },
+  {
+    "id": "K",
+    "title": "K-MEX",
+    "englishTitle": "K-MEX",
+    "timeLimit": 1000,
+    "memoryLimit": 512,
+    "source": "https://qoj.ac/problem/20246",
+    "qoj": "https://qoj.ac/problem/20246",
+    "codeforces": "",
+    "markdown": "Let $a$ be an array of length $n$. Define $\\operatorname{mex}(a)$ as the smallest non-negative integer that does not appear in $a$. For example:\n\n* $\\operatorname{mex}([4, 0, 2, 1]) = 3$\n* $\\operatorname{mex}([-2, -4, 3]) = 0$\n\nDefine a $k$-transformation as follows: for each index $i$ ($1 \\leq i \\leq n$), independently choose to either keep $a_i$ unchanged or replace it with $k - a_i$. After all choices are made, we obtain a new array $a'$.\n\nDefine $k$-$\\operatorname{mex}(a)$ as the maximum possible value of $\\operatorname{mex}(a')$ among all arrays $a'$ that can be obtained from $a$ via a $k$-transformation.\n\nYou must answer $q$ queries. Each query provides a non-negative integer $k$; compute $k$-$\\operatorname{mex}(a)$ for each query.\n\nTo reduce the output size, you are only required to output the bitwise XOR (exclusive-OR) of the answers over all $q$ queries.\n\n## Input\n\nThe first line contains a single integer $T$ ($1 \\leq T \\leq 10^3$) --- the number of test cases.\n\nFor each test case:\n\n* The first line contains a single positive integer $n$ ($1 \\leq n \\leq 5 \\times 10^3$), denoting the length of the array.\n* The second line contains $n$ integers $a_1, a_2, \\dots, a_n$ ($0 \\leq a_i \\leq 10^9$), denoting the initial elements of array $a$.\n* The next line contains a single positive integer $q$ ($1 \\leq q \\leq 5 \\times 10^5$), denoting the number of queries.\n* Each of the next $q$ lines contains a single non-negative integer $k$ ($0 \\leq k \\leq 10^9$), denoting you must compute $k$-$\\operatorname{mex}(a)$ for this $k$.\n\nIt is guaranteed that $\\sum n \\leq 5 \\times 10^3$ and $\\sum q \\leq 5 \\times 10^5$ across all test cases in one test file.\n\n## Output\n\nFor each test case, output a single integer, denoting the bitwise XOR (exclusive-OR) of the answers to all queries in that test case.",
+    "samples": [
+      {
+        "input": "2\n3\n0 1 3\n3\n1\n2\n5\n9\n0 0 1 1 2 3 3 4 5\n7\n4\n5\n6\n7\n8\n9\n10\n",
+        "output": "3\n8\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-online-2026-2/K.pdf",
+    "statementFormat": "markdown",
+    "tests": [
+      {
+        "input": "2\n3\n0 1 3\n3\n1\n2\n5\n9\n0 0 1 1 2 3 3 4 5\n7\n4\n5\n6\n7\n8\n9\n10\n",
+        "output": "3\n8\n",
+        "label": "公开样例 1",
+        "kind": "sample"
+      },
+      {
+        "input": "1\n6\n29 4 2 8 30 19\n8\n38\n38\n36\n3\n7\n12\n23\n26\n",
+        "output": "0\n",
+        "label": "随机场景 1",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n10\n26 7 30 2 8 13 17 16 4 21\n8\n21\n5\n12\n20\n14\n23\n30\n22\n",
+        "output": "0\n",
+        "label": "随机场景 2",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n5\n5 18 3 21 20\n8\n29\n12\n11\n14\n31\n22\n15\n32\n",
+        "output": "0\n",
+        "label": "随机场景 3",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n1\n0\n8\n17\n6\n2\n28\n12\n7\n4\n24\n",
+        "output": "0\n",
+        "label": "随机场景 4",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n2\n16 13\n8\n2\n5\n18\n15\n31\n21\n17\n28\n",
+        "output": "0\n",
+        "label": "随机场景 5",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n2\n21 27\n8\n25\n28\n20\n19\n13\n40\n25\n26\n",
+        "output": "0\n",
+        "label": "随机场景 6",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n4\n4 10 14 4\n8\n24\n33\n10\n40\n39\n8\n27\n22\n",
+        "output": "1\n",
+        "label": "随机场景 7",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n10\n27 8 10 7 18 6 8 7 12 28\n8\n9\n5\n3\n3\n6\n6\n16\n35\n",
+        "output": "0\n",
+        "label": "随机场景 8",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n7\n24 9 11 28 15 15 17\n8\n21\n7\n16\n37\n9\n4\n26\n34\n",
+        "output": "1\n",
+        "label": "随机场景 9",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n9\n26 13 29 25 7 1 13 28 16\n8\n22\n38\n32\n4\n6\n40\n0\n37\n",
+        "output": "0\n",
+        "label": "随机场景 10",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n7\n10 16 21 21 18 10 19\n8\n1\n40\n13\n23\n5\n11\n33\n34\n",
+        "output": "0\n",
+        "label": "随机场景 11",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n3\n0 0 0\n3\n0\n1\n2\n",
+        "output": "2\n",
+        "label": "重复元素不能生成所有值",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n3\n1000000000 0 1\n3\n0\n1000000000\n999999999\n",
+        "output": "2\n",
+        "label": "最大 k 与变换后负数",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n8\n0 1 2 3 4 5 6 7\n4\n0\n7\n7\n14\n",
+        "output": "0\n",
+        "label": "重复查询答案异或抵消",
+        "kind": "trick"
+      }
+    ]
+  },
+  {
+    "id": "L",
+    "title": "Loop",
+    "englishTitle": "Loop",
+    "timeLimit": 1000,
+    "memoryLimit": 512,
+    "source": "https://qoj.ac/problem/20247",
+    "qoj": "https://qoj.ac/problem/20247",
+    "codeforces": "",
+    "markdown": "You have fallen into a Loop trap. To escape from the Loop trap, you need to solve the following puzzle:\n\nYou are given an integer sequence $a_0,a_1,\\ldots,a_{n-1}$ of length $n$.\n\nConstruct an $n\\times n$ grid, with both row and column indices starting from $0$. The $0$-th column, from top to bottom, is $a_0,a_1,\\ldots,a_{n-1}$. Starting from the $1$-st column, each column is obtained by cyclically shifting the previous column down by one cell.\n\nFormally, if the number in row $i$ and column $j$ is $b_{i,j}$, then\n\n$$\nb_{i,j}=\n\\begin{cases}\na_i & j=0 \\\\\nb_{(i+n-1)\\bmod n,j-1} & j>0\n\\end{cases}\n$$\n\nYou are at the upper-left corner $(0,0)$. In each step, you may only move right or down, until you reach the lower-right corner $(n-1,n-1)$. Every grid cell visited by the path is counted, including the starting and ending cells.\n\nPlease find the minimum possible sum of the weights of the grid cells visited by the path.\n\n## Input\n\nThe first line contains one positive integer $T$ $(1\\leq T\\leq 10^3)$, denoting the number of test cases.\n\nFor each test case, the first line contains one integer $n$ $(1\\leq n\\leq 10^5)$, denoting the length of the integer sequence.\n\nThe second line contains $n$ integers $a_0,a_1,\\ldots,a_{n-1}$ $(0\\leq a_i\\leq 10^9)$, denoting the integer sequence.\n\nIt is guaranteed that, within each test file, the sum of $n$ over all test cases does not exceed $10^5$.\n\n## Output\n\nFor each test case, output one integer in one line, denoting the minimum path weight sum.\n\n## Note\n\nFor the first test case, the constructed grid is as follows:\n\n$$\n\\begin{array}{c|c|c|c}\n3 & 1 & 2 & 4 \\\\\n\\hline\n4 & 3 & 1 & 2 \\\\\n\\hline\n2 & 4 & 3 & 1 \\\\\n\\hline\n1 & 2 & 4 & 3 \\\\\n\\end{array}\n$$\n\nA path with the minimum possible sum of visited cell weights is\n\n$$\n(0,0) \\to (0,1) \\to (0,2) \\to (1,2) \\to (1,3) \\to (2,3) \\to (3,3).\n$$\n\nIts weight sum is $3+1+2+1+2+1+3=13$. It can be verified that no valid path has a weight sum less than $13$.",
+    "samples": [
+      {
+        "input": "7\n4\n3 4 2 1\n1\n7\n5\n8 0 9 0 1\n7\n5 1 9 0 0 9 9\n4\n1 1000 1000 1\n6\n4 0 9 0 1 9\n3\n1000000000 1000000000 1000000000\n",
+        "output": "13\n7\n20\n30\n7\n24\n5000000000\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-online-2026-2/L.pdf",
+    "statementFormat": "markdown",
+    "tests": [
+      {
+        "input": "7\n4\n3 4 2 1\n1\n7\n5\n8 0 9 0 1\n7\n5 1 9 0 0 9 9\n4\n1 1000 1000 1\n6\n4 0 9 0 1 9\n3\n1000000000 1000000000 1000000000\n",
+        "output": "13\n7\n20\n30\n7\n24\n5000000000\n",
+        "label": "公开样例 1",
+        "kind": "sample"
+      },
+      {
+        "input": "1\n18\n5 9 11 23 5 30 12 7 29 22 19 7 26 30 26 6 23 9\n",
+        "output": "243\n",
+        "label": "随机场景 1",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n16\n13 12 11 26 25 30 30 7 11 24 6 11 11 18 23 14\n",
+        "output": "339\n",
+        "label": "随机场景 2",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n25\n24 15 4 8 5 17 13 21 22 17 21 23 19 8 6 6 7 25 10 25 16 10 27 12 30\n",
+        "output": "346\n",
+        "label": "随机场景 3",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n16\n28 15 15 5 19 8 25 0 21 25 19 17 5 3 17 4\n",
+        "output": "197\n",
+        "label": "随机场景 4",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n7\n29 7 6 4 16 5 9\n",
+        "output": "118\n",
+        "label": "随机场景 5",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n23\n13 18 0 11 17 26 12 13 18 23 8 11 27 29 19 25 12 13 0 22 22 24 18\n",
+        "output": "282\n",
+        "label": "随机场景 6",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n11\n0 8 30 8 28 26 0 23 6 4 25\n",
+        "output": "80\n",
+        "label": "随机场景 7",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n12\n24 3 4 16 27 23 14 7 14 0 1 21\n",
+        "output": "100\n",
+        "label": "随机场景 8",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n2\n24 1\n",
+        "output": "49\n",
+        "label": "随机场景 9",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n14\n8 19 7 12 26 21 15 29 22 12 2 28 1 29\n",
+        "output": "260\n",
+        "label": "随机场景 10",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n12\n3 24 19 7 10 30 28 23 22 5 15 15\n",
+        "output": "201\n",
+        "label": "随机场景 11",
+        "kind": "regular"
+      },
+      {
+        "input": "1\n1\n7\n",
+        "output": "7\n",
+        "label": "起点终点是同一格",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n30\n1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000\n",
+        "output": "59000000000\n",
+        "label": "路径总和超过 32 位",
+        "kind": "trick"
+      },
+      {
+        "input": "1\n4\n0 1000000000 0 1000000000\n",
+        "output": "3000000000\n",
+        "label": "零权与循环移位方向",
+        "kind": "trick"
+      }
+    ]
+  }
+]

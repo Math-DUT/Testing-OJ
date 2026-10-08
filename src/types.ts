@@ -1,4 +1,10 @@
 export type Language = "cpp" | "python";
+export interface TestCase {
+  input: string;
+  output: string;
+  label: string;
+  kind: "sample" | "regular" | "trick";
+}
 export interface Problem {
   id: string;
   title: string;
@@ -10,7 +16,27 @@ export interface Problem {
   codeforces: string;
   markdown: string;
   samples: { input: string; output: string }[];
+  tests?: TestCase[];
   checker: string;
+  pdf?: string;
+  statementFormat?: "markdown" | "pdf";
+}
+export interface Contest {
+  id: string;
+  title: string;
+  shortTitle: string;
+  englishTitle: string;
+  date: string;
+  duration: number;
+  pdf: string;
+  source: string;
+  sourceLabel: string;
+  problems: Problem[];
+}
+export interface FontSettings {
+  ui: number;
+  statement: number;
+  code: number;
 }
 export interface RunResult {
   status: string;
@@ -20,6 +46,7 @@ export interface RunResult {
 }
 export interface Submission {
   id: string;
+  contestId: string;
   problem: string;
   language: Language;
   source: string;
