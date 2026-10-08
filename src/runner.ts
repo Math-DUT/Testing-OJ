@@ -1,0 +1,80 @@
+import type { Language, RunResult } from "./types";
+let active: Worker | null = null;
+let workerLanguage: Language | null = null;
+let cancelPending: (() => void) | null = null;
+export function stopRunner() {
+  active?.terminate();
+  active = null;
+  workerLanguage = null;
+  const cancel = cancelPending;
+  cancelPending = null;
+  cancel?.();
+}
+export function execute(
+  language: Language,
+  source: string,
+  input: string,
+  onPhase: (phase: string) => void,
+): Promise<RunResult> {
+  if (!active || workerLanguage !== language) {
+    stopRunner();
+    active = new Worker(
+      new URL(
+        `${import.meta.env.BASE_URL}runtime/${language === "cpp" ? "cpp-worker.js" : "python-worker.js"}`,
+        location.href,
+      ),
+      { type: language === "python" ? "module" : "classic" },
+    );
+    workerLanguage = language;
+  }
+  const worker = active;
+  return new Promise((resolve) => {
+    let timeout: ReturnType<typeof setTimeout>;
+    let phase = "loading";
+    let finished = false;
+    const finish = (result: RunResult) => {
+      if (finished) return;
+      finished = true;
+      clearTimeout(timeout);
+      cancelPending = null;
+      worker.onmessage = null;
+      worker.onerror = null;
+      resolve(result);
+    };
+    cancelPending = () => finish({ status: "CANCELLED", output: "", time: 0 });
+    const deadline = (ms: number) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        finish({
+          status: phase === "running" ? "TLE" : "ERROR",
+          output: "",
+          error:
+            phase === "running"
+              ? "超过浏览器自测时限（10 秒）"
+              : "运行环境加载或编译超时，请检查网络后重试。",
+          time: phase === "running" ? 10000 : 0,
+        });
+        stopRunner();
+      }, ms);
+    };
+    deadline(180000);
+    worker.onmessage = (event) => {
+      if (event.data.type === "phase") {
+        phase = event.data.phase;
+        onPhase(phase);
+        deadline(phase === "running" ? 10000 : 180000);
+      }
+      if (event.data.type === "result") finish(event.data.result);
+    };
+    worker.onerror = (e) => {
+      finish({
+        status: "ERROR",
+        output: "",
+        error: e.message || "运行环境加载失败，请刷新后重试。",
+        time: 0,
+      });
+      stopRunner();
+    };
+    worker.postMessage({ source, input });
+  });
+}
