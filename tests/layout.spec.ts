@@ -27,7 +27,7 @@ test("all 39 statements render as native text with valid math and direct problem
       page.getByRole("navigation", { name: "比赛题目" }).getByRole("button"),
     ).toHaveCount(ids.length);
     for (const id of ids) {
-      await page.getByLabel("选择题目").selectOption(id);
+      await page.getByRole("button", { name: `题目 ${id}`, exact: true }).click();
       await expect(page.locator(".paper-heading small")).toHaveText(
         `Problem ${id}`,
       );
@@ -105,7 +105,7 @@ test("dividers resize and persist; hiding code keeps drafts, Zen and the contest
   await expect(page.locator(".app")).toHaveClass(/zen/);
   await page.reload();
   await expect(page.locator(".editor-pane")).toHaveCount(0);
-  await page.getByLabel("选择题目").selectOption("A");
+  await page.getByRole("button", { name: "题目 A", exact: true }).click();
   await page.getByRole("button", { name: "打开代码区", exact: true }).click();
   await expect(page.locator(".cm-content")).toContainText(
     "// retained 中文 draft",

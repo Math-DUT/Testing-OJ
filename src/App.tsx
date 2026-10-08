@@ -3,6 +3,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
 import { EditorView } from "@codemirror/view";
+import { EditorState } from "@codemirror/state";
 import Markdown from "react-markdown";
 import remarkMath from "remark-math";
 import remarkGfm from "remark-gfm";
@@ -52,6 +53,7 @@ import {
 } from "./layout";
 import { codeLanguage, isCpp, languageLabel, languages } from "./languages";
 import { acceptLocalRunnerLink, localRunnerHealth } from "./localRunner";
+import { cleanCodeFont, codeFonts, defaultCodeFont } from "./fonts";
 
 acceptLocalRunnerLink();
 
@@ -121,7 +123,7 @@ const codeTheme = EditorView.theme({
     color: "var(--text)",
   },
   ".cm-content": {
-    fontFamily: "JetBrains Mono, monospace",
+    fontFamily: "var(--code-font-family)",
     padding: "18px 0",
     caretColor: "#b5a4ff",
   },
@@ -133,7 +135,10 @@ const codeTheme = EditorView.theme({
   },
   ".cm-activeLine": { backgroundColor: "#8888880b" },
   ".cm-activeLineGutter": { backgroundColor: "transparent", color: "#aaa" },
-  ".cm-scroller": { overflow: "auto" },
+  ".cm-scroller": {
+    overflow: "auto",
+    fontFamily: "var(--code-font-family)",
+  },
   ".cm-focused": { outline: "none" },
 });
 const phaseText: Record<string, string> = {
@@ -166,6 +171,9 @@ export default function App() {
     setSessions((s) => ({ ...s, [contest.id]: value }));
   const [fonts, setFonts] = useState<FontSettings>(() =>
     cleanFonts(read("fonts", defaultFonts)),
+  );
+  const [codeFont, setCodeFont] = useState(() =>
+    cleanCodeFont(read("code-font", defaultCodeFont)),
   );
   const [layout, setLayout] = useState(() =>
     cleanLayout(read("layout", defaultLayout)),
@@ -300,6 +308,13 @@ export default function App() {
     );
     save("fonts", fonts);
   }, [fonts]);
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--code-font-family",
+      codeFonts[codeFont].family,
+    );
+    save("code-font", codeFont);
+  }, [codeFont]);
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     save("theme", theme);
@@ -479,6 +494,7 @@ export default function App() {
           profile,
           sessions,
           fonts,
+          codeFont,
           layout,
           submissions,
           codes: Object.fromEntries(
@@ -538,6 +554,7 @@ export default function App() {
       setSubmissions(records);
       setSessions(importedSessions);
       if (data.fonts) setFonts(cleanFonts(data.fonts));
+      if (data.codeFont) setCodeFont(cleanCodeFont(data.codeFont));
       if (data.layout) setLayout(cleanLayout(data.layout));
       for (const [key, value] of Object.entries(data.codes ?? {})) {
         if (
@@ -1080,18 +1097,21 @@ export default function App() {
                   <ArrowLeft size={15} />
                   题目
                 </button>
-                <select
-                  className="problem-select"
-                  aria-label="选择题目"
-                  value={problem.id}
-                  onChange={(e) => nav(`problem/${e.target.value}`)}
-                >
+                <nav className="problem-navigation" aria-label="比赛题目">
                   {problems.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.id}. {p.title}
-                    </option>
+                    <button
+                      key={p.id}
+                      className={`${p.id === problem.id ? "active" : ""} ${passed.has(p.id) ? "solved" : ""}`}
+                      aria-label={`题目 ${p.id}`}
+                      aria-current={p.id === problem.id ? "page" : undefined}
+                      title={`${p.id}. ${p.title}`}
+                      onClick={() => nav(`problem/${p.id}`)}
+                    >
+                      {p.id}
+                      {passed.has(p.id) && <i />}
+                    </button>
                   ))}
-                </select>
+                </nav>
                 <div className="problem-limits">
                   {contestActive && (
                     <span className="zen-timer">
@@ -1145,21 +1165,6 @@ export default function App() {
                   </div>
                 )}
               </div>
-              <nav className="problem-navigation" aria-label="比赛题目">
-                {problems.map((p) => (
-                  <button
-                    key={p.id}
-                    className={`${p.id === problem.id ? "active" : ""} ${passed.has(p.id) ? "solved" : ""}`}
-                    aria-label={`题目 ${p.id}`}
-                    aria-current={p.id === problem.id ? "page" : undefined}
-                    title={`${p.id}. ${p.title}`}
-                    onClick={() => nav(`problem/${p.id}`)}
-                  >
-                    {p.id}
-                    {passed.has(p.id) && <i />}
-                  </button>
-                ))}
-              </nav>
               <div
                 ref={workbench}
                 className={`workbench ${layout.editorEnabled ? "" : "reading-mode"}`}
@@ -1358,12 +1363,14 @@ export default function App() {
                           extensions={[
                             isCpp(language) ? cpp() : python(),
                             codeTheme,
+                            EditorState.tabSize.of(4),
                           ]}
                           onChange={(value) => {
                             setCode(value);
                             save(draftKey(problem.id, language), value);
                           }}
                           basicSetup={{
+                            tabSize: 4,
                             foldGutter: false,
                             highlightActiveLine: true,
                           }}
@@ -1822,7 +1829,22 @@ export default function App() {
                   <output>{fonts[key]} px</output>
                 </label>
               ))}
+              <label className="code-font-control">
+                <span>编程字体</span>
+                <select
+                  aria-label="编程字体"
+                  value={codeFont}
+                  onChange={(e) => setCodeFont(cleanCodeFont(e.target.value))}
+                >
+                  {Object.entries(codeFonts).map(([value, font]) => (
+                    <option key={value} value={value}>
+                      {font.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
               <div className="font-preview">Aa · 辽宁省赛 · ICPC 2026</div>
+              <div className="code-font-preview">for (int i = 0; i &lt; n; ++i)</div>
             </div>
             <div className="setting-row layout-settings">
               <label>
