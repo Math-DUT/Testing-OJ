@@ -27,6 +27,8 @@ def read_problem(i):
     # Display math delimiters must occupy their own lines for CommonMark.
     markdown = re.sub(r'\$\$(.*?)\$\$', lambda m:'$$\n'+m.group(1).strip()+'\n$$', markdown, flags=re.S)
     markdown = markdown.replace('$ put_', '$put_')
+    markdown = markdown.replace('  \n', '\\\n')
+    markdown = re.sub(r'^> +$', '>', markdown, flags=re.M)
     assets = ROOT / 'public/images'
     assets.mkdir(parents=True, exist_ok=True)
     for url in set(re.findall(r'!\[.*?\]\((https://[^ )]+)\)', markdown)):
