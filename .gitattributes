@@ -1,7 +1,4 @@
-* text=auto eol=lf
-*.pdf binary
-*.png binary
-*.tar binary
-public/runtime/cpp/clang binary
-public/runtime/cpp/lld binary
-public/runtime/cpp/memfs binary
+# Runtime receipts refer to exact vendored bytes on every checkout platform.
+public/runtime/cpp22/runtime-manifest.v1.json -text
+public/runtime/cpp22/toolchain.js -text
+public/runtime/cpp22/asset-receipts.json -text

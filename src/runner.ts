@@ -1,8 +1,11 @@
 import type { Language, RunResult } from "./types";
+import { codeLanguage, cppStandard } from "./languages";
+import { executePyPy, stopLocalRunner } from "./localRunner";
 let active: Worker | null = null;
-let workerLanguage: Language | null = null;
+let workerLanguage: string | null = null;
 let cancelPending: (() => void) | null = null;
 export function stopRunner() {
+  stopLocalRunner();
   active?.terminate();
   active = null;
   workerLanguage = null;
@@ -17,16 +20,24 @@ export function execute(
   onPhase: (phase: string) => void,
   interactive = false,
 ): Promise<RunResult> {
-  if (!active || workerLanguage !== language) {
+  if (language === "pypy3") {
+    active?.terminate();
+    active = null;
+    workerLanguage = null;
+    onPhase("running");
+    return executePyPy(source, input, interactive);
+  }
+  const family = codeLanguage(language);
+  if (!active || workerLanguage !== family) {
     stopRunner();
     active = new Worker(
       new URL(
-        `${import.meta.env.BASE_URL}runtime/${language === "cpp" ? "cpp-worker.js" : "python-worker.js"}`,
+        `${import.meta.env.BASE_URL}runtime/${family === "cpp" ? "cpp-worker.js" : "python-worker.js"}`,
         location.href,
       ),
-      { type: language === "python" ? "module" : "classic" },
+      { type: family === "python" ? "module" : "classic" },
     );
-    workerLanguage = language;
+    workerLanguage = family;
   }
   const worker = active;
   return new Promise((resolve) => {
@@ -76,6 +87,11 @@ export function execute(
       });
       stopRunner();
     };
-    worker.postMessage({ source, input, interactive });
+    worker.postMessage({
+      source,
+      input,
+      interactive,
+      standard: cppStandard(language),
+    });
   });
 }

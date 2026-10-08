@@ -1,0 +1,30 @@
+{
+  "runtime-manifest.v1.json": {
+    "bytes": 963,
+    "sha256": "bd7c982dd2e34aabe9422cbc362e4bb2694080f82100086bad40694b78f2a784"
+  },
+  "toolchain.js": {
+    "bytes": 890476,
+    "sha256": "c251a5126e85c193434f1128b168e4683bd0357db7d16d971afd3469759e047f"
+  },
+  "bin/clang.wasm.gz": {
+    "bytes": 15721977,
+    "sha256": "b1174438d9a67b7ff11e623541b9a0572c024a9e798084b9b021dd9da2da0874"
+  },
+  "bin/lld.wasm.gz": {
+    "bytes": 7837837,
+    "sha256": "f842a9b5df3c6d326f0260bfd313c11c2e22bc8b8ae0387deede9a4af55779cd"
+  },
+  "bin/memfs.wasm.gz": {
+    "bytes": 38702,
+    "sha256": "cbca9e27ceafbca840603a39fc71e4f83bfb085237c8eab84fd0401ac76806c7"
+  },
+  "bin/sysroot.tar.gz": {
+    "bytes": 5401380,
+    "sha256": "195e8083bace1baf86014f134a210db354cd77825988eaac7d262161cf496c4f"
+  },
+  "bin/printscan-long-double.a": {
+    "bytes": 111062,
+    "sha256": "33e04007d3547095068391b42189d1ac5398dd04e9da3118dfa644ffea7f4148"
+  }
+}

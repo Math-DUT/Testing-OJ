@@ -135,7 +135,8 @@ test("old records and drafts migrate; contest sessions and drafts stay separate"
   await page.goto("/#contest/icpc-online-2026-1/submissions");
   await expect(page.locator(".history-row")).toHaveCount(0);
   await page.goto("/#contest/icpc-online-2026-1/problem/A");
-  await expect(page.locator("iframe")).toBeVisible();
+  await expect(page.locator(".statement")).toBeVisible();
+  await expect(page.locator("iframe")).toHaveCount(0);
   await page.locator(".cm-content").fill("// first contest draft");
   await page.goto("/#contest/icpc-online-2026-2/problem/A");
   await expect(page.locator(".cm-content")).not.toContainText(

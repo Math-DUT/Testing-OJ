@@ -72,9 +72,11 @@ def import_problem(item):
         pdf_path.parent.mkdir(parents=True, exist_ok=True)
         pdf_path.write_bytes(pdf)
         samples = pdf_samples(pdf)
-        # Keep the original mathematical typesetting in the PDF viewer.
-        markdown = ''
-        format_ = 'pdf'
+        # First-round sources contain only PDFs. Use the manually checked,
+        # versioned Markdown transcription for native site rendering.
+        draft = ROOT/f'statements/{cid}/{letter}.md'
+        markdown = draft.read_text(encoding='utf-8').split('\n\n',1)[1].strip()
+        format_ = 'markdown'
     else:
         article = soup.select_one('article.uoj-article')
         if not article: raise RuntimeError(f'{pid}: statement missing')

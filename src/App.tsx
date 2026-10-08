@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
@@ -43,6 +43,17 @@ import type {
 } from "./types";
 import { execute, stopRunner } from "./runner";
 import { checkOutput } from "./checkers";
+import ResizeHandle from "./ResizeHandle";
+import {
+  cleanLayout,
+  defaultLayout,
+  layoutLimits,
+  type WorkspaceLayout,
+} from "./layout";
+import { codeLanguage, isCpp, languageLabel, languages } from "./languages";
+import { acceptLocalRunnerLink, localRunnerHealth } from "./localRunner";
+
+acceptLocalRunnerLink();
 
 const KEY = "testing-oj:v1:";
 const defaultFonts: FontSettings = { ui: 16, statement: 17, code: 16 };
@@ -91,7 +102,7 @@ function download(name: string, content: string) {
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-const template: Record<Language, string> = {
+const template: Record<"cpp" | "python", string> = {
   cpp: "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    // Write your solution here.\n\n    return 0;\n}\n",
   python:
     'import sys\n\n\ndef solve():\n    # Write your solution here.\n    pass\n\n\nif __name__ == "__main__":\n    solve()\n',
@@ -156,15 +167,27 @@ export default function App() {
   const [fonts, setFonts] = useState<FontSettings>(() =>
     cleanFonts(read("fonts", defaultFonts)),
   );
+  const [layout, setLayout] = useState(() =>
+    cleanLayout(read("layout", defaultLayout)),
+  );
+  const [mobile, setMobile] = useState(
+    () => matchMedia("(max-width: 760px)").matches,
+  );
+  const workbench = useRef<HTMLDivElement>(null);
+  const editorPane = useRef<HTMLElement>(null);
+  const customInputs = useRef<HTMLDivElement>(null);
+  const changeLayout = (key: keyof WorkspaceLayout, value: number | boolean) =>
+    setLayout((previous) => cleanLayout({ ...previous, [key]: value }));
   const [profile, setProfile] = useState<string>(read("profile", "Math-DUT"));
   const [theme, setTheme] = useState(read("theme", "dark"));
   const [query, setQuery] = useState("");
   const [now, setNow] = useState(Date.now());
   const [settings, setSettings] = useState(false);
+  const [pypyVersion, setPypyVersion] = useState<string | null>(null);
+  const [checkingPyPy, setCheckingPyPy] = useState(false);
   const [toast, setToast] = useState("");
   const [detail, setDetail] = useState<Submission | null>(null);
   const [code, setCode] = useState("");
-  const [view, setView] = useState("statement");
   const [input, setInput] = useState("");
   const [expected, setExpected] = useState("");
   const [testMode, setTestMode] = useState<"samples" | "custom">("samples");
@@ -178,13 +201,13 @@ export default function App() {
   const problem = problems.find((p) => route === `problem/${p.id}`);
   const history = submissions.filter((s) => s.contestId === contest.id);
   const draftKey = (id: string, lang: Language, cid = contest.id) =>
-    `code:${cid}:${id}:${lang}`;
+    `code:${cid}:${id}:${codeLanguage(lang)}`;
   const readCode = (id: string, lang: Language) =>
     read(
       draftKey(id, lang),
       contest.id === DEFAULT_CONTEST
-        ? read(`code:${id}:${lang}`, template[lang])
-        : template[lang],
+        ? read(`code:${id}:${codeLanguage(lang)}`, template[codeLanguage(lang)])
+        : template[codeLanguage(lang)],
     );
   const remaining = session
     ? Math.max(0, (session.end ?? session.start + HOURS) - now)
@@ -219,7 +242,6 @@ export default function App() {
       setBusy("");
       setPath(location.hash);
       setResult(null);
-      setView("statement");
     };
     window.addEventListener("hashchange", handler);
     const timer = setInterval(() => setNow(Date.now()), 1000);
@@ -236,9 +258,23 @@ export default function App() {
   }, [parsed.contestId]);
   useEffect(() => save("selected-contest", selectedContest), [selectedContest]);
   useEffect(() => save("zen", zen), [zen]);
+  const checkPyPy = async () => {
+    setCheckingPyPy(true);
+    setPypyVersion(await localRunnerHealth());
+    setCheckingPyPy(false);
+  };
+  useEffect(() => {
+    void checkPyPy();
+  }, []);
+  useEffect(() => save("layout", layout), [layout]);
+  useEffect(() => {
+    const media = matchMedia("(max-width: 760px)");
+    const update = () => setMobile(media.matches);
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
   useEffect(() => {
     if (problem) {
-      setView(problem.statementFormat === "pdf" ? "pdf" : "statement");
       save(`last-problem:${contest.id}`, problem.id);
     }
   }, [contest.id, problem?.id]);
@@ -326,6 +362,12 @@ export default function App() {
   };
   const run = async (submit: boolean) => {
     if (!problem || busy) return;
+    changeLayout("editorEnabled", true);
+    if (language === "pypy3" && !(await localRunnerHealth())) {
+      setSettings(true);
+      notify("PyPy3 需要启动本机助手。");
+      return;
+    }
     const tests =
       testMode === "samples"
         ? problem.tests || problem.samples
@@ -437,6 +479,7 @@ export default function App() {
           profile,
           sessions,
           fonts,
+          layout,
           submissions,
           codes: Object.fromEntries(
             Object.keys(localStorage)
@@ -468,7 +511,7 @@ export default function App() {
                 c.id === s.contestId &&
                 c.problems.some((p) => p.id === s.problem),
             ) ||
-            !["cpp", "python"].includes(s.language) ||
+            !languages.includes(s.language) ||
             typeof s.source !== "string" ||
             !Number.isFinite(s.at) ||
             !Array.isArray(s.details),
@@ -495,6 +538,7 @@ export default function App() {
       setSubmissions(records);
       setSessions(importedSessions);
       if (data.fonts) setFonts(cleanFonts(data.fonts));
+      if (data.layout) setLayout(cleanLayout(data.layout));
       for (const [key, value] of Object.entries(data.codes ?? {})) {
         if (
           /^testing-oj:v1:code:(?:(lncpc-2025|icpc-online-2026-[12]):)?[A-N]:(cpp|python)$/.test(
@@ -563,7 +607,8 @@ export default function App() {
   );
   return (
     <div
-      className={`app ${route === "contests" ? "hub-layout" : ""} ${collapsed ? "collapsed" : ""} ${zen && route !== "contests" ? "zen" : ""}`}
+      className={`app ${problem ? "problem-layout" : ""} ${route === "contests" ? "hub-layout" : ""} ${collapsed ? "collapsed" : ""} ${zen && route !== "contests" ? "zen" : ""}`}
+      style={{ "--sidebar-width": `${layout.sidebar}px` } as CSSProperties}
     >
       <aside className="activity">
         <button
@@ -681,6 +726,16 @@ export default function App() {
           浏览器本地运行<span className="mono">WASM</span>
         </div>
       </aside>
+      <ResizeHandle
+        className="sidebar-splitter"
+        label="侧栏宽度"
+        axis="x"
+        value={layout.sidebar}
+        min={layoutLimits.sidebar[0]}
+        max={layoutLimits.sidebar[1]}
+        onChange={(n) => changeLayout("sidebar", n)}
+        onReset={() => changeLayout("sidebar", defaultLayout.sidebar)}
+      />
       <div className="main-shell">
         <header className="topbar">
           <div className="breadcrumbs">
@@ -1025,9 +1080,18 @@ export default function App() {
                   <ArrowLeft size={15} />
                   题目
                 </button>
-                <strong>
-                  <span>{problem.id}.</span> {problem.title}
-                </strong>
+                <select
+                  className="problem-select"
+                  aria-label="选择题目"
+                  value={problem.id}
+                  onChange={(e) => nav(`problem/${e.target.value}`)}
+                >
+                  {problems.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.id}. {p.title}
+                    </option>
+                  ))}
+                </select>
                 <div className="problem-limits">
                   {contestActive && (
                     <span className="zen-timer">
@@ -1047,6 +1111,19 @@ export default function App() {
                     PDF
                   </a>
                 </div>
+                <button
+                  className={`button quiet editor-toggle ${layout.editorEnabled ? "enabled" : ""}`}
+                  aria-label={
+                    layout.editorEnabled ? "关闭代码区" : "打开代码区"
+                  }
+                  aria-pressed={layout.editorEnabled}
+                  onClick={() =>
+                    changeLayout("editorEnabled", !layout.editorEnabled)
+                  }
+                >
+                  <Code2 size={16} />
+                  代码区
+                </button>
                 {zen && (
                   <div className="zen-tools">
                     <button
@@ -1068,36 +1145,39 @@ export default function App() {
                   </div>
                 )}
               </div>
-              <div className="workbench">
+              <nav className="problem-navigation" aria-label="比赛题目">
+                {problems.map((p) => (
+                  <button
+                    key={p.id}
+                    className={`${p.id === problem.id ? "active" : ""} ${passed.has(p.id) ? "solved" : ""}`}
+                    aria-label={`题目 ${p.id}`}
+                    aria-current={p.id === problem.id ? "page" : undefined}
+                    title={`${p.id}. ${p.title}`}
+                    onClick={() => nav(`problem/${p.id}`)}
+                  >
+                    {p.id}
+                    {passed.has(p.id) && <i />}
+                  </button>
+                ))}
+              </nav>
+              <div
+                ref={workbench}
+                className={`workbench ${layout.editorEnabled ? "" : "reading-mode"}`}
+                style={
+                  {
+                    "--statement-grow": `${layout.statement}fr`,
+                    "--editor-grow": `${100 - layout.statement}fr`,
+                    "--code-grow": `${layout.code}fr`,
+                    "--test-grow": `${100 - layout.code}fr`,
+                    "--input-grow": `${layout.input}fr`,
+                    "--output-grow": `${100 - layout.input}fr`,
+                    "--mobile-statement-height": `${layout.mobileStatement}px`,
+                  } as CSSProperties
+                }
+              >
                 <section className="statement-pane">
                   <div className="pane-header">
-                    <button
-                      className={
-                        view === "statement" ||
-                        (problem.statementFormat === "pdf" && view === "pdf")
-                          ? "pane-tab active"
-                          : "pane-tab"
-                      }
-                      onClick={() =>
-                        setView(
-                          problem.statementFormat === "pdf"
-                            ? "pdf"
-                            : "statement",
-                        )
-                      }
-                    >
-                      题面
-                    </button>
-                    {problem.statementFormat !== "pdf" && (
-                      <button
-                        className={
-                          view === "pdf" ? "pane-tab active" : "pane-tab"
-                        }
-                        onClick={() => setView("pdf")}
-                      >
-                        PDF
-                      </button>
-                    )}
+                    <span className="pane-tab active">题面</span>
                     <a
                       href={problem.qoj}
                       target="_blank"
@@ -1108,310 +1188,390 @@ export default function App() {
                       <ChevronRight size={12} />
                     </a>
                   </div>
-                  {view === "pdf" ? (
-                    <iframe
-                      title={`${problem.id} 题面 PDF`}
-                      src={`${problemPdf(contest, problem)}#zoom=${Math.round((fonts.statement / 17) * 100)}`}
-                    />
-                  ) : (
-                    <article className="statement">
-                      <div className="paper-heading">
-                        <small>Problem {problem.id}</small>
-                        <h2>{problem.title}</h2>
-                        {problem.englishTitle !== problem.title && (
-                          <p>{problem.englishTitle}</p>
-                        )}
+                  <article className="statement">
+                    <div className="paper-heading">
+                      <small>Problem {problem.id}</small>
+                      <h2>{problem.title}</h2>
+                      {problem.englishTitle !== problem.title && (
+                        <p>{problem.englishTitle}</p>
+                      )}
+                    </div>
+                    <Markdown
+                      remarkPlugins={[remarkMath, remarkGfm]}
+                      rehypePlugins={[rehypeKatex]}
+                    >
+                      {problem.markdown.split("\n\n## Note\n\n")[0]}
+                    </Markdown>
+                    <h2>Examples</h2>
+                    {problem.samples.map((s, i) => (
+                      <div className="sample" key={i}>
+                        <div className="sample-title">
+                          Sample {i + 1}
+                          <button
+                            onClick={() => {
+                              changeLayout("editorEnabled", true);
+                              setInput(
+                                problem.checker === "hidden-track"
+                                  ? problem.tests![0].input
+                                  : s.input,
+                              );
+                              setExpected(
+                                problem.checker === "hidden-track"
+                                  ? ""
+                                  : s.output,
+                              );
+                              setTestMode("custom");
+                              setResult(null);
+                            }}
+                          >
+                            <Play size={12} />
+                            {problem.checker === "hidden-track"
+                              ? "交互自测"
+                              : "载入"}
+                          </button>
+                        </div>
+                        <div className="sample-grid">
+                          <div>
+                            <label>标准输入</label>
+                            <pre>{s.input}</pre>
+                          </div>
+                          <div>
+                            <label>标准输出</label>
+                            <pre>{s.output}</pre>
+                          </div>
+                        </div>
                       </div>
-                      <Markdown
-                        remarkPlugins={[remarkMath, remarkGfm]}
-                        rehypePlugins={[rehypeKatex]}
-                      >
-                        {problem.markdown.split("\n\n## Note\n\n")[0]}
-                      </Markdown>
-                      <h2>Examples</h2>
-                      {problem.samples.map((s, i) => (
-                        <div className="sample" key={i}>
-                          <div className="sample-title">
-                            Sample {i + 1}
+                    ))}
+                    {problem.markdown.includes("\n\n## Note\n\n") && (
+                      <>
+                        <h2>Note</h2>
+                        <Markdown
+                          remarkPlugins={[remarkMath, remarkGfm]}
+                          rehypePlugins={[rehypeKatex]}
+                        >
+                          {problem.markdown
+                            .split("\n\n## Note\n\n")
+                            .slice(1)
+                            .join("\n\n## Note\n\n")}
+                        </Markdown>
+                      </>
+                    )}
+                    <div className="statement-source">
+                      题面来源：
+                      <a href={problem.source} target="_blank" rel="noreferrer">
+                        {contest.id === DEFAULT_CONTEST
+                          ? "洛谷官方重现赛"
+                          : "QOJ"}
+                      </a>{" "}
+                      {problem.codeforces && (
+                        <>
+                          {" "}
+                          ·{" "}
+                          <a
+                            href={problem.codeforces}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Codeforces
+                          </a>
+                        </>
+                      )}
+                    </div>
+                  </article>
+                </section>
+                {layout.editorEnabled && (
+                  <>
+                    <ResizeHandle
+                      label="题面与代码分隔线"
+                      axis={mobile ? "y" : "x"}
+                      value={mobile ? layout.mobileStatement : layout.statement}
+                      min={
+                        mobile
+                          ? layoutLimits.mobileStatement[0]
+                          : layoutLimits.statement[0]
+                      }
+                      max={
+                        mobile
+                          ? layoutLimits.mobileStatement[1]
+                          : layoutLimits.statement[1]
+                      }
+                      measureSize={
+                        mobile
+                          ? undefined
+                          : () => (workbench.current?.clientWidth ?? 0) - 6
+                      }
+                      onChange={(n) =>
+                        changeLayout(
+                          mobile ? "mobileStatement" : "statement",
+                          n,
+                        )
+                      }
+                      onReset={() =>
+                        changeLayout(
+                          mobile ? "mobileStatement" : "statement",
+                          mobile
+                            ? defaultLayout.mobileStatement
+                            : defaultLayout.statement,
+                        )
+                      }
+                    />
+                    <section className="editor-pane" ref={editorPane}>
+                      <div className="pane-header">
+                        <div className="filename">
+                          <Code2 size={15} />
+                          {isCpp(language) ? "main.cpp" : "main.py"}
+                          <span className="saved-label">已自动保存</span>
+                        </div>
+                        <select
+                          aria-label="语言"
+                          value={language}
+                          disabled={!!busy}
+                          onChange={(e) =>
+                            setLanguage(e.target.value as Language)
+                          }
+                        >
+                          <option value="cpp">C++17 · O2</option>
+                          <option value="cpp20">C++20 · O2</option>
+                          <option value="cpp23">C++23 · O2</option>
+                          <option value="python">Python · Pyodide</option>
+                          <option value="pypy3">PyPy3 · 本机</option>
+                        </select>
+                        <button
+                          title="下载代码"
+                          aria-label="下载代码"
+                          className="icon-button"
+                          onClick={() =>
+                            download(
+                              `${problem.id}.${isCpp(language) ? "cpp" : "py"}`,
+                              code,
+                            )
+                          }
+                        >
+                          <Download size={15} />
+                        </button>
+                      </div>
+                      <div className="code-area">
+                        <CodeMirror
+                          value={code}
+                          height="100%"
+                          theme={theme === "dark" ? "dark" : "light"}
+                          extensions={[
+                            isCpp(language) ? cpp() : python(),
+                            codeTheme,
+                          ]}
+                          onChange={(value) => {
+                            setCode(value);
+                            save(draftKey(problem.id, language), value);
+                          }}
+                          basicSetup={{
+                            foldGutter: false,
+                            highlightActiveLine: true,
+                          }}
+                        />
+                      </div>
+                      <div className="run-bar">
+                        <span>
+                          <span className="connection-dot" />
+                          本地运行<span className="run-limit">10 s / case</span>
+                        </span>
+                        <button
+                          className="button quiet"
+                          disabled={!!busy}
+                          onClick={() => run(false)}
+                        >
+                          <Play size={14} />
+                          运行
+                        </button>
+                        <button
+                          className="button primary"
+                          disabled={!!busy}
+                          onClick={() => run(true)}
+                        >
+                          <Check size={14} />
+                          提交自测
+                        </button>
+                      </div>
+                      <ResizeHandle
+                        label="代码与测试分隔线"
+                        axis="y"
+                        value={layout.code}
+                        min={layoutLimits.code[0]}
+                        max={layoutLimits.code[1]}
+                        measureSize={() => {
+                          const pane = editorPane.current;
+                          return pane
+                            ? pane.clientHeight -
+                                (pane.querySelector(".pane-header")
+                                  ?.clientHeight ?? 44) -
+                                (pane.querySelector(".run-bar")?.clientHeight ??
+                                  54) -
+                                6
+                            : 0;
+                        }}
+                        onChange={(n) => changeLayout("code", n)}
+                        onReset={() => changeLayout("code", defaultLayout.code)}
+                      />
+                      <div className="test-panel">
+                        <div className="pane-header">
+                          <Terminal size={15} />
+                          <strong>测试</strong>
+                          <div className="segmented">
                             <button
+                              disabled={!!busy}
+                              className={testMode === "samples" ? "active" : ""}
                               onClick={() => {
-                                setInput(
-                                  problem.checker === "hidden-track"
-                                    ? problem.tests![0].input
-                                    : s.input,
-                                );
-                                setExpected(
-                                  problem.checker === "hidden-track"
-                                    ? ""
-                                    : s.output,
-                                );
+                                setTestMode("samples");
+                                setResult(null);
+                              }}
+                            >
+                              全部测试点
+                            </button>
+                            <button
+                              disabled={!!busy}
+                              className={testMode === "custom" ? "active" : ""}
+                              onClick={() => {
                                 setTestMode("custom");
                                 setResult(null);
                               }}
                             >
-                              <Play size={12} />
-                              {problem.checker === "hidden-track"
-                                ? "交互自测"
-                                : "载入"}
+                              自定义
                             </button>
                           </div>
-                          <div className="sample-grid">
-                            <div>
-                              <label>标准输入</label>
-                              <pre>{s.input}</pre>
-                            </div>
-                            <div>
-                              <label>标准输出</label>
-                              <pre>{s.output}</pre>
-                            </div>
-                          </div>
                         </div>
-                      ))}
-                      {problem.markdown.includes("\n\n## Note\n\n") && (
-                        <>
-                          <h2>Note</h2>
-                          <Markdown
-                            remarkPlugins={[remarkMath, remarkGfm]}
-                            rehypePlugins={[rehypeKatex]}
-                          >
-                            {problem.markdown
-                              .split("\n\n## Note\n\n")
-                              .slice(1)
-                              .join("\n\n## Note\n\n")}
-                          </Markdown>
-                        </>
-                      )}
-                      <div className="statement-source">
-                        题面来源：
-                        <a
-                          href={problem.source}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {contest.id === DEFAULT_CONTEST
-                            ? "洛谷官方重现赛"
-                            : "QOJ"}
-                        </a>{" "}
-                        {problem.codeforces && (
-                          <>
-                            {" "}
-                            ·{" "}
-                            <a
-                              href={problem.codeforces}
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              Codeforces
-                            </a>
-                          </>
-                        )}
-                      </div>
-                    </article>
-                  )}
-                </section>
-                <section className="editor-pane">
-                  <div className="pane-header">
-                    <div className="filename">
-                      <Code2 size={15} />
-                      {language === "cpp" ? "main.cpp" : "main.py"}
-                      <span className="saved-label">已自动保存</span>
-                    </div>
-                    <select
-                      aria-label="语言"
-                      value={language}
-                      disabled={!!busy}
-                      onChange={(e) => setLanguage(e.target.value as Language)}
-                    >
-                      <option value="cpp">C++17 · Clang WASM</option>
-                      <option value="python">Python · Pyodide</option>
-                    </select>
-                    <button
-                      title="下载代码"
-                      aria-label="下载代码"
-                      className="icon-button"
-                      onClick={() =>
-                        download(
-                          `${problem.id}.${language === "cpp" ? "cpp" : "py"}`,
-                          code,
-                        )
-                      }
-                    >
-                      <Download size={15} />
-                    </button>
-                  </div>
-                  <div className="code-area">
-                    <CodeMirror
-                      value={code}
-                      height="100%"
-                      theme={theme === "dark" ? "dark" : "light"}
-                      extensions={[
-                        language === "cpp" ? cpp() : python(),
-                        codeTheme,
-                      ]}
-                      onChange={(value) => {
-                        setCode(value);
-                        save(draftKey(problem.id, language), value);
-                      }}
-                      basicSetup={{
-                        foldGutter: false,
-                        highlightActiveLine: true,
-                      }}
-                    />
-                  </div>
-                  <div className="run-bar">
-                    <span>
-                      <span className="connection-dot" />
-                      本地运行<span className="run-limit">10 s / case</span>
-                    </span>
-                    <button
-                      className="button quiet"
-                      disabled={!!busy}
-                      onClick={() => run(false)}
-                    >
-                      <Play size={14} />
-                      运行
-                    </button>
-                    <button
-                      className="button primary"
-                      disabled={!!busy}
-                      onClick={() => run(true)}
-                    >
-                      <Check size={14} />
-                      提交自测
-                    </button>
-                  </div>
-                  <div className="test-panel">
-                    <div className="pane-header">
-                      <Terminal size={15} />
-                      <strong>测试</strong>
-                      <div className="segmented">
-                        <button
-                          disabled={!!busy}
-                          className={testMode === "samples" ? "active" : ""}
-                          onClick={() => {
-                            setTestMode("samples");
-                            setResult(null);
-                          }}
-                        >
-                          全部测试点
-                        </button>
-                        <button
-                          disabled={!!busy}
-                          className={testMode === "custom" ? "active" : ""}
-                          onClick={() => {
-                            setTestMode("custom");
-                            setResult(null);
-                          }}
-                        >
-                          自定义
-                        </button>
-                      </div>
-                    </div>
-                    {busy ? (
-                      <div className="running">
-                        <span className="spinner" />
-                        {phaseText[busy]}
-                        <span className="mono">
-                          {testProgress.current} / {testProgress.total}
-                        </span>
-                        <small>首次加载 C++ 约 60 MB，Python 约 12 MB。</small>
-                      </div>
-                    ) : result ? (
-                      <div className="test-results">
-                        {result.map((r, i) => (
-                          <details
-                            key={i}
-                            open={!["PASS", "SKIP"].includes(r.status)}
-                          >
-                            <summary>
-                              <span title={problem.tests?.[i]?.label}>
-                                Test {i + 1}
-                                {problem.tests?.[i]?.kind === "trick" && (
-                                  <small className="trick-tag">trick</small>
-                                )}
-                              </span>
-                              {badge(r.status)}
-                              <span className="mono timing">
-                                {r.time.toFixed(1)} ms
-                              </span>
-                              <ChevronDown size={14} />
-                            </summary>
-                            <div className="output-label">标准输出</div>
-                            <pre>{r.output || "(empty)"}</pre>
-                            {r.error && (
-                              <pre className="error-output">{r.error}</pre>
-                            )}
-                            {r.status === "WA" &&
-                              problem.checker !== "hidden-track" && (
-                                <>
-                                  <div className="output-label">预期输出</div>
-                                  <pre>
-                                    {testMode === "samples"
-                                      ? (problem.tests || problem.samples)[i]
-                                          .output
-                                      : expected}
-                                  </pre>
-                                </>
-                              )}
-                          </details>
-                        ))}
-                        <p className="test-scope">
-                          浏览器自测结果；时间、内存与原赛环境不同。
-                        </p>
-                      </div>
-                    ) : testMode === "custom" ? (
-                      <div className="custom-inputs">
-                        <label>
-                          {problem.checker === "hidden-track"
-                            ? "隐藏排列 · T，n，排列（0 起始）"
-                            : "标准输入"}
-                          <textarea
-                            aria-label="标准输入"
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            spellCheck={false}
-                          />
-                        </label>
-                        {problem.checker !== "hidden-track" && (
-                          <label>
-                            预期输出 <span>可留空</span>
-                            <textarea
-                              aria-label="预期输出"
-                              value={expected}
-                              onChange={(e) => setExpected(e.target.value)}
-                              spellCheck={false}
-                            />
-                          </label>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="test-placeholder">
-                        <div className="test-cases">
-                          {(problem.tests || problem.samples).map((test, i) => (
-                            <span
-                              key={i}
-                              title={
-                                "label" in test
-                                  ? String(test.label)
-                                  : `Sample ${i + 1}`
-                              }
-                            >
-                              {"kind" in test && test.kind === "trick"
-                                ? "Trick"
-                                : "Test"}{" "}
-                              {i + 1}
-                              <span className="dash">—</span>
+                        {busy ? (
+                          <div className="running">
+                            <span className="spinner" />
+                            {phaseText[busy]}
+                            <span className="mono">
+                              {testProgress.current} / {testProgress.total}
                             </span>
-                          ))}
-                        </div>
-                        <p>
-                          运行全部 {(problem.tests || problem.samples).length}{" "}
-                          个测试点 <kbd>Ctrl + Enter</kbd>
-                        </p>
+                            <small>
+                              首次加载 C++ 约 29 MB，Python 约 12 MB。
+                            </small>
+                          </div>
+                        ) : result ? (
+                          <div className="test-results">
+                            {result.map((r, i) => (
+                              <details
+                                key={i}
+                                open={!["PASS", "SKIP"].includes(r.status)}
+                              >
+                                <summary>
+                                  <span title={problem.tests?.[i]?.label}>
+                                    Test {i + 1}
+                                    {problem.tests?.[i]?.kind === "trick" && (
+                                      <small className="trick-tag">trick</small>
+                                    )}
+                                  </span>
+                                  {badge(r.status)}
+                                  <span className="mono timing">
+                                    {r.time.toFixed(1)} ms
+                                  </span>
+                                  <ChevronDown size={14} />
+                                </summary>
+                                <div className="output-label">标准输出</div>
+                                <pre>{r.output || "(empty)"}</pre>
+                                {r.error && (
+                                  <pre className="error-output">{r.error}</pre>
+                                )}
+                                {r.status === "WA" &&
+                                  problem.checker !== "hidden-track" && (
+                                    <>
+                                      <div className="output-label">
+                                        预期输出
+                                      </div>
+                                      <pre>
+                                        {testMode === "samples"
+                                          ? (problem.tests || problem.samples)[
+                                              i
+                                            ].output
+                                          : expected}
+                                      </pre>
+                                    </>
+                                  )}
+                              </details>
+                            ))}
+                            <p className="test-scope">
+                              浏览器自测结果；时间、内存与原赛环境不同。
+                            </p>
+                          </div>
+                        ) : testMode === "custom" ? (
+                          <div
+                            ref={customInputs}
+                            className={`custom-inputs ${problem.checker === "hidden-track" ? "single" : ""}`}
+                          >
+                            <label>
+                              {problem.checker === "hidden-track"
+                                ? "隐藏排列 · T，n，排列（0 起始）"
+                                : "标准输入"}
+                              <textarea
+                                aria-label="标准输入"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                spellCheck={false}
+                              />
+                            </label>
+                            {problem.checker !== "hidden-track" && (
+                              <ResizeHandle
+                                label="输入与输出分隔线"
+                                axis="x"
+                                value={layout.input}
+                                min={layoutLimits.input[0]}
+                                max={layoutLimits.input[1]}
+                                measureSize={() =>
+                                  (customInputs.current?.clientWidth ?? 0) - 34
+                                }
+                                onChange={(n) => changeLayout("input", n)}
+                                onReset={() =>
+                                  changeLayout("input", defaultLayout.input)
+                                }
+                              />
+                            )}
+                            {problem.checker !== "hidden-track" && (
+                              <label>
+                                预期输出 <span>可留空</span>
+                                <textarea
+                                  aria-label="预期输出"
+                                  value={expected}
+                                  onChange={(e) => setExpected(e.target.value)}
+                                  spellCheck={false}
+                                />
+                              </label>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="test-placeholder">
+                            <div className="test-cases">
+                              {(problem.tests || problem.samples).map(
+                                (test, i) => (
+                                  <span
+                                    key={i}
+                                    title={
+                                      "label" in test
+                                        ? String(test.label)
+                                        : `Sample ${i + 1}`
+                                    }
+                                  >
+                                    {"kind" in test && test.kind === "trick"
+                                      ? "Trick"
+                                      : "Test"}{" "}
+                                    {i + 1}
+                                    <span className="dash">—</span>
+                                  </span>
+                                ),
+                              )}
+                            </div>
+                            <p>
+                              运行全部{" "}
+                              {(problem.tests || problem.samples).length}{" "}
+                              个测试点 <kbd>Ctrl + Enter</kbd>
+                            </p>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                </section>
+                    </section>
+                  </>
+                )}
               </div>
             </>
           )}
@@ -1446,7 +1606,7 @@ export default function App() {
                       <span className="mono">
                         {s.passed} / {s.total}
                       </span>
-                      <span>{s.language === "cpp" ? "C++17" : "Python"}</span>
+                      <span>{languageLabel(s.language)}</span>
                       <span className="mono">{s.time.toFixed(1)} ms</span>
                       <span>
                         {new Date(s.at).toLocaleString("zh-CN", {
@@ -1575,7 +1735,7 @@ export default function App() {
           </span>
           <span className="status-scope">15 个自测点 · 3 个 trick</span>
           <span className="status-spacer" />
-          <span>{language === "cpp" ? "C++17" : "Python"}</span>
+          <span>{languageLabel(language)}</span>
           <span>UTF-8</span>
           <button onClick={() => setSettings(true)}>
             <Settings size={12} />
@@ -1664,6 +1824,53 @@ export default function App() {
               ))}
               <div className="font-preview">Aa · 辽宁省赛 · ICPC 2026</div>
             </div>
+            <div className="setting-row layout-settings">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={layout.editorEnabled}
+                  onChange={(e) =>
+                    changeLayout("editorEnabled", e.target.checked)
+                  }
+                />
+                显示代码区
+              </label>
+              <button
+                className="button quiet"
+                onClick={() => setLayout(defaultLayout)}
+              >
+                还原布局
+              </button>
+            </div>
+            <div className="local-runner-settings">
+              <div className="setting-row">
+                <div>
+                  PyPy3{" "}
+                  <small>{pypyVersion ? "本机已连接" : "本机助手未连接"}</small>
+                </div>
+                <button
+                  className="button quiet"
+                  disabled={checkingPyPy}
+                  onClick={checkPyPy}
+                >
+                  检测连接
+                </button>
+                <a
+                  className="button quiet"
+                  href={`${import.meta.env.BASE_URL}local/pypy-helper.zip`}
+                  download
+                >
+                  <Download size={14} />
+                  下载助手
+                </a>
+              </div>
+              {!pypyVersion && (
+                <p>
+                  Windows：解压后双击「启动 PyPy3.cmd」，在助手打开的页面选择
+                  PyPy3。
+                </p>
+              )}
+            </div>
             <label className="setting-label">
               选手名称
               <input
@@ -1733,7 +1940,7 @@ export default function App() {
               <span>
                 {detail.passed}/{detail.total} 测试点
               </span>
-              <span>{detail.language === "cpp" ? "C++17" : "Python"}</span>
+              <span>{languageLabel(detail.language)}</span>
             </div>
             <pre>{detail.source}</pre>
             <div className="detail-actions">
@@ -1741,7 +1948,7 @@ export default function App() {
                 className="button quiet"
                 onClick={() =>
                   download(
-                    `${detail.contestId}-${detail.problem}.${detail.language === "cpp" ? "cpp" : "py"}`,
+                    `${detail.contestId}-${detail.problem}.${isCpp(detail.language) ? "cpp" : "py"}`,
                     detail.source,
                   )
                 }

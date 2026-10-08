@@ -24,6 +24,7 @@ for (const [cid, path] of [
 ]) {
   const problems = JSON.parse(await fs.readFile(path, "utf8"));
   for (const p of problems) {
+    assert(p.markdown.length > 150 && p.statementFormat !== "pdf", `${cid}/${p.id}: missing native statement`);
     assert.equal(p.tests.length, 15);
     assert.equal(p.tests.filter((t) => t.kind === "trick").length, 3);
     assert.equal(new Set(p.tests.map((t) => t.input)).size, 15);

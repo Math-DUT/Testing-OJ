@@ -1,4 +1,4 @@
-export type Language = "cpp" | "python";
+export type Language = "cpp" | "cpp20" | "cpp23" | "python" | "pypy3";
 export interface TestCase {
   input: string;
   output: string;

@@ -8,7 +8,7 @@
     "source": "https://qoj.ac/problem/20016",
     "qoj": "https://qoj.ac/problem/20016",
     "codeforces": "",
-    "markdown": "",
+    "markdown": "There is an initially empty stack $S$. A sequence of operations is then performed on it. There are three types of operations:\n\n- `+ x` means pushing the element $x$ onto the stack.\n- `? x` means querying whether the element $x$ exists in the stack. There are two possible results:\n  - `T x` means that the element $x$ exists.\n  - `F x` means that the element $x$ does not exist.\n- `-` means popping the top element from the stack (the stack must be nonempty).\n\nLittle G recorded all `+ x`, `T x`, and `F x` operations during the entire process, but did not record any `-` operations.\n\nNow, Little G wants to insert some `-` operations into the recorded operation sequence such that:\n\n- At all times, all elements in the stack are distinct.\n- The results of all `? x` queries are consistent with the operation sequence you construct.\n\nIt is guaranteed that at least one valid reconstructed sequence exists.\n\n## Input\n\nThere are multiple test cases. The first line of the input contains an integer $T$ ($1\\le T\\le 10^5$), representing the number of test cases.\n\nFor each test case:\n\n- The first line contains a positive integer $n$ ($1\\le n\\le 10^6$).\n- Each of the next $n$ lines is in the form `+ x`, `T x`, or `F x`, representing a recorded operation. It is guaranteed that $1\\le x\\le 10^9$.\n\nIt is guaranteed that $1\\le \\sum n\\le 10^6$.\n\n## Output\n\nFor each test case, output one line containing a string consisting only of the characters `+`, `?`, and `-`, representing the operation sequence you reconstruct, where:\n\n- If the $i$-th character is `+`, then the $i$-th operation in your reconstructed sequence pushes an element onto the stack.\n- If the $i$-th character is `?`, then the $i$-th operation in your reconstructed sequence queries whether an element exists in the stack.\n- If the $i$-th character is `-`, then the $i$-th operation in your reconstructed sequence pops the top element from the stack.\n\nIf there are multiple possible original operation sequences, you may reconstruct any one of them.",
     "samples": [
       {
         "input": "2\n4\n+ 1\n+ 1\nT 1\nF 1\n6\n+ 1\n+ 2\nT 1\nF 3\nT 2\n+ 2\n",
@@ -17,7 +17,7 @@
     ],
     "checker": "recall",
     "pdf": "./pdf/icpc-online-2026-1/A.pdf",
-    "statementFormat": "pdf",
+    "statementFormat": "markdown",
     "tests": [
       {
         "input": "2\n4\n+ 1\n+ 1\nT 1\nF 1\n6\n+ 1\n+ 2\nT 1\nF 3\nT 2\n+ 2\n",
@@ -120,7 +120,7 @@
     "source": "https://qoj.ac/problem/20017",
     "qoj": "https://qoj.ac/problem/20017",
     "codeforces": "",
-    "markdown": "",
+    "markdown": "Given a strictly increasing sequence $a$ of length $n$ and an initial value $v_0$.\n\nFor all $0\\le v'\\le v_0$, find the number of permutations $p$ of length $n$ such that the following procedure yields final value $v=v'$:\n\n1. Initialize $v\\leftarrow v_0$.\n2. For $i=1,2,\\ldots,n$, update $v\\leftarrow v\\bmod a_{p_i}$.\n\nOutput the answer modulo $998244353$.\n\n## Input\n\nThe first line contains two integers $n$ and $v_0$ ($1\\le n<2^{18}$, $1\\le v_0<2^{18}$).\n\nThe second line contains $n$ integers $a_1,a_2,\\ldots,a_n$ ($1\\le a_1<a_2<\\cdots<a_n<2^{18}$).\n\n## Output\n\nOutput $v_0+1$ integers, where the $i$-th integer ($1\\le i\\le v_0+1$) represents the answer for $v'=i-1$, modulo $998244353$.",
     "samples": [
       {
         "input": "2 5\n2 3\n",
@@ -133,7 +133,7 @@
     ],
     "checker": "tokens",
     "pdf": "./pdf/icpc-online-2026-1/B.pdf",
-    "statementFormat": "pdf",
+    "statementFormat": "markdown",
     "tests": [
       {
         "input": "2 5\n2 3\n",
@@ -236,7 +236,7 @@
     "source": "https://qoj.ac/problem/20018",
     "qoj": "https://qoj.ac/problem/20018",
     "codeforces": "",
-    "markdown": "",
+    "markdown": "There is an unknown permutation $p=(p_1,p_2,\\ldots,p_n)$ of the integers $1,2,\\ldots,n$. You are given $m$ pieces of information about this permutation.\n\nEach piece of information consists of an interval $[l_i,r_i]$ and a permutation $q_{i,1},q_{i,2},\\ldots,q_{i,r_i-l_i+1}$ of the indices in this interval. It states that\n\n$$\np_{q_{i,1}}<p_{q_{i,2}}<\\cdots<p_{q_{i,r_i-l_i+1}}.\n$$\n\nYour task is to find a permutation that satisfies all the given information and has the minimum possible number of inversions. If no such permutation exists, output $-1$.\n\nIf several optimal permutations exist, output any of them.\n\nThe number of inversions of a permutation $p$ is the number of pairs of indices $(x,y)$ such that $1\\le x<y\\le n$ and $p_x>p_y$.\n\n## Input\n\nThe first line contains a single integer $T$ ($1\\le T\\le 10^6$) — the number of test cases.\n\nFor each test case:\n\n- The first line contains two integers $n$ ($1\\le n\\le 10^6$) and $m$ ($1\\le m\\le 10^6$) — the size of the permutation and the number of constraints.\n- Each of the next $m$ lines describes a constraint. The $i$-th constraint starts with two integers $l_i$ and $r_i$ ($1\\le l_i\\le r_i\\le n$), followed by $r_i-l_i+1$ integers $q_{i,1},q_{i,2},\\ldots,q_{i,r_i-l_i+1}$, which form a permutation of the integers from $l_i$ to $r_i$.\n\nIt is guaranteed that $1\\le\\sum n\\le 10^6$, $1\\le\\sum m\\le 10^6$, and $1\\le\\sum\\limits_{\\text{all test cases}}\\sum\\limits_{i=1}^{m}(r_i-l_i+1)\\le 10^6$ over all test cases.\n\n## Output\n\nFor each test case, print a single line:\n\n- If no satisfying permutation exists, print `-1`.\n- Otherwise, print $n$ space-separated integers $p_1,p_2,\\ldots,p_n$ representing a valid permutation that minimizes the number of inversions.\n\nIf there are multiple optimal permutations, print any of them.",
     "samples": [
       {
         "input": "4\n4 1\n2 4 3 2 4\n3 2\n1 3 1 2 3\n1 3 3 2 1\n5 2\n2 4 4 2 3\n2 4 4 2 3\n4 2\n2 2 2\n1 4 2 1 4 3\n",
@@ -245,7 +245,7 @@
     ],
     "checker": "permutation-inversions",
     "pdf": "./pdf/icpc-online-2026-1/C.pdf",
-    "statementFormat": "pdf",
+    "statementFormat": "markdown",
     "tests": [
       {
         "input": "4\n4 1\n2 4 3 2 4\n3 2\n1 3 1 2 3\n1 3 3 2 1\n5 2\n2 4 4 2 3\n2 4 4 2 3\n4 2\n2 2 2\n1 4 2 1 4 3\n",
@@ -348,7 +348,7 @@
     "source": "https://qoj.ac/problem/20019",
     "qoj": "https://qoj.ac/problem/20019",
     "codeforces": "",
-    "markdown": "",
+    "markdown": "Given a 01-sequence $s_1,s_2,\\ldots,s_n$ of length $n$, define\n\n$$\np_i=\\sum_{j=1}^{i}[s_i\\ne s_j],\n$$\n\nwhere $[\\,]$ is the Iverson bracket ($1$ if the condition holds, $0$ otherwise).\n\nYou are given the integer $n$ and the multiset $\\{p'_1,p'_2,\\ldots,p'_n\\}$ of the values $\\{p_1,p_2,\\ldots,p_n\\}$.\n\nCount the number of sequences $s$ that satisfy the condition. Output the answer modulo $998244353$.\n\nIt is guaranteed that there exists at least one string satisfying the conditions.\n\n## Input\n\nThe first line contains a single integer $n$ ($1\\le n\\le 10^5$).\n\nThe second line contains $n$ integers $p'_1,p'_2,\\ldots,p'_n$ ($0\\le p'_i\\le n-1$) — the multiset.\n\n## Output\n\nPrint a single integer — the number of valid binary strings modulo $998244353$.",
     "samples": [
       {
         "input": "1\n0\n",
@@ -361,7 +361,7 @@
     ],
     "checker": "tokens",
     "pdf": "./pdf/icpc-online-2026-1/D.pdf",
-    "statementFormat": "pdf",
+    "statementFormat": "markdown",
     "tests": [
       {
         "input": "1\n0\n",
@@ -464,7 +464,7 @@
     "source": "https://qoj.ac/problem/20020",
     "qoj": "https://qoj.ac/problem/20020",
     "codeforces": "",
-    "markdown": "",
+    "markdown": "Construct a permutation $p_1,p_2,\\ldots,p_n$ of length $n$ that satisfies\n\n$$\n\\underset{1\\le i\\le n}{\\operatorname{lcm}}\\left(p_i+p_{(i\\bmod n)+1}\\right)\\le 20n.\n$$\n\n## Input\n\nThe first line contains a positive integer $t$ ($1\\le t\\le 10^4$), representing the number of test cases. Each test case contains a single integer $n$ ($1\\le n\\le 8\\cdot 10^6$), representing the length of the permutation.\n\nIt is guaranteed that the sum of $n$ over all test cases does not exceed $8\\cdot 10^6$.\n\n## Output\n\nFor each test case, output the permutation $p_1,p_2,\\ldots,p_n$ that satisfies the condition.\n\nIt is guaranteed that at least one such permutation exists.\n\n## Note\n\nIn the example, $\\operatorname{lcm}(p_1+p_2,p_2+p_3,p_3+p_1)=\\operatorname{lcm}(3,5,4)=60\\le 20n$.\n\nYou can use the following code to speed up the output.\n\n```cpp\n#include <bits/stdc++.h>\nusing namespace std;\n\nint ptr = 0; char buf[1 << 23];\ninline void writeChar(char c) {\n    if (ptr == 1 << 23) fwrite(buf, 1, ptr, stdout), ptr = 0;\n    buf[ptr++] = c;\n}\ninline void writeInt(int x) {\n    int t = 0; char s[10];\n    while (x) s[t++] = (char)('0' + x % 10), x /= 10;\n    while (t) writeChar(s[--t]);\n}\ninline void flushOut() {\n    if (ptr) fwrite(buf, 1, ptr, stdout), ptr = 0;\n}\nint main() {\n    // Your code here...\n    flushOut();\n    return 0;\n}\n```",
     "samples": [
       {
         "input": "1\n3\n",
@@ -473,7 +473,7 @@
     ],
     "checker": "lcm-permutation",
     "pdf": "./pdf/icpc-online-2026-1/E.pdf",
-    "statementFormat": "pdf",
+    "statementFormat": "markdown",
     "tests": [
       {
         "input": "1\n3\n",
@@ -576,7 +576,7 @@
     "source": "https://qoj.ac/problem/20021",
     "qoj": "https://qoj.ac/problem/20021",
     "codeforces": "",
-    "markdown": "",
+    "markdown": "The International Collegiate Programming Contest has inspired generations of students throughout fifty years of excellence.\n\nConsider $n$ consecutive years. In each year, exactly $m$ problems are prepared, and every problem has an integer rating.\n\nThe score of a year is the sum of the ratings of all $m$ problems in that year. The score immediately before the first year is defined to be $0$.\n\nA year is called excellent if its score is strictly less than the score of the previous year. This definition also applies to the first year, whose score is compared with $0$.\n\nDetermine how many years are excellent.\n\n## Input\n\nThe first line contains two integers $n$ and $m$ ($1\\le n\\le 50$, $1\\le m\\le 13$) — the number of years and the number of problems in each year.\n\nEach of the next $n$ lines contains $m$ integers $a_{i,1},a_{i,2},\\ldots,a_{i,m}$ ($-1000\\le a_{i,j}<0$) — the ratings of the problems in year $i$.\n\n## Output\n\nPrint one integer — the number of excellent years.\n\n## Note\n\nIn the first example, the scores of the five years are $-600,-550,-550,-500$, and $-650$. The first year is excellent because $-600<0$, and the fifth year is excellent because $-650<-500$. Equality is not sufficient, so the third year is not excellent.\n\nIn the second example, the scores are $-10,-11,-11$, and $-12$. The first, second, and fourth years are excellent.",
     "samples": [
       {
         "input": "5 3\n-100 -200 -300\n-100 -200 -250\n-150 -200 -200\n-100 -150 -250\n-200 -200 -250\n",
@@ -589,7 +589,7 @@
     ],
     "checker": "tokens",
     "pdf": "./pdf/icpc-online-2026-1/F.pdf",
-    "statementFormat": "pdf",
+    "statementFormat": "markdown",
     "tests": [
       {
         "input": "5 3\n-100 -200 -300\n-100 -200 -250\n-150 -200 -200\n-100 -150 -250\n-200 -200 -250\n",
@@ -692,7 +692,7 @@
     "source": "https://qoj.ac/problem/20022",
     "qoj": "https://qoj.ac/problem/20022",
     "codeforces": "",
-    "markdown": "",
+    "markdown": "You have to cross the city before the last train leaves.\n\nThe city has $n$ junctions and $m$ one-way roads. Each road takes exactly one minute to pass. Junction $i$ has a toll gate, and passing through it costs $c_i$ coins.\n\nYou start at junction $1$ and want to reach junction $n$. Since you are in a hurry, you will only consider routes that use the minimum possible number of roads.\n\nAmong all such shortest routes, count how many have total toll at most $C$. The total toll of a route is the sum of $c_i$ over all junctions on the route, including junctions $1$ and $n$.\n\nBecause the answer may be large, output it modulo $2^{64}$.\n\n## Input\n\nThe first line contains three integers $n,m$, and $C$ ($1\\le n\\le 90$, $0\\le m\\le 300$, $0\\le C\\le 10^{12}$).\n\nThe second line contains $n$ integers $c_1,c_2,\\ldots,c_n$ ($0\\le c_i\\le 10^{12}$), where $c_i$ is the toll of junction $i$.\n\nEach of the next $m$ lines contains two integers $u$ and $v$ ($1\\le u,v\\le n$, $u\\ne v$), denoting a one-way road from $u$ to $v$.\n\nThere are no repeated directed roads.\n\n## Output\n\nPrint one integer: the number of shortest routes from junction $1$ to junction $n$ whose total toll is at most $C$, modulo $2^{64}$.\n\n## Note\n\nIn the example, the shortest routes from junction $1$ to junction $4$ use exactly two roads.\n\nThey are $1\\to 2\\to 4$, with total toll $1+2+4=7$, and $1\\to 3\\to 4$, with total toll $1+3+4=8$. Both routes have total toll at most $8$.\n\nThe route $1\\to 2\\to 3\\to 4$ is not counted, because it is not a shortest route.",
     "samples": [
       {
         "input": "4 5 8\n1 2 3 4\n1 2\n1 3\n2 4\n3 4\n2 3\n",
@@ -701,7 +701,7 @@
     ],
     "checker": "tokens",
     "pdf": "./pdf/icpc-online-2026-1/G.pdf",
-    "statementFormat": "pdf",
+    "statementFormat": "markdown",
     "tests": [
       {
         "input": "4 5 8\n1 2 3 4\n1 2\n1 3\n2 4\n3 4\n2 3\n",
@@ -804,7 +804,7 @@
     "source": "https://qoj.ac/problem/20023",
     "qoj": "https://qoj.ac/problem/20023",
     "codeforces": "",
-    "markdown": "",
+    "markdown": "For a string $A$, let $\\operatorname{pref}(A,i)$ denote the prefix of $A$ of length $i$.\n\nFor strings $A,B$, let $\\operatorname{occur}(A,B)$ denote the number of occurrences of $A$ in $B$.\n\nDefine:\n\n$$\n\\operatorname{score}(A,B)=\\sum_{i=1}^{\\operatorname{len}(A)}\\sum_{j=1}^{\\operatorname{len}(B)}\\operatorname{occur}(\\operatorname{pref}(A,i),\\operatorname{pref}(B,j)).\n$$\n\nThat is, the sum over every prefix of $A$ of its number of occurrences in every prefix of $B$.\n\nYou are given a text string $T$.\n\nThere are $q$ queries, each given by $a_i$ pattern strings $S_1,S_2,\\ldots,S_{a_i}$ and an integer $b_i$.\n\nFor each query, find the minimum $x$ such that:\n\n$$\n\\sum_{j=1}^{a_i}\\operatorname{score}(S_j,\\operatorname{pref}(T,x))\\ge b_i.\n$$\n\nIf no such $x$ exists, output $-1$.\n\n## Input\n\nThe first line contains the text string $T$ ($1\\le |T|\\le 2\\times 10^5$, where $|T|$ denotes the length of $T$).\n\nThe second line contains a single integer $q$ ($1\\le q\\le 2\\times 10^5$).\n\nFor each query, the first line contains two integers $a_i,b_i$ ($1\\le a_i\\le 2\\times 10^5$, $1\\le b_i\\le 10^{18}$). The following $a_i$ lines each contain a pattern string $S_1,S_2,\\ldots,S_{a_i}$ in order.\n\n$\\sum |S|\\le 2\\times 10^5$, where $\\sum |S|$ is the total length of all pattern strings across all queries in one test case.\n\nAll strings consist of lowercase English letters.\n\n## Output\n\nOutput $q$ lines, the answer to each query in order.",
     "samples": [
       {
         "input": "abac\n3\n1 5\naba\n2 10\na\nac\n1 1\nx\n",
@@ -813,7 +813,7 @@
     ],
     "checker": "tokens",
     "pdf": "./pdf/icpc-online-2026-1/H.pdf",
-    "statementFormat": "pdf",
+    "statementFormat": "markdown",
     "tests": [
       {
         "input": "abac\n3\n1 5\naba\n2 10\na\nac\n1 1\nx\n",
@@ -916,7 +916,7 @@
     "source": "https://qoj.ac/problem/20024",
     "qoj": "https://qoj.ac/problem/20024",
     "codeforces": "",
-    "markdown": "",
+    "markdown": "Night unfolds across rivers and mountains, and moonlight falls upon the water like a lamp gently lifted in someone's hands.\n\nLong ago, stargazers traced a vast lattice across the heavens. Every star was given its own position $(i,j)$, yet even stars that lie close together do not necessarily shine with the same light.\n\nA star at $(i,j)$ may resonate with certain ancient celestial tracks. Whenever a prime divides both $i$ and $j$, the star is said to be in harmony with one such track. Beyond these resonances, every star also carries a glimmer of its own, one that will never fade. Thus, its radiance is $\\omega(\\gcd(i,j))+1$, where $\\omega(x)$ denotes the number of distinct prime factors of $x$.\n\nNo one's eyes can hold the entire night sky in a single glance. Each time you look up, you can bear at most $L$ units of starlight. You begin with the lowest line of sight, at the star $(n,1)$, and slowly raise your gaze, encountering the stars in increasing order of their slope $j/i$. If several stars overlap along the same line of sight, the nearer one (i.e. the one with smaller $i$) is encountered first. You gather their light one by one, until the next star can no longer be seen in its entirety.\n\nThe night is vast and the stars are countless, yet gaze must finally come to rest somewhere. The last star that can be seen fully is the one I hold especially dear.\n\nTo the eye, it may be only a distant point of light. To me, however, it calls to mind someone who has left the familiar eaves behind and set out along a road of her own. She is not a destination waiting to be reached, but a traveler already on her way.\n\nShe has gone so far that the night has blurred her figure. Other stars lie along the same line of sight, overlapping in the distant sky, so I can no longer tell exactly where she is. All I can do is keep looking in her direction.\n\nSo I ask only this of you: tell me which direction I should look, namely the slope $j/i$ of the star.\n\n## Formal Description\n\nFor a positive integer $x$, let $\\omega(x)$ denote the number of distinct prime factors of $x$. In particular, $\\omega(1)=0$.\n\nYou are given a positive integer $n$. Consider all integer points $(i,j)$ satisfying $1\\le i,j\\le n$. The weight of $(i,j)$ is $a_{i,j}=\\omega(\\gcd(i,j))+1$.\n\nSort these $n^2$ points by $j/i$ in increasing order. If two points have the same value of $j/i$, the point with smaller $i$ comes first. Denote the resulting sequence by $c_1,c_2,\\ldots,c_{n^2}$.\n\nLet $c_k=(i_k,j_k)$ and define the prefix weight sum\n\n$$\nS_k=\\sum_{r=1}^{k}a_{i_r,j_r}.\n$$\n\nFor each query, you are given a positive integer $L$. Let $k$ be the largest positive integer satisfying $S_k\\le L$. If the total weight of all points is at most $L$, let $k=n^2$.\n\nOutput the slope $j_k/i_k$ of $c_k$. More precisely, output two coprime positive integers $p,q$ such that $p/q=j_k/i_k$.\n\nIt can be proved that the answer exists and is unique for every query.\n\n## Input\n\nThe first line contains two positive integers $n$ ($1\\le n\\le 10^9$) and $T$ ($1\\le T\\le 5$).\n\nThe following $T$ lines each contain one positive integer $L$ ($1\\le L\\le 2\\times 10^{18}$).\n\n## Output\n\nFor each query, output one line containing two coprime positive integers $p,q$, representing the answer slope $p/q$.\n\n## Note\n\n$1\\le n\\le 10^9$, $1\\le T\\le 5$, $1\\le L\\le 2\\times 10^{18}$.\n\nPerhaps each of us is walking a road like hers.\n\nAt times, this mountain path is paved with disappointments known to no one and joys that last only for a moment. To keep moving forward is not to sever ourselves from the past, nor to abandon who we are today. The roads on which we lost our way, the nights during which we came to a halt, and the people who once walked beside us will all become part of the landscape, carried with us toward places farther away.\n\nThe road ahead may be long and difficult. There will still be nights when you cannot see the way, and moments when you wonder whether you can continue. Yet I hope you will not mistake a distant destination for proof that all your steps have been in vain. To have come this far is itself to have become a shining star; and those who are willing to look up once more will always find a new direction among the constellations.\n\n**I offer you a lamp of moon, wishing all of you fair winds, however distant the mountains and long the road ahead.**",
     "samples": [
       {
         "input": "2 3\n1\n3\n100\n",
@@ -933,7 +933,7 @@
     ],
     "checker": "tokens",
     "pdf": "./pdf/icpc-online-2026-1/I.pdf",
-    "statementFormat": "pdf",
+    "statementFormat": "markdown",
     "tests": [
       {
         "input": "2 3\n1\n3\n100\n",
@@ -1036,7 +1036,7 @@
     "source": "https://qoj.ac/problem/20025",
     "qoj": "https://qoj.ac/problem/20025",
     "codeforces": "",
-    "markdown": "",
+    "markdown": "You are given a string $S$ of length $n$, indexed from $1$ to $n$. Every character of $S$ is either `N` or `H`.\n\nYou must process $T$ operations in order. An operation is described by three integers $op,p$, and $k$, and consists of repeating the following procedure exactly $k$ times. Every repetition starts at position $p$ and uses the current string obtained after all previous repetitions and operations.\n\nFor one repetition, choose a direction and a stopping character according to $op$:\n\n- If $op=1$, move to the right and use `N` as the stopping character.\n- If $op=2$, move to the right and use `H` as the stopping character.\n- If $op=3$, move to the left and use `N` as the stopping character.\n- If $op=4$, move to the left and use `H` as the stopping character.\n\nStart at position $p$. At every visited position, first flip its character: `N` becomes `H`, and `H` becomes `N`. If the character **before the flip** was the stopping character, the repetition ends immediately. Otherwise, move by one position in the chosen direction and continue. If there is no next position in that direction, the repetition ends after flipping the boundary character.\n\nDetermine the string after all operations have been performed.\n\n## Input\n\nThe first line contains two integers $n$ and $T$ ($1\\le n,T\\le 10^5$) — the length of the string and the number of operations.\n\nThe second line contains a string $S$ of length $n$. Every character of $S$ is either `N` or `H`.\n\nEach of the next $T$ lines contains three integers $op_i,p_i$, and $k_i$ ($1\\le op_i\\le 4$, $1\\le p_i\\le n$, $0\\le k_i\\le 10^{18}$), describing the $i$-th operation.\n\n## Output\n\nOutput one string of length $n$ — the final value of $S$ after all $T$ operations.",
     "samples": [
       {
         "input": "5 5\nHHNNN\n1 5 0\n4 1 3\n1 5 1\n3 1 3\n4 4 3\n",
@@ -1045,7 +1045,7 @@
     ],
     "checker": "tokens",
     "pdf": "./pdf/icpc-online-2026-1/J.pdf",
-    "statementFormat": "pdf",
+    "statementFormat": "markdown",
     "tests": [
       {
         "input": "5 5\nHHNNN\n1 5 0\n4 1 3\n1 5 1\n3 1 3\n4 4 3\n",
@@ -1148,7 +1148,7 @@
     "source": "https://qoj.ac/problem/20026",
     "qoj": "https://qoj.ac/problem/20026",
     "codeforces": "",
-    "markdown": "",
+    "markdown": "There are $n$ people standing in a row from left to right. Each person is either a villager or a werewolf.\n\nVillagers always tell the truth. Werewolves may tell either the truth or a lie. It is also known that no two adjacent people are both werewolves.\n\nThe statement of the $i$-th person is described by a pair $(d_i,b_i)$:\n\n- If $d_i=\\texttt{L}$, the person says that there are exactly $b_i$ werewolves to their left.\n- If $d_i=\\texttt{R}$, the person says that there are exactly $b_i$ werewolves to their right.\n\nFor each test case, construct any possible assignment of people to villagers and werewolves, or determine that no such assignment exists.\n\n## Input\n\nThe first line contains an integer $T$ ($1\\le T\\le 10^5$), the number of test cases.\n\nEach test case consists of three lines. The first line contains an integer $n$ ($2\\le n\\le 5\\cdot 10^5$). The second line contains a string $d$ of length $n$, consisting only of characters `L` and `R`. The third line contains $n$ integers $b_1,b_2,\\ldots,b_n$ ($0\\le b_i\\le n$).\n\nThe sum of $n$ over all test cases does not exceed $5\\cdot 10^5$.\n\n## Output\n\nFor each test case, if there is no valid assignment, print `-1`.\n\nOtherwise print a binary sequence of length $n$. The $i$-th value must be $0$ if the $i$-th person is a villager, and $1$ if the $i$-th person is a werewolf. You may print it either as one binary string or as $n$ space-separated integers.",
     "samples": [
       {
         "input": "3\n3\nRLL\n1 0 0\n3\nRRR\n2 0 1\n5\nRRLRR\n1 2 1 1 0\n",
@@ -1157,7 +1157,7 @@
     ],
     "checker": "wolf-game",
     "pdf": "./pdf/icpc-online-2026-1/K.pdf",
-    "statementFormat": "pdf",
+    "statementFormat": "markdown",
     "tests": [
       {
         "input": "3\n3\nRLL\n1 0 0\n3\nRRR\n2 0 1\n5\nRRLRR\n1 2 1 1 0\n",
@@ -1260,7 +1260,7 @@
     "source": "https://qoj.ac/problem/20027",
     "qoj": "https://qoj.ac/problem/20027",
     "codeforces": "",
-    "markdown": "",
+    "markdown": "You are given $n$ lowercase English strings $s_1,s_2,\\ldots,s_n$.\n\nFor each pair of integers $(i,j)$ satisfying $1\\le j\\le i\\le n$, define $f_{i,j}$ as the maximum possible length of the longest common prefix of exactly $j$ strings selected from the first $i$ strings. Formally,\n\n$$\nf_{i,j}=\\max_{\\substack{T\\subseteq\\{1,2,\\ldots,i\\}\\\\|T|=j}}\\left|\\operatorname{LCP}(s_k\\mid k\\in T)\\right|.\n$$\n\nThe longest common prefix of a single string is the string itself.\n\nFor each $i=1,2,\\ldots,n$, calculate\n\n$$\n\\sum_{j=1}^{i}(f_{i,j}\\oplus j),\n$$\n\nwhere $\\oplus$ denotes the bitwise XOR operation.\n\n## Input\n\nThe first line contains an integer $n$ ($1\\le n\\le 5\\cdot 10^5$), the number of strings.\n\nEach of the next $n$ lines contains a non-empty string $s_i$ consisting only of lowercase English letters.\n\nIt is guaranteed that\n\n$$\n\\sum_{i=1}^{n}|s_i|\\le 5\\cdot 10^5.\n$$\n\n## Output\n\nPrint $n$ lines. The $i$-th line should contain one integer:\n\n$$\n\\sum_{j=1}^{i}(f_{i,j}\\oplus j).\n$$\n\n## Note\n\nThe longest common prefix of several strings is the longest string that is a prefix of every selected string.\n\nThe symbol $\\oplus$ denotes the bitwise XOR operation.",
     "samples": [
       {
         "input": "4\na\nab\nabc\nabcd\n",
@@ -1273,7 +1273,7 @@
     ],
     "checker": "tokens",
     "pdf": "./pdf/icpc-online-2026-1/L.pdf",
-    "statementFormat": "pdf",
+    "statementFormat": "markdown",
     "tests": [
       {
         "input": "4\na\nab\nabc\nabcd\n",
@@ -1376,7 +1376,7 @@
     "source": "https://qoj.ac/problem/20028",
     "qoj": "https://qoj.ac/problem/20028",
     "codeforces": "",
-    "markdown": "",
+    "markdown": "In an ICPC contest, every participating team must first check in at the registration desk. You are asked to maintain the information system used for the sign-in process.\n\nThere is a roster containing the names of $n$ teams. All team names are pairwise distinct, and every name consists only of uppercase or lowercase English letters.\n\nAfter the roster, there are $m$ queries. Each query gives a name (which also consists only of uppercase or lowercase English letters). For each query, you must classify it into exactly one of the following three outcomes:\n\n- **Successful sign-in** — the name belongs to a valid team, and that team has not signed in before.\n- **Not a valid team** — the name does not belong to any team in the roster.\n- **Already signed in** — the name belongs to a valid team, but that team has already signed in earlier.\n\n## Input\n\nThe first line contains two integers $n$ and $m$ ($1\\le n,m\\le 10^5$) — the number of teams in the roster and the number of queries.\n\nThe next $n$ lines each contain a team name. All team names are distinct.\n\nThe next $m$ lines each contain a query name.\n\nEvery name (both roster names and query names) consists only of uppercase or lowercase English letters. The total number of characters over all names (roster names and query names combined) does not exceed $10^6$.\n\n## Output\n\nFor each of the $m$ queries, print one line containing exactly one of the following words:\n\n- `OK` — if the query results in a successful sign-in.\n- `WRONG` — if the name is not a valid team.\n- `REPEAT` — if the name has already signed in.",
     "samples": [
       {
         "input": "5 9\nRebornAsaVegetableDog\nLetItRot\nNaiveBirds\nOpenYourBrain\nCaptainTakesMeNot\nCaptainTakesMeNot\nOpenYourBrain\nNaiveBirds\nLetItRot\nRebornAsaVegetableDog\nNaiveBirds\nOneStepAway\nMetempsychosis\nCaptainTakesMeNot\n",
@@ -1385,7 +1385,7 @@
     ],
     "checker": "tokens",
     "pdf": "./pdf/icpc-online-2026-1/M.pdf",
-    "statementFormat": "pdf",
+    "statementFormat": "markdown",
     "tests": [
       {
         "input": "5 9\nRebornAsaVegetableDog\nLetItRot\nNaiveBirds\nOpenYourBrain\nCaptainTakesMeNot\nCaptainTakesMeNot\nOpenYourBrain\nNaiveBirds\nLetItRot\nRebornAsaVegetableDog\nNaiveBirds\nOneStepAway\nMetempsychosis\nCaptainTakesMeNot\n",
@@ -1488,7 +1488,7 @@
     "source": "https://qoj.ac/problem/20029",
     "qoj": "https://qoj.ac/problem/20029",
     "codeforces": "",
-    "markdown": "",
+    "markdown": "You are given a sequence of length $n$.\n\nFor each position $i$, there are between $1$ and $3$ chess pieces. The chess pieces have three possible colors: red, yellow, and blue.\n\nIt is guaranteed that there are no two chess pieces of the same color at the same position.\n\nYou need to divide the sequence into several continuous segments.\n\nA continuous segment is called red if the number of red chess pieces in this segment is not less than the number of yellow chess pieces and is also not less than the number of blue chess pieces. More formally, for a segment:\n\n$$\n\\text{red count}\\ge\\max(\\text{yellow count},\\text{blue count}).\n$$\n\nYour task is to maximize the sum of lengths of all red segments after the division. Output this maximum possible sum.\n\n## Input\n\nThe first line contains an integer $n$ ($1\\le n\\le 10^6$).\n\nThe following $n$ lines describe the sequence. The $i$-th line contains three integers $r_i,y_i$, and $b_i$ ($0\\le r_i,y_i,b_i\\le 1$), where:\n\n- $r_i=1$ means that the $i$-th position contains a red chess piece.\n- $y_i=1$ means that it contains a yellow chess piece.\n- $b_i=1$ means that it contains a blue chess piece.\n\nIt is guaranteed that $1\\le r_i+y_i+b_i\\le 3$ for every $i$.\n\n## Output\n\nPrint one integer: the maximum possible sum of lengths of all red segments.",
     "samples": [
       {
         "input": "10\n1 0 0\n0 1 1\n0 1 1\n1 1 0\n0 1 1\n1 0 1\n0 1 0\n0 1 1\n1 1 1\n1 0 1\n",
@@ -1497,7 +1497,7 @@
     ],
     "checker": "tokens",
     "pdf": "./pdf/icpc-online-2026-1/N.pdf",
-    "statementFormat": "pdf",
+    "statementFormat": "markdown",
     "tests": [
       {
         "input": "10\n1 0 0\n0 1 1\n0 1 1\n1 1 0\n0 1 1\n1 0 1\n0 1 0\n0 1 1\n1 1 1\n1 0 1\n",
