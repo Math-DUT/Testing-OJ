@@ -32,7 +32,7 @@ export function execute(
     stopRunner();
     active = new Worker(
       new URL(
-        `${import.meta.env.BASE_URL}runtime/${family === "cpp" ? "cpp-worker.js" : "python-worker.js"}`,
+        `${import.meta.env.BASE_URL}runtime/${family === "cpp" ? "cpp-worker.js" : "python-worker.js"}?v=20261009-clang22`,
         location.href,
       ),
       { type: family === "python" ? "module" : "classic" },
