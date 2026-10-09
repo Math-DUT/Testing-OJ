@@ -64,11 +64,13 @@ test("C++ and Python execute locally; PASS, WA, CE, TLE, persistence", async ({
   await page.getByRole("button", { name: "运行", exact: true }).click();
   await expect(page.locator(".test-results .verdict.fail").first()).toHaveText(
     /WA/,
+    { timeout: 30000 },
   );
   await page.locator(".cm-content").fill("print(");
   await page.getByRole("button", { name: "运行", exact: true }).click();
   await expect(page.locator(".test-results .verdict.fail").first()).toHaveText(
     /CE/,
+    { timeout: 30000 },
   );
   await page.locator(".cm-content").fill("while True: pass");
   await page.getByRole("button", { name: "运行", exact: true }).click();

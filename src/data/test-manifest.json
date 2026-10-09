@@ -1,318 +1,435 @@
 {
   "seed": "SHA-256 of contest/problem",
-  "scope": "Public self-test data: exhaustive small cases and exact special cases, not official hidden tests.",
+  "scope": "Public constraint-valid stress data, independently checked references and structural identities; not official hidden tests.",
   "problems": [
     {
       "contest": "lncpc-2025",
       "problem": "A",
       "count": 15,
       "trick": 3,
-      "oracle": "liaoning",
-      "sha256": "13203881d01c2c2e50052f9649b82a01a86fe0d0e09c2ec3a35938aa715f050e"
+      "oracle": "stress_liaoning",
+      "inputBytes": 461707,
+      "maxInputBytes": 67796,
+      "outputBytes": 176900,
+      "sha256": "f6ee94c5ee0c4676a4a5ede1d93034be0ec549e8e556deeed1ec96ad4b39350d"
     },
     {
       "contest": "lncpc-2025",
       "problem": "B",
       "count": 15,
       "trick": 3,
-      "oracle": "liaoning",
-      "sha256": "fc80cca3be43ad9b0be47c2a2074c108c1a0d97dfea1142860b720e6b2bdbf8a"
+      "oracle": "stress_liaoning",
+      "inputBytes": 4482856,
+      "maxInputBytes": 1250951,
+      "outputBytes": 2389907,
+      "sha256": "32f5bdbcaf5334283b498817fe17016d28313f81b2b52d96779edbefc549eff0"
     },
     {
       "contest": "lncpc-2025",
       "problem": "C",
       "count": 15,
       "trick": 3,
-      "oracle": "liaoning",
-      "sha256": "e45ebaab019a44f12967f18b1be9afa42cff9406f39a00f75e56d48511e2573a"
+      "oracle": "stress_liaoning",
+      "inputBytes": 150,
+      "maxInputBytes": 10,
+      "outputBytes": 30,
+      "sha256": "cb4bf010f4773362deb5b9296464801f76ec9eabc539c9bc6bb4f7a35208a4ed"
     },
     {
       "contest": "lncpc-2025",
       "problem": "D",
       "count": 15,
       "trick": 3,
-      "oracle": "liaoning",
-      "sha256": "620933512e7a9b2250d07baa5b4ce612291d5608b623fcfbf30b65bc3803e54e"
+      "oracle": "stress_liaoning",
+      "inputBytes": 7892,
+      "maxInputBytes": 604,
+      "outputBytes": 30,
+      "sha256": "2d530b2e0634028491f9d53e62b6faf831c3da6ae7741042ec3bb65aa3c64293"
     },
     {
       "contest": "lncpc-2025",
       "problem": "E",
       "count": 15,
       "trick": 3,
-      "oracle": "liaoning",
-      "sha256": "880d68c55d7a4cfdf5c3b2a06b28c0e6f73a214c479a4c2b3ec5d012866abae0"
+      "oracle": "stress_liaoning",
+      "inputBytes": 6376909,
+      "maxInputBytes": 1000009,
+      "outputBytes": 128,
+      "sha256": "e66ec723e1dff09e4e15138566bedb8745151bbe8bb2652410efa9dcafbc662a"
     },
     {
       "contest": "lncpc-2025",
       "problem": "F",
       "count": 15,
       "trick": 3,
-      "oracle": "liaoning",
-      "sha256": "19713b332863ddef2973f44ce9fda3089ac25b88ab640fd689bf7ee342874d20"
+      "oracle": "stress_liaoning",
+      "inputBytes": 32540337,
+      "maxInputBytes": 10000028,
+      "outputBytes": 17846758,
+      "sha256": "1cfef7cbebf588d85d244ecbeae85433358564c911cc33ff9b09d292fdf1aa1d"
     },
     {
       "contest": "lncpc-2025",
       "problem": "G",
       "count": 15,
       "trick": 3,
-      "oracle": "liaoning",
-      "sha256": "63a0f06363d81c4e5220502b22677049c70f143111edb9e02f6ac1f3a353f6bc"
+      "oracle": "stress_liaoning",
+      "inputBytes": 10013,
+      "maxInputBytes": 1006,
+      "outputBytes": 109,
+      "sha256": "78ec97e6582741900188f579137812abc4872061e6740cdc517210daabe6573b"
     },
     {
       "contest": "lncpc-2025",
       "problem": "H",
       "count": 15,
       "trick": 3,
-      "oracle": "liaoning",
-      "sha256": "e31183dc21124433b3058a95a8c585ff898b769389225929ebbcf9ab37158540"
+      "oracle": "stress_liaoning",
+      "inputBytes": 41611622,
+      "maxInputBytes": 10704832,
+      "outputBytes": 9559344,
+      "sha256": "40658bbca0b4d479b6077e5dcd2a6e7ac4cbdd3a963f11b248e8d92ac937a47d"
     },
     {
       "contest": "lncpc-2025",
       "problem": "I",
       "count": 15,
       "trick": 3,
-      "oracle": "liaoning",
-      "sha256": "ee75b47c6dbf56e12b8721a95f19bbf304a13d94b8355134e48258f0c359bad9"
+      "oracle": "stress_liaoning",
+      "inputBytes": 30077735,
+      "maxInputBytes": 9889026,
+      "outputBytes": 147,
+      "sha256": "8e84d903c3e36152f6d57545ce1bf53442b2dc579363fe2405840c6e16a395b7"
     },
     {
       "contest": "lncpc-2025",
       "problem": "J",
       "count": 15,
       "trick": 3,
-      "oracle": "liaoning",
-      "sha256": "4a87c1f0ec16bea7f4e9c558bf56d17ad395c511668d19392ab6360c69176d97"
+      "oracle": "stress_liaoning",
+      "inputBytes": 29286393,
+      "maxInputBytes": 5713655,
+      "outputBytes": 9356525,
+      "sha256": "e56378e014350050c2571227b33e981f91529a79c68b955c2470d4f22930897d"
     },
     {
       "contest": "lncpc-2025",
       "problem": "K",
       "count": 15,
       "trick": 3,
-      "oracle": "liaoning",
-      "sha256": "25916f25c0098e7c2e43739a07f44bd3c8f50301a6d5896e83e6f27b99cbbe8f"
+      "oracle": "stress_liaoning",
+      "inputBytes": 7254100,
+      "maxInputBytes": 3000003,
+      "outputBytes": 497,
+      "sha256": "ad890fe2b0596a662fc1ef8baa84a35cbeb70480649d934cda94a404c1828e7e"
     },
     {
       "contest": "lncpc-2025",
       "problem": "L",
       "count": 15,
       "trick": 3,
-      "oracle": "liaoning",
-      "sha256": "1735e48ec9b40c08598e7825543201fbf398c48b751a9e6ed0950c91add5f5f9"
+      "oracle": "stress_liaoning",
+      "inputBytes": 110435,
+      "maxInputBytes": 17793,
+      "outputBytes": 78062194,
+      "sha256": "d1e3e22aef5f0010da333621c3fa905f4674cfa9a8b06cc0e2fb2c1400d56526"
     },
     {
       "contest": "lncpc-2025",
       "problem": "M",
       "count": 15,
       "trick": 3,
-      "oracle": "liaoning",
-      "sha256": "98c62e91e35899e2704e1d4819d6a46ccdcc539fc46ee9c6833ea79a1561cf5b"
+      "oracle": "stress_liaoning",
+      "inputBytes": 72324301,
+      "maxInputBytes": 37777026,
+      "outputBytes": 80,
+      "sha256": "1b36bf4f372b21825042132e6f1eafada36f325e023465f884566b3344686eb7"
     },
     {
       "contest": "icpc-online-2026-1",
       "problem": "A",
       "count": 15,
       "trick": 3,
-      "oracle": "online1",
-      "sha256": "8038fec00a7cce8d0abf192f50dd4ac8ac41ceca77ec87455b31212fab2eebe7"
+      "oracle": "stress_online1",
+      "inputBytes": 31588540,
+      "maxInputBytes": 10004070,
+      "outputBytes": 4552876,
+      "sha256": "ebf544238037f711350b760261ed0fbb8f5e02b5de7a5a23c9f146dbdde28eb4"
     },
     {
       "contest": "icpc-online-2026-1",
       "problem": "B",
       "count": 15,
       "trick": 3,
-      "oracle": "online1",
-      "sha256": "2d13a801838da26aac2aebebf60ec259a47733fd9cedca094c6d5c17e99ca4fc"
+      "oracle": "stress_online1",
+      "inputBytes": 4863231,
+      "maxInputBytes": 1723910,
+      "outputBytes": 3380657,
+      "sha256": "7986049061016e83bec6f743b6c2948a8846825bf4ae290e109f2ad67d5e5678"
     },
     {
       "contest": "icpc-online-2026-1",
       "problem": "C",
       "count": 15,
       "trick": 3,
-      "oracle": "online1",
-      "sha256": "34f8fbbc5516bc2712e70c5ca2e56b2c689b5631251d0e39f63a3ff396c1e7f5"
+      "oracle": "stress_online1",
+      "inputBytes": 23523847,
+      "maxInputBytes": 6965461,
+      "outputBytes": 13274187,
+      "sha256": "e17553d8c440933d7f9e8b7f9de7787cc39cb048fc711e3ff3771f571af4cee4"
     },
     {
       "contest": "icpc-online-2026-1",
       "problem": "D",
       "count": 15,
       "trick": 3,
-      "oracle": "online1",
-      "sha256": "878454fbafbf60f934b5ed4f896c1ae97f496022ee46bd99a3932c8a7708ce6e"
+      "oracle": "stress_online1",
+      "inputBytes": 3134786,
+      "maxInputBytes": 577791,
+      "outputBytes": 54,
+      "sha256": "c9e85540e92565c66f186fe3c12d105fd64c9bc84cce8002450e29210c20434a"
     },
     {
       "contest": "icpc-online-2026-1",
       "problem": "E",
       "count": 15,
       "trick": 3,
-      "oracle": "online1",
-      "sha256": "a08536d8643f81536d49b987abf948f6944e44e8296bbbd0361c02c36bad24af"
+      "oracle": "stress_online1",
+      "inputBytes": 194248,
+      "maxInputBytes": 40006,
+      "outputBytes": 85558226,
+      "sha256": "633f65d8273eb41a12a867855994bedbcc935cae9fcb9696160c43ecd3f98570"
     },
     {
       "contest": "icpc-online-2026-1",
       "problem": "F",
       "count": 15,
       "trick": 3,
-      "oracle": "online1",
-      "sha256": "881d886d07d26b770a6107a501a001229f757383a0a59d5c8f61a8930b74bba0"
+      "oracle": "stress_online1",
+      "inputBytes": 41028,
+      "maxInputBytes": 3206,
+      "outputBytes": 39,
+      "sha256": "c1055343d707b62867aec2b66b5bcf5fe075b96a7a937da3e552696186cca6b4"
     },
     {
       "contest": "icpc-online-2026-1",
       "problem": "G",
       "count": 15,
       "trick": 3,
-      "oracle": "online1",
-      "sha256": "a0d2de2ebeb40c48fa1476273cf0871d7b470706d369338478c4dd00dfb7d03c"
+      "oracle": "stress_online1",
+      "inputBytes": 27333,
+      "maxInputBytes": 2206,
+      "outputBytes": 180,
+      "sha256": "98e2e012e2f1a40013c521b69ca7d5127925e2f518294636c5a7d610f1d55bd1"
     },
     {
       "contest": "icpc-online-2026-1",
       "problem": "H",
       "count": 15,
       "trick": 3,
-      "oracle": "online1",
-      "sha256": "2e24e8fc7ecdefcc00610b8f562882bd0e4df456a91880487245546e484c3d23"
+      "oracle": "stress_online1",
+      "inputBytes": 14001693,
+      "maxInputBytes": 3087324,
+      "outputBytes": 3013599,
+      "sha256": "15a0ca74efbaaba4d647ddc62665d9ad8696475745a2085e994d1eb59212b54a"
     },
     {
       "contest": "icpc-online-2026-1",
       "problem": "I",
       "count": 15,
       "trick": 3,
-      "oracle": "online1",
-      "sha256": "b42c014b25770fd093a100d91058a17faf06c0866e40ff81b15601d4b5f5e278"
+      "oracle": "stress_online1",
+      "inputBytes": 729,
+      "maxInputBytes": 65,
+      "outputBytes": 593,
+      "sha256": "f849f47e246abccd654b73e8299079ca671ce6266104122f2e89b992c1b426c1"
     },
     {
       "contest": "icpc-online-2026-1",
       "problem": "J",
       "count": 15,
       "trick": 3,
-      "oracle": "online1",
-      "sha256": "a0e3ecd93f87e4a0bad78cb6da2383a457c5a61a99c23100ea0afd387dc19674"
+      "oracle": "stress_online1",
+      "inputBytes": 15018711,
+      "maxInputBytes": 1860940,
+      "outputBytes": 814028,
+      "sha256": "da256097e003f046d19be42fc94e380a7da1865453064c3d9edfba3610c01de2"
     },
     {
       "contest": "icpc-online-2026-1",
       "problem": "K",
       "count": 15,
       "trick": 3,
-      "oracle": "online1",
-      "sha256": "ccc6e4e6daca9c173aedc465a380477c5094b1213722d7d56c02edc9955f68f1"
+      "oracle": "stress_online1",
+      "inputBytes": 15392394,
+      "maxInputBytes": 3672372,
+      "outputBytes": 2254024,
+      "sha256": "a83fc4a89cf4008014a9807e6983c82b4fc7f579c21f8445d106532d34e2050c"
     },
     {
       "contest": "icpc-online-2026-1",
       "problem": "L",
       "count": 15,
       "trick": 3,
-      "oracle": "online1",
-      "sha256": "f7d2a0f60057aba8821dd5ac45ebefca32ed402c498a468113a32b2399314c78"
+      "oracle": "stress_online1",
+      "inputBytes": 5670652,
+      "maxInputBytes": 1000005,
+      "outputBytes": 6666066,
+      "sha256": "34a9c83a413af2e1c5a336e8dbe0c716e363776422a85e764f692a124145a525"
     },
     {
       "contest": "icpc-online-2026-1",
       "problem": "M",
       "count": 15,
       "trick": 3,
-      "oracle": "online1",
-      "sha256": "47f1af65a845703b362a0f2662653ac2e94541c018f683e691e32fc6fcfbf85a"
+      "oracle": "stress_online1",
+      "inputBytes": 10458245,
+      "maxInputBytes": 1200014,
+      "outputBytes": 4370745,
+      "sha256": "e533a27c1c3f0dd9e77161ec8737e13f086e723f82351b92ace2d2830c7baf34"
     },
     {
       "contest": "icpc-online-2026-1",
       "problem": "N",
       "count": 15,
       "trick": 3,
-      "oracle": "online1",
-      "sha256": "b3b3eddb4c14be898ab79a603c65c90c67d9430c6b47c1f937753267bfa11fdd"
+      "oracle": "stress_online1",
+      "inputBytes": 19524386,
+      "maxInputBytes": 6000008,
+      "outputBytes": 84,
+      "sha256": "622e7b7d70887cdd865fe3f60f3c2e40b36190751bdd7c6f992293eb2809fff9"
     },
     {
       "contest": "icpc-online-2026-2",
       "problem": "A",
       "count": 15,
       "trick": 3,
-      "oracle": "online2",
-      "sha256": "4219376193809983fb4fc9e01c56cebef8e41f5b74de4cbd650b41c838409d6b"
+      "oracle": "stress_online2",
+      "inputBytes": 17046647,
+      "maxInputBytes": 6940407,
+      "outputBytes": 12362093,
+      "sha256": "03c31658a25d083049cc16ad0853422e9f593c7ea1c009c75805ae03a8ef98a7"
     },
     {
       "contest": "icpc-online-2026-2",
       "problem": "B",
       "count": 15,
       "trick": 3,
-      "oracle": "online2",
-      "sha256": "2ba21ae8c27a803c83a2e1c2203dfc5692372345f4e05c926f93893333f73701"
+      "oracle": "stress_online2",
+      "inputBytes": 14228399,
+      "maxInputBytes": 5735314,
+      "outputBytes": 611,
+      "sha256": "129e6135cb86d4e59badccb0d56abf53fc23a12c3f75b1585354fc9a858ae45b"
     },
     {
       "contest": "icpc-online-2026-2",
       "problem": "C",
       "count": 15,
       "trick": 3,
-      "oracle": "online2",
-      "sha256": "2f0cbac0e2b55b1b10b74a8f8bfc4b3eea9c3c7e7bf7aa230960f3307c057140"
+      "oracle": "stress_online2",
+      "inputBytes": 44891082,
+      "maxInputBytes": 7155746,
+      "outputBytes": 8339556,
+      "sha256": "c5d0c4010422fe5a3401364e2ed9d5ed7df1111053ce37404c3df83b3add4dee"
     },
     {
       "contest": "icpc-online-2026-2",
       "problem": "D",
       "count": 15,
       "trick": 3,
-      "oracle": "online2",
-      "sha256": "260736a79d02f44d725179d7f8328c7925ef8be09340431e3cc2b024dbe9d39a"
+      "oracle": "stress_online2",
+      "inputBytes": 31168935,
+      "maxInputBytes": 7097212,
+      "outputBytes": 78,
+      "sha256": "5223ca4f3f66df4aaaa15021a7edcb573cd175ed433d0bec2f44ea1fa7ac83e1"
     },
     {
       "contest": "icpc-online-2026-2",
       "problem": "E",
       "count": 15,
       "trick": 3,
-      "oracle": "online2",
-      "sha256": "6da254b824ba3d5da6e7357cff16c9eebc22bbe4f60c6f78026d828a8c10aded"
+      "oracle": "stress_online2",
+      "inputBytes": 78616,
+      "maxInputBytes": 9382,
+      "outputBytes": 133331,
+      "sha256": "f7017570f2cdc07b631e206e17be2a98943b5b749da45685adfafde0e24bbbd6"
     },
     {
       "contest": "icpc-online-2026-2",
       "problem": "F",
       "count": 15,
       "trick": 3,
-      "oracle": "online2",
-      "sha256": "446734f2b3e2678588e3f9b9c0cb1c61df59e2270375d13a2cd632009faa1db1"
+      "oracle": "stress_online2",
+      "inputBytes": 4829462,
+      "maxInputBytes": 577788,
+      "outputBytes": 67,
+      "sha256": "c53aea8d23041242974a164e7788a8e3f0874941fe50c234efd37cad27cc076f"
     },
     {
       "contest": "icpc-online-2026-2",
       "problem": "G",
       "count": 15,
       "trick": 3,
-      "oracle": "online2",
-      "sha256": "1d2e310e65450775c3e9839d2dcf640239b879efa0c2b0b2b218bcb574d8bd7f"
+      "oracle": "stress_online2",
+      "inputBytes": 170,
+      "maxInputBytes": 23,
+      "outputBytes": 64354950,
+      "sha256": "4a907d209a3b4afdfcde147acd228b14c216515dcef4e6a01fbe891a8789c171"
     },
     {
       "contest": "icpc-online-2026-2",
       "problem": "H",
       "count": 15,
       "trick": 3,
-      "oracle": "online2",
-      "sha256": "1fcc3f4ec5294e0ded109b4bf3535b04abfe50db0106b23c898128e17d2c7d05"
+      "oracle": "stress_online2",
+      "inputBytes": 266862,
+      "maxInputBytes": 38953,
+      "outputBytes": 266610,
+      "sha256": "2e3c23856b655063beaa6eda61f44569a83a3a95d86b29a847fe49cf3d396a78"
     },
     {
       "contest": "icpc-online-2026-2",
       "problem": "I",
       "count": 15,
       "trick": 3,
-      "oracle": "online2",
-      "sha256": "b55bb52bad02115839cb22dcd9b25d1d00f01f1c0671bb122e35432faf6a2c56"
+      "oracle": "stress_online2",
+      "inputBytes": 6388112,
+      "maxInputBytes": 788995,
+      "outputBytes": 148,
+      "sha256": "16b29940594cf882dd9628e7ee9511755ad30f8668c5a4028e8a6ade7aeb0639"
     },
     {
       "contest": "icpc-online-2026-2",
       "problem": "J",
       "count": 15,
       "trick": 3,
-      "oracle": "online2",
-      "sha256": "8cb9ae3162d89778fe5255df96380c6316ad8baf8aac7da3ac8557452b018f05"
+      "oracle": "stress_online2",
+      "inputBytes": 226931,
+      "maxInputBytes": 19192,
+      "outputBytes": 100,
+      "sha256": "c808f03a5a39c55c6ab1fc3618440faf672f8152369b19539ae28da3facdd0b6"
     },
     {
       "contest": "icpc-online-2026-2",
       "problem": "K",
       "count": 15,
       "trick": 3,
-      "oracle": "online2",
-      "sha256": "b19e459fa5c40b28ef02930273fe5fbdb7c52cb8ee470280e5957be069087605"
+      "oracle": "stress_online2",
+      "inputBytes": 15996219,
+      "maxInputBytes": 3514414,
+      "outputBytes": 41,
+      "sha256": "1e5254593c68f7383faaaf7df1c096b94220b445e28d5fcb1b6d9e6c262ce723"
     },
     {
       "contest": "icpc-online-2026-2",
       "problem": "L",
       "count": 15,
       "trick": 3,
-      "oracle": "online2",
-      "sha256": "87ed2747e6bd2f1db582b115abef6c48b902bdcb529a31d2f328e7a9d7339d82"
+      "oracle": "stress_online2",
+      "inputBytes": 6295133,
+      "maxInputBytes": 988997,
+      "outputBytes": 179,
+      "sha256": "4b4fc941b85c94ee1cc03f7c1e3d38854e64d46c8930b9b173baed4baaef3334"
     }
   ]
 }

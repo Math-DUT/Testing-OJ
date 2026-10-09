@@ -7,21 +7,21 @@
 - JetBrains 风格的深色工作区、浅色主题、手机布局。
 - 独立比赛入口，三场比赛选项卡，共 39 题（13 + 14 + 12）。
 - 开赛自动进入禅模式；继续比赛回到上次题目，Esc 或右上角按钮退出。
-- 界面、题面和代码字体分别可调，自动保存设置。
+- 界面、题面和代码字号分别可调，采用 Phycat 使用的霞鹜文楷；编程字体可选 Cascadia Code、JetBrains Mono、Fira Code 或系统等宽。Tab 插入 4 个空格，自动保存设置。
 - 侧栏、题面/代码、代码/测试、输入/输出分隔线均可拖动；双击还原，也支持方向键。布局随刷新保留，手机使用上下分隔线。
-- 代码区可开启或关闭；纯阅读时题面铺满工作区，草稿保留。顶部题号按钮和选择框直接切题，保留比赛计时与禅模式。
-- 每题 15 个不同输入的自测点，包括 3 个 trick 点；共 585 组。
+- 代码区可开启或关闭；纯阅读时题面铺满工作区，草稿保留。顶部题号按钮直接切题，保留比赛计时与禅模式。
+- 每题 15 个不同输入的自测点：12 个压力测试和 3 个 trick，共 585 组、117 个 trick。按原题范围覆盖大数组、深树、重复值、溢出、构造、精度、交互和大量输出。
 - 39 道题全部采用站内文本和 KaTeX 公式，保留原题图片、约束、样例及说明，不嵌入 PDF 阅读器。
 - 39 份独立 PDF 和三份带目录封面的合并题面。
 - C++17 / C++20 / C++23：实际 Clang 22.1.8 / libc++ / WASI SDK 33，均使用 `-O2`，本仓库包含运行环境和许可。支持 UTF-8 注释和 long double 运算、输入输出。
 - Python：Pyodide，首次运行从 jsDelivr 加载运行环境。
 - PyPy3：可下载本机助手，Windows 双击启动，首次从 Python 官方下载站获取 PyPy3；Linux / macOS 使用已安装的 PyPy3。仍由使用者自己的电脑执行，无需服务器。
-- 在 Web Worker 中运行，单组自测最多 10 秒，标准输出最多 2 MiB。
+- 在 Web Worker 中运行和校验，单组自测最多 10 秒，支持停止。测试文件单独压缩、按需下载并校验 SHA-256；大输出按测试点提高额度（最多 128 MiB），展示和历史记录仅保留预览。
 - 构造题校验不同合法答案；几何题使用原题的浮点误差规则；第二场 H 提供本地交互器，校验查询回复、次数上限和最终答案。
 - 自定义输入与预期输出、五小时计时、ICPC 罚时、自测榜。
 - 每场比赛独立保存代码、计时和提交记录，兼容旧版记录及备份。
 
-**数据范围：公开样例、自行生成的小规模穷举数据和可精确求解的边界数据，不是官方隐藏测试。Passed 只表示这 15 个自测点通过，不等于原比赛 AC。** 复杂题的生成数据以小规模为主；第二场 B 当前生成数据仅覆盖长方形，不能据此判断任意凸多边形算法正确性。所有人的代码和记录保存在各自浏览器里。浏览器 WebAssembly 的性能和 ABI 与原比赛不同，页面显示的原赛时限仅供参考。
+**测试数据为自行生成的压力数据，不是官方隐藏测试；Passed 表示通过本题 15 个自测文件。** 多数可扩展题覆盖到原题规模上限；不同题目采用随机、结构和边界数据组合，小规模穷举用来交叉验证参考算法。第二场 B 包含大型凸多边形、椭圆和抛物线形状，按原题精度校验。每题实际覆盖范围记录在 `src/data/stress-report.json`。所有人的代码和记录保存在各自浏览器里。浏览器 WebAssembly 的性能和 ABI 与原比赛不同，页面显示的原赛时限仅供参考。
 
 交互题 H 的自定义输入格式为 `T`，之后每组为 `n` 和一个从 0 开始的隐藏排列。程序会收到题目规定的 `T`、`n` 和查询回复，不会直接收到隐藏排列。官方样例是交互记录；题面中的“交互自测”按钮会载入可运行的本地场景。
 
@@ -66,7 +66,7 @@ npm run preview
 - [2026 网络赛第一场 · QOJ 4071](https://qoj.ac/contest/4071)，题目 20016–20029。
 - [2026 网络赛第二场 · QOJ 4113](https://qoj.ac/contest/4113)，题目 20236–20247。
 
-`src/problems.json` 与 `src/data/icpc-online-2026-*.json` 保存题面、公开样例和自测点；`statements/` 保存 Markdown 源稿；`public/pdf/` 保存供下载的 PDF。39 道题在网站中均为原生文本，第一场按原始 PDF 逐题转写并核对公式和数据范围。独立 PDF 保留原有排版，下载入口不影响站内阅读。
+`src/problems.json` 与 `src/data/icpc-online-2026-*.json` 保存题面、公开样例和自测点索引；`public/test-data/` 保存 gzip 压缩的 `.bin` 测试文件；`statements/` 保存 Markdown 源稿；`public/pdf/` 保存供下载的 PDF。39 道题在网站中均为原生文本，第一场按原始 PDF 逐题转写并核对公式和数据范围。独立 PDF 保留原有排版，下载入口不影响站内阅读。
 
 修改第一场 Markdown 后运行 `python scripts/sync-online-text.py`，只更新题面，不修改公开样例、校验器或自测点。
 
@@ -82,15 +82,19 @@ python scripts/import-problems.py
 python scripts/import-online.py
 ```
 
-导入原始题面后生成自测点：
+导入原始题面后生成自测点（先用支持 C++17 的编译器构建离线参考程序）：
 
 ```sh
+mkdir -p tmp
+g++ -std=c++17 -O2 scripts/test-data/fast-oracles.cpp -o tmp/fast-oracles.exe
+python scripts/test-data/verify-stress.py
 python scripts/generate-tests.py
 node scripts/validate-tests.mjs
+python scripts/test-data/validate-constraints.py
 python scripts/test-data/verify-oracles.py
 ```
 
-参考算法在 `scripts/test-data/`；随机种子由比赛和题号的 SHA-256 决定。`src/data/test-manifest.json` 记录每题的数量、trick 数量、参考模块和数据校验值。穷举参考实现用来验证小规模数据，不作为高效题解。
+参考算法在 `scripts/test-data/`；随机种子由比赛和题号的 SHA-256 决定。`src/data/test-manifest.json` 记录每题的数量、trick 数量、参考模块和数据校验值。穷举、直接模拟和独立算法交叉验证大规模参考公式；发布时逐文件检查原题约束、压缩文件校验值、构造答案和交互协议。部分算法核对使用辽宁省赛与第二场的命题组官方题解。可用 `--contest 比赛ID --problem 题号` 单独重生成一题。
 
 重新生成 PDF：
 

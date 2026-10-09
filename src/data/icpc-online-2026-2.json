@@ -24,94 +24,169 @@
     "statementFormat": "markdown",
     "tests": [
       {
-        "input": "3 3\n1 1\n3 0 1 7\n6 1 2 3 4 5 7\n",
-        "output": "3\n0 7 6\n",
-        "label": "公开样例 1",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "压力数据 1",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/A/01-807ad3a2a5b67646.bin",
+        "sha256": "807ad3a2a5b67646136a5dbe29bd146b214cb5307ce8c1aa0ec24a222ac18942",
+        "inputBytes": 23434,
+        "outputBytes": 382112,
+        "maxOutputBytes": 2577024
       },
       {
-        "input": "1 4\n4 11 5 14 0\n",
-        "output": "0\n",
-        "label": "公开样例 2",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "压力数据 2",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/A/02-f6368d6b9bfb61c5.bin",
+        "sha256": "f6368d6b9bfb61c52601b9feb9063ac92bdc3314491dbf4ee266a7659ade47ca",
+        "inputBytes": 806400,
+        "outputBytes": 8,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "3 2\n1 0\n2 3 0\n2 0 3\n",
-        "output": "0\n\n",
-        "label": "随机场景 1",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 3",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/A/03-8451f8b22b038091.bin",
+        "sha256": "8451f8b22b03809151c6eb06b167e66369b4a492590494e4fecd6f4828fa1789",
+        "inputBytes": 145715,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "3 2\n4 1 0 3 2\n3 1 2 3\n4 1 3 2 0\n",
-        "output": "1\n0\n",
-        "label": "随机场景 2",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 4",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/A/04-49968c51f5319846.bin",
+        "sha256": "49968c51f5319846c404794c497b3a9e5161cba3e48dd422eee1225afb55ecfe",
+        "inputBytes": 289215,
+        "outputBytes": 3558913,
+        "maxOutputBytes": 15284228
       },
       {
-        "input": "3 1\n2 1 0\n1 0\n1 1\n",
-        "output": "1\n0\n",
-        "label": "随机场景 3",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 5",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/A/05-c5d5e8ba8733f07a.bin",
+        "sha256": "c5d5e8ba8733f07a781665c2a56b0fac4d307e7636feb2e87815895588bfcd32",
+        "inputBytes": 6940407,
+        "outputBytes": 337110,
+        "maxOutputBytes": 2397016
       },
       {
-        "input": "2 3\n3 2 4 5\n8 3 6 0 2 4 1 7 5\n",
-        "output": "5\n0 1 3 6 7\n",
-        "label": "随机场景 4",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 6",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/A/06-2f111c05e0b22985.bin",
+        "sha256": "2f111c05e0b2298529f0079e16d7a86fd10cd05c20024557ccb7becf2cb950a7",
+        "inputBytes": 702771,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "2 3\n1 6\n5 0 6 7 1 5\n",
-        "output": "7\n0 1 2 3 4 5 7\n",
-        "label": "随机场景 5",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 7",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/A/07-4e2c8380ea6f52b4.bin",
+        "sha256": "4e2c8380ea6f52b494e9a879e619b29a3d09fd63b50568b8ae0a3a5d73575047",
+        "inputBytes": 1111765,
+        "outputBytes": 806401,
+        "maxOutputBytes": 4274180
       },
       {
-        "input": "2 3\n6 3 1 2 5 4 6\n4 5 1 4 2\n",
-        "output": "4\n0 3 6 7\n",
-        "label": "随机场景 6",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 8",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/A/08-96e45cc3ebf0eab0.bin",
+        "sha256": "96e45cc3ebf0eab014b606b662d556284a7edfd60d884820b58097382adde329",
+        "inputBytes": 1723904,
+        "outputBytes": 8,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1 3\n6 4 7 1 0 2 3\n",
-        "output": "2\n5 6\n",
-        "label": "随机场景 7",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 9",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/A/09-48104c505f03cb50.bin",
+        "sha256": "48104c505f03cb508c70a87d7e2bc8ff4014b46ec7350e4bf3872c997a8bc874",
+        "inputBytes": 1653837,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "2 3\n6 0 6 1 4 3 2\n6 0 3 4 7 1 2\n",
-        "output": "3\n5 6 7\n",
-        "label": "随机场景 8",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 10",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/A/10-c13cd5a9a12502c3.bin",
+        "sha256": "c13cd5a9a12502c3326c69038906973a91b7773eb50bca9a7ee212c1b90fc5a8",
+        "inputBytes": 1680005,
+        "outputBytes": 7277506,
+        "maxOutputBytes": 30158600
       },
       {
-        "input": "4 2\n2 0 1\n1 3\n1 3\n4 2 3 0 1\n",
-        "output": "1\n0\n",
-        "label": "随机场景 9",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 11",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/A/11-766dca32afaf6240.bin",
+        "sha256": "766dca32afaf62401bae23841209cf1ad57ecc5eec57f42aaf4d0203e3551fe4",
+        "inputBytes": 382111,
+        "outputBytes": 8,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1 2\n2 3 1\n",
-        "output": "2\n0 2\n",
-        "label": "随机场景 10",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 12",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/A/12-37a9be8a93d91fa2.bin",
+        "sha256": "37a9be8a93d91fa2b31fffe48e78dac25bf1bb1407c23b84343e5acca5771bb8",
+        "inputBytes": 1587017,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "3 3\n1 2\n3 0 2 7\n6 1 2 3 4 6 7\n",
-        "output": "3\n0 5 7\n",
+        "input": "",
+        "output": "",
         "label": "加入元素影响所有集合",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/A/13-e419c2f5904f9b56.bin",
+        "sha256": "e419c2f5904f9b5683069707f7e05338c3b19504856819bd12e3d9ace27f25ac",
+        "inputBytes": 30,
+        "outputBytes": 8,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "2 3\n4 0 1 2 3\n2 0 4\n",
-        "output": "0\n\n",
+        "input": "",
+        "output": "",
         "label": "集合已经 XOR 闭合",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/A/14-1b16b5921f3e6b8e.bin",
+        "sha256": "1b16b5921f3e6b8ebe6e4743a7754e1b577affe8a7581c5e2138225bf0e08cd0",
+        "inputBytes": 20,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "3 3\n1 1\n1 2\n1 4\n",
-        "output": "1\n0\n",
+        "input": "",
+        "output": "",
         "label": "缺少零与多集合相互限制",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/A/15-d3f5990097524e7a.bin",
+        "sha256": "d3f5990097524e7ab6c4ac3ec48e81fa39b2a11dd48fa509d7044d052d63a6c6",
+        "inputBytes": 16,
+        "outputBytes": 4,
+        "maxOutputBytes": 2097152
       }
     ]
   },
@@ -136,94 +211,169 @@
     "statementFormat": "markdown",
     "tests": [
       {
-        "input": "2\n3\n2 0\n1 5\n0 0\n4\n1 0\n1 1\n0 1\n0 0\n",
-        "output": "4.908664519941197\n1.384172075579563\n",
-        "label": "公开样例 1",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "大型凸多边形、精确最远点与高精度积分",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/B/01-24568018504df7cf.bin",
+        "sha256": "24568018504df7cf95e29243f2d40fae2bc17c12bd6239871ea6436a242fabe0",
+        "inputBytes": 4019,
+        "outputBytes": 20,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n479 0\n479 998\n0 998\n0 0\n",
-        "output": "1078.012084177380302\n",
-        "label": "随机场景 1",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "非抛物线凸多边形、极扁椭圆和独立最远点穷举",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/B/02-1ae2f55e198df4a2.bin",
+        "sha256": "1ae2f55e198df4a2cef0c6ea06c883bbcfcc61dfdd4883e39ead993238e6690b",
+        "inputBytes": 40719,
+        "outputBytes": 60,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n564 0\n564 659\n0 659\n0 0\n",
-        "output": "848.736168172409293\n",
-        "label": "随机场景 2",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "大型凸多边形、精确最远点与高精度积分",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/B/03-47ae8206db6c0c48.bin",
+        "sha256": "47ae8206db6c0c485afa7f5f88603d766413a2813bc4822a60138fa4768f02ad",
+        "inputBytes": 49856,
+        "outputBytes": 20,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n933 0\n933 829\n0 829\n0 0\n",
-        "output": "1221.382344815146325\n",
-        "label": "随机场景 3",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "非抛物线凸多边形、极扁椭圆和独立最远点穷举",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/B/04-4f1dee8a5427e965.bin",
+        "sha256": "4f1dee8a5427e965c706bba1950909b58ab856e0ff742a2c0faa8ef811c406ec",
+        "inputBytes": 91567,
+        "outputBytes": 60,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n938 0\n938 222\n0 222\n0 0\n",
-        "output": "931.553577126027335\n",
-        "label": "随机场景 4",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "大型凸多边形、精确最远点与高精度积分",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/B/05-448873faff6f57d5.bin",
+        "sha256": "448873faff6f57d5ea6b9d0ac5ffe0126aeb514b3ebcdcde59ac287258136b1e",
+        "inputBytes": 227340,
+        "outputBytes": 20,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n493 0\n493 392\n0 392\n0 0\n",
-        "output": "616.106518257744028\n",
-        "label": "随机场景 5",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "非抛物线凸多边形、极扁椭圆和独立最远点穷举",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/B/06-0c174a5d9b9bbab8.bin",
+        "sha256": "0c174a5d9b9bbab8a7f693e3a16e84996058420fcbb22efdb9b5b2980f529f3a",
+        "inputBytes": 202926,
+        "outputBytes": 60,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n312 0\n312 39\n0 39\n0 0\n",
-        "output": "302.473530990253323\n",
-        "label": "随机场景 6",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "大型凸多边形、精确最远点与高精度积分",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/B/07-f09411794322418a.bin",
+        "sha256": "f09411794322418a1d5ed81202bf182f680faa8258903af44ada384a97aeecbd",
+        "inputBytes": 723328,
+        "outputBytes": 20,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n108 0\n108 536\n0 536\n0 0\n",
-        "output": "527.680639578909449\n",
-        "label": "随机场景 7",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "非抛物线凸多边形、极扁椭圆和独立最远点穷举",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/B/08-61ba130451a6446d.bin",
+        "sha256": "61ba130451a6446d323f1fafedee112ef9062988d52adc6245d4891c46b4f571",
+        "inputBytes": 405556,
+        "outputBytes": 60,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n191 0\n191 231\n0 231\n0 0\n",
-        "output": "293.248934416696557\n",
-        "label": "随机场景 8",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "大型凸多边形、精确最远点与高精度积分",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/B/09-a10f8d5d15a1811b.bin",
+        "sha256": "a10f8d5d15a1811b41358ba9b434a0a64883e63253333992d6d8b91ae6c197fb",
+        "inputBytes": 990748,
+        "outputBytes": 20,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n567 0\n567 430\n0 430\n0 0\n",
-        "output": "695.898788455167278\n",
-        "label": "随机场景 9",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "大型凸多边形、精确最远点与高精度积分",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/B/10-b5df25a1e7cd7417.bin",
+        "sha256": "b5df25a1e7cd74174bca3422c938188f9798262dc0ce00f12eb98d07cb0960f1",
+        "inputBytes": 1146599,
+        "outputBytes": 20,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n764 0\n764 883\n0 883\n0 0\n",
-        "output": "1142.563430284379137\n",
-        "label": "随机场景 10",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "大型凸多边形、精确最远点与高精度积分",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/B/11-dc12a4259ada5b1e.bin",
+        "sha256": "dc12a4259ada5b1ec5d755318e8c9a0534ce5d43ffc5ea01b86ea0e3c285a0a3",
+        "inputBytes": 5735314,
+        "outputBytes": 100,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n338 0\n338 812\n0 812\n0 0\n",
-        "output": "855.119141056823878\n",
-        "label": "随机场景 11",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "大型凸多边形、精确最远点与高精度积分",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/B/12-67e4cc09177c93da.bin",
+        "sha256": "67e4cc09177c93da860d277839a599fcdc58f1d21de3cec52c9987a443808902",
+        "inputBytes": 4610313,
+        "outputBytes": 80,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n1 0\n1 1\n0 1\n0 0\n",
-        "output": "1.384172075579563\n",
+        "input": "",
+        "output": "",
         "label": "单位正方形",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/B/13-1ee76b052216a378.bin",
+        "sha256": "1ee76b052216a378818971492a17357eafca996978a742acfc5f1e6f641cb96e",
+        "inputBytes": 20,
+        "outputBytes": 18,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n1000000000 0\n1000000000 1000000000\n0 1000000000\n0 0\n",
-        "output": "1384172075.579563379287720\n",
+        "input": "",
+        "output": "",
         "label": "最大坐标的正方形",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/B/14-0a48ca1f82c4e08a.bin",
+        "sha256": "0a48ca1f82c4e08ae4302f0cc5aa3e8414ac0100ceb1c2aa734fa8fef77cf029",
+        "inputBytes": 56,
+        "outputBytes": 27,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n1000000000 0\n1000000000 1\n0 1\n0 0\n",
-        "output": "956611477.533906817436218\n",
+        "input": "",
+        "output": "",
         "label": "极薄长方形的浮点精度",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/B/15-afd82a34cdabad0c.bin",
+        "sha256": "afd82a34cdabad0c56635ae880dc79532b1c58db5f0db62c795b59053ae400e8",
+        "inputBytes": 38,
+        "outputBytes": 26,
+        "maxOutputBytes": 2097152
       }
     ]
   },
@@ -248,94 +398,169 @@
     "statementFormat": "markdown",
     "tests": [
       {
-        "input": "2\n5\n1 2\n2 3\n3 4\n4 5\n10 20 30 40 50\n3\n1 4 2\n2 4 4\n1 1 1\n2\n1 2\n7 5\n1\n1 1 1\n",
-        "output": "120\n90\n50\n7\n",
-        "label": "公开样例 1",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "压力数据 1",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/C/01-10ce9de24f537b7e.bin",
+        "sha256": "10ce9de24f537b7e496a1f880cc4bb6fddf404910f2e0b02b371bd9f6814a22c",
+        "inputBytes": 79775,
+        "outputBytes": 17036,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n6\n6 2\n4 1\n2 1\n3 1\n5 1\n16 38 14 69 22 74\n12\n3 3 3\n4 5 5\n1 4 3\n4 4 4\n3 5 3\n4 5 5\n4 4 4\n1 1 1\n1 2 1\n5 5 5\n1 5 4\n4 4 4\n",
-        "output": "74\n74\n112\n74\n74\n74\n74\n74\n85\n74\n219\n74\n",
-        "label": "随机场景 1",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 2",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/C/02-fb23b19a51994345.bin",
+        "sha256": "fb23b19a51994345dce508f48bd58eedbe74c9815f994393abb7f70374ba8f1b",
+        "inputBytes": 196923,
+        "outputBytes": 50300,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n9\n8 4\n7 5\n9 2\n2 1\n6 5\n4 1\n5 4\n3 1\n84 94 93 19 49 44 71 16 51\n12\n5 8 5\n4 8 7\n2 4 2\n5 7 7\n5 6 6\n4 6 6\n8 8 8\n2 3 3\n1 1 1\n2 6 5\n7 7 7\n5 5 5\n",
-        "output": "245\n290\n229\n103\n94\n178\n94\n120\n94\n248\n94\n94\n",
-        "label": "随机场景 2",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 3",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/C/03-4c3759891738a3a0.bin",
+        "sha256": "4c3759891738a3a0459f30e134930f4684b4c7f1d928fa4d449125058c39e16a",
+        "inputBytes": 528904,
+        "outputBytes": 72006,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n12\n9 3\n12 1\n10 8\n2 1\n7 1\n5 1\n6 3\n11 5\n3 2\n8 7\n4 2\n56 35 67 18 71 76 29 87 84 9 24 56\n12\n5 5 5\n5 9 7\n11 11 11\n5 10 9\n7 11 8\n7 8 8\n4 6 6\n5 5 5\n9 9 9\n9 9 9\n7 7 7\n3 4 3\n",
-        "output": "87\n180\n87\n267\n196\n143\n120\n87\n87\n87\n87\n91\n",
-        "label": "随机场景 3",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 4",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/C/04-652cdb53d6eb0726.bin",
+        "sha256": "652cdb53d6eb072615bf13f47c92bca9d029582fcd98360a4ede232deb2f99d2",
+        "inputBytes": 1113129,
+        "outputBytes": 234961,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n7\n5 3\n4 3\n2 1\n3 2\n7 5\n6 1\n60 58 7 24 73 100 83\n12\n6 6 6\n5 5 5\n4 6 6\n6 6 6\n1 5 1\n4 5 4\n2 4 4\n4 6 6\n2 2 2\n3 4 4\n5 6 5\n5 5 5\n",
-        "output": "100\n100\n156\n100\n156\n156\n118\n156\n100\n118\n160\n100\n",
-        "label": "随机场景 4",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 5",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/C/05-427eef44bf446e3d.bin",
+        "sha256": "427eef44bf446e3dd36f19956bbf16366fecf26e44f8a81f0f1bf6f29c9de24c",
+        "inputBytes": 1708832,
+        "outputBytes": 427980,
+        "maxOutputBytes": 2760496
       },
       {
-        "input": "1\n10\n10 6\n6 2\n3 1\n4 3\n7 2\n9 2\n5 1\n2 1\n8 4\n76 61 81 58 99 6 74 89 92 60\n12\n6 7 7\n2 3 3\n7 7 7\n2 9 8\n5 9 6\n4 5 5\n1 5 4\n5 7 7\n3 4 3\n9 9 9\n6 8 8\n5 8 7\n",
-        "output": "153\n99\n99\n403\n310\n139\n201\n227\n139\n99\n175\n303\n",
-        "label": "随机场景 5",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 6",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/C/06-1224d072cc3ef589.bin",
+        "sha256": "1224d072cc3ef589aec40b2d2636d8b99d7606c6f4ee8d23b288b109555c4dec",
+        "inputBytes": 2880392,
+        "outputBytes": 360036,
+        "maxOutputBytes": 2488720
       },
       {
-        "input": "1\n11\n11 10\n5 1\n9 5\n7 4\n3 2\n8 7\n6 1\n2 1\n10 8\n4 2\n100 29 9 77 28 97 16 37 76 87 55\n12\n1 3 2\n8 9 8\n3 8 7\n2 6 6\n6 8 8\n7 8 7\n8 9 8\n8 8 8\n9 9 9\n9 9 9\n2 3 2\n2 6 4\n",
-        "output": "142\n124\n138\n204\n197\n129\n124\n100\n100\n100\n104\n204\n",
-        "label": "随机场景 6",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 7",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/C/07-3db2b72c56c57015.bin",
+        "sha256": "3db2b72c56c57015d0ea0af134b66a31d18a8eff0bfc99faf91549416c2eeb92",
+        "inputBytes": 4843462,
+        "outputBytes": 1032467,
+        "maxOutputBytes": 5178444
       },
       {
-        "input": "1\n4\n4 2\n2 1\n3 2\n75 50 85 32\n12\n1 1 1\n2 2 2\n3 3 3\n2 2 2\n2 2 2\n2 2 2\n1 1 1\n2 3 3\n3 3 3\n3 3 3\n2 2 2\n2 3 3\n",
-        "output": "85\n85\n85\n85\n85\n85\n85\n125\n85\n85\n85\n125\n",
-        "label": "随机场景 7",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 8",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/C/08-7259326cf4dc1cdd.bin",
+        "sha256": "7259326cf4dc1cdda5a787d248f9f76b63eb488fd648bfb27708fd7c02053f6c",
+        "inputBytes": 6267295,
+        "outputBytes": 1521378,
+        "maxOutputBytes": 7134088
       },
       {
-        "input": "1\n5\n3 2\n5 3\n2 1\n4 2\n78 28 84 32 1\n12\n2 2 2\n1 1 1\n3 4 4\n1 1 1\n2 3 2\n2 4 2\n3 4 4\n1 3 3\n4 4 4\n1 4 3\n3 4 4\n3 3 3\n",
-        "output": "84\n84\n106\n84\n106\n138\n106\n113\n84\n145\n106\n84\n",
-        "label": "随机场景 8",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 9",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/C/09-43134c0e74ade722.bin",
+        "sha256": "43134c0e74ade7225f6eef93a3e607a7f7948cec8b8f67e429efa12cda03276d",
+        "inputBytes": 6924788,
+        "outputBytes": 800100,
+        "maxOutputBytes": 4248976
       },
       {
-        "input": "1\n8\n5 2\n3 2\n4 1\n6 3\n2 1\n8 5\n7 1\n2 77 91 8 68 17 95 21\n12\n2 4 4\n3 6 4\n2 4 4\n5 5 5\n5 7 7\n1 3 3\n5 6 5\n3 4 3\n3 3 3\n2 2 2\n3 6 5\n2 7 4\n",
-        "output": "168\n95\n168\n95\n95\n236\n95\n108\n95\n95\n108\n273\n",
-        "label": "随机场景 9",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 10",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/C/10-136feb2ffb538af9.bin",
+        "sha256": "136feb2ffb538af982252f4dfe771791fae9dba534c66f0433b881d183ceb7dd",
+        "inputBytes": 7155746,
+        "outputBytes": 1501445,
+        "maxOutputBytes": 7054356
       },
       {
-        "input": "1\n11\n9 6\n4 1\n5 2\n7 6\n11 6\n8 2\n6 2\n2 1\n10 6\n3 1\n63 16 83 34 73 13 82 4 75 44 14\n12\n6 10 6\n8 8 8\n10 10 10\n5 8 7\n6 6 6\n8 9 9\n9 9 9\n3 6 6\n6 6 6\n5 8 7\n1 3 2\n7 10 8\n",
-        "output": "219\n83\n83\n83\n83\n83\n83\n109\n83\n83\n89\n146\n",
-        "label": "随机场景 10",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 11",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/C/11-f793cb9420bc230d.bin",
+        "sha256": "f793cb9420bc230db18a55b78a00ad3e1ca37ff0dde3a34dfad7004caf63c247",
+        "inputBytes": 6267337,
+        "outputBytes": 1521627,
+        "maxOutputBytes": 7135084
       },
       {
-        "input": "1\n5\n3 2\n5 1\n2 1\n4 2\n81 94 68 79 36\n12\n3 4 4\n4 4 4\n3 3 3\n3 3 3\n4 4 4\n4 4 4\n2 3 3\n4 4 4\n3 3 3\n3 3 3\n3 4 3\n1 3 1\n",
-        "output": "175\n94\n94\n94\n94\n94\n117\n94\n94\n94\n173\n211\n",
-        "label": "随机场景 11",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 12",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/C/12-37be75fa22f3fc33.bin",
+        "sha256": "37be75fa22f3fc334dd0864106bceb114fb0058245ddebe758da47864f2ed78d",
+        "inputBytes": 6924191,
+        "outputBytes": 800100,
+        "maxOutputBytes": 4248976
       },
       {
-        "input": "1\n2\n2 1\n10 58\n12\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n",
-        "output": "58\n58\n58\n58\n58\n58\n58\n58\n58\n58\n58\n58\n",
+        "input": "",
+        "output": "",
         "label": "两点树删除唯一边",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/C/13-5f0fa96efc3ce91c.bin",
+        "sha256": "5f0fa96efc3ce91c56b17808ee444db479a5b7588efd336f8708a7536ba51e4c",
+        "inputBytes": 89,
+        "outputBytes": 36,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n3\n3 2\n2 1\n98 94 52\n12\n2 2 2\n1 1 1\n2 2 2\n2 2 2\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n1 1 1\n2 2 2\n1 1 1\n2 2 2\n",
-        "output": "98\n98\n98\n98\n98\n98\n98\n98\n98\n98\n98\n98\n",
+        "input": "",
+        "output": "",
         "label": "区间只含被删除的边",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/C/14-8c586c48ac920fbd.bin",
+        "sha256": "8c586c48ac920fbdcb8ffd49490bb610a29a2f99a338d263bb5bb4ade46d7e67",
+        "inputBytes": 96,
+        "outputBytes": 36,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n7\n3 1\n5 4\n6 1\n4 3\n7 3\n2 1\n60 96 32 44 51 1 34\n12\n1 6 6\n1 6 3\n1 6 5\n1 6 4\n1 6 3\n1 6 2\n1 6 5\n1 6 4\n1 6 5\n1 6 6\n1 6 5\n1 6 4\n",
-        "output": "222\n317\n284\n223\n317\n267\n284\n223\n284\n222\n284\n223\n",
+        "input": "",
+        "output": "",
         "label": "全树删除边切成两部分",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/C/15-16a1d0eb171c4f02.bin",
+        "sha256": "16a1d0eb171c4f02670050fc574055073f3b721d2942b999a0eb23e8a97dbae7",
+        "inputBytes": 123,
+        "outputBytes": 48,
+        "maxOutputBytes": 2097152
       }
     ]
   },
@@ -372,94 +597,169 @@
     "statementFormat": "markdown",
     "tests": [
       {
-        "input": "2 1\n2 2\n",
-        "output": "4\n",
-        "label": "公开样例 1",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "压力数据 1",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/D/01-383bb234f167c014.bin",
+        "sha256": "383bb234f167c014d9327de8bf28ae171ee22e2ee10c0c1e8151f26f82eb280d",
+        "inputBytes": 40625,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "2 2\n1 4\n2 4\n",
-        "output": "12\n",
-        "label": "公开样例 2",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "压力数据 2",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/D/02-86473a70fee0af41.bin",
+        "sha256": "86473a70fee0af4102ec0408c3c14ac9083ee305b4c36e860a3b2dab2338f0a9",
+        "inputBytes": 108269,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "2 2\n2 3\n4 4\n",
-        "output": "0\n",
-        "label": "公开样例 3",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "压力数据 3",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/D/03-6fd8d3b1d145de0e.bin",
+        "sha256": "6fd8d3b1d145de0e4eb08703109b86c848b86515c540dc556f8010a2552d0f3f",
+        "inputBytes": 243595,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "4 2\n1 2\n1 3\n",
-        "output": "0\n",
-        "label": "公开样例 4",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "压力数据 4",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/D/04-38952960a047370f.bin",
+        "sha256": "38952960a047370f89200ae855a9bd4c793ae9069e6b3c7ce55c607d304308f8",
+        "inputBytes": 473874,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1 0\n",
-        "output": "2\n",
-        "label": "随机场景 1",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 5",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/D/05-40ffbcc4b1722271.bin",
+        "sha256": "40ffbcc4b1722271ae22d78ec2d78c9082931d145e32eecf59cc436d1dbc6119",
+        "inputBytes": 812180,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "2 2\n3 3\n3 2\n",
-        "output": "0\n",
-        "label": "随机场景 2",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 6",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/D/06-6498944788592dbe.bin",
+        "sha256": "6498944788592dbefca5c504b96a0f800ddb2d70fc12563cfeb2855d35773932",
+        "inputBytes": 1218270,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "2 2\n2 1\n4 3\n",
-        "output": "0\n",
-        "label": "随机场景 3",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 7",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/D/07-ef5e78e3577d068e.bin",
+        "sha256": "ef5e78e3577d068e638544f7c62ddd8b84b8fec9ca36ec62058ff14d2aa22985",
+        "inputBytes": 1895002,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "3 2\n3 2\n6 8\n",
-        "output": "0\n",
-        "label": "随机场景 4",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 8",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/D/08-62b7fd5fcbf8c073.bin",
+        "sha256": "62b7fd5fcbf8c073e30678c75b8f3374d42c27c7cdb526dd38e55601148a7e9d",
+        "inputBytes": 2707215,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "2 2\n4 3\n5 1\n",
-        "output": "2\n",
-        "label": "随机场景 5",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 9",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/D/09-9f18bfa4d00c5c1b.bin",
+        "sha256": "9f18bfa4d00c5c1b90896d6beca68a2298cb4db148624279c637b71bfa00f35c",
+        "inputBytes": 4060861,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1 2\n3 1\n1 1\n",
-        "output": "0\n",
-        "label": "随机场景 6",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 10",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/D/10-c4187a9077551af3.bin",
+        "sha256": "c4187a9077551af3014104c738e232d6a17b614be21664756f581360330f08e3",
+        "inputBytes": 5414745,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "3 0\n",
-        "output": "40320\n",
-        "label": "随机场景 7",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 11",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/D/11-61f3cfeb3ad5d4f4.bin",
+        "sha256": "61f3cfeb3ad5d4f42e7969e1fc90d63b480c11a339bd9379fc65e5dd6be7138b",
+        "inputBytes": 7097062,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "2 0\n",
-        "output": "24\n",
-        "label": "随机场景 8",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 12",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/D/12-1cad8c11349fed1e.bin",
+        "sha256": "1cad8c11349fed1e311b75cbeab193d5a72b68c718ebdc54190d3c2c2bdbc347",
+        "inputBytes": 7097212,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "18 0\n",
-        "output": "546362027\n",
+        "input": "",
+        "output": "",
         "label": "没有限制，十八层阶乘取模",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/D/13-bd93b2dcacab7be8.bin",
+        "sha256": "bd93b2dcacab7be8fd456f2e3b3d56dd9c7ecc3f07e27d547f26c639b240b306",
+        "inputBytes": 5,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "3 1\n1 7\n",
-        "output": "0\n",
+        "input": "",
+        "output": "",
         "label": "根节点值必须是最大叶值",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/D/14-d2ef7d9491483d66.bin",
+        "sha256": "d2ef7d9491483d66becfe13460896deb8f0d0c70fdd32e096bb5de553e2b98b7",
+        "inputBytes": 8,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "2 2\n4 1\n4 2\n",
-        "output": "0\n",
+        "input": "",
+        "output": "",
         "label": "同一节点相互矛盾的约束",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/D/15-e81e08aab22e3e3e.bin",
+        "sha256": "e81e08aab22e3e3e86b3defe38209f72ddf4534b3973bc517dbd5f7151d5a1f7",
+        "inputBytes": 12,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       }
     ]
   },
@@ -488,94 +788,169 @@
     "statementFormat": "markdown",
     "tests": [
       {
-        "input": "5\n1\n5\n8\n54\n9653618\n",
-        "output": "1\n11\n7\n183\n9856882167209\n",
-        "label": "公开样例 1",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "压力数据 1",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/E/01-48d8147937516151.bin",
+        "sha256": "48d8147937516151c4652f3fcb337be44837c46b4dcd6f0b4675d03d7aba7935",
+        "inputBytes": 926,
+        "outputBytes": 1549,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "5\n48\n2\n4\n8\n16\n",
-        "output": "47\n1\n3\n7\n23\n",
-        "label": "公开样例 2",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "压力数据 2",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/E/02-1af2c4e5ce795aee.bin",
+        "sha256": "1af2c4e5ce795aee8b69bc4c172a13f5a096131aafc423499867bd9e1b0f9db5",
+        "inputBytes": 1873,
+        "outputBytes": 3192,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "5\n241\n69\n140\n57\n249\n",
-        "output": "25137\n777\n329\n427\n11487\n",
-        "label": "随机场景 1",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 3",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/E/03-3ad1fd948fa94c39.bin",
+        "sha256": "3ad1fd948fa94c39ef7b6f2662d9aab34f82c08d031e9ad6ca9f9b1362df0d16",
+        "inputBytes": 2710,
+        "outputBytes": 4571,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "5\n193\n209\n125\n204\n117\n",
-        "output": "19117\n8967\n5731\n687\n575\n",
-        "label": "随机场景 2",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 4",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/E/04-095dd2cd46fe2898.bin",
+        "sha256": "095dd2cd46fe289891ab02fe54e4c54bb0cb0ada8df054c4bce285a05cfc3674",
+        "inputBytes": 4666,
+        "outputBytes": 7897,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "5\n144\n165\n246\n10\n123\n",
-        "output": "329\n987\n1827\n11\n1827\n",
-        "label": "随机场景 3",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 5",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/E/05-c922a8acefa27cb3.bin",
+        "sha256": "c922a8acefa27cb3c9c5dfef46da877619210060a4a545032d3a2ddc0e4be49f",
+        "inputBytes": 6434,
+        "outputBytes": 10944,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "5\n151\n194\n147\n221\n67\n",
-        "output": "10941\n4781\n2107\n4865\n2331\n",
-        "label": "随机场景 4",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 6",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/E/06-18255ae57980b1d0.bin",
+        "sha256": "18255ae57980b1d0b1dbd6c35b4a3c553552b9113f4275cff0059f7dcc40cc41",
+        "inputBytes": 7448,
+        "outputBytes": 12626,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "5\n106\n8\n97\n37\n44\n",
-        "output": "1727\n7\n4781\n671\n147\n",
-        "label": "随机场景 5",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 7",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/E/07-0d6325ca4bb3e85c.bin",
+        "sha256": "0d6325ca4bb3e85c9a5918842d3249c8d577e1553930482f8e40b8f9d2d512de",
+        "inputBytes": 8251,
+        "outputBytes": 14016,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "5\n60\n158\n204\n116\n233\n",
-        "output": "47\n3297\n687\n989\n34959\n",
-        "label": "随机场景 6",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 8",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/E/08-7803fe01612b2dbd.bin",
+        "sha256": "7803fe01612b2dbd378a87810b3e01b774137e02a62980da67dcdddad05a7667",
+        "inputBytes": 9256,
+        "outputBytes": 15681,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "5\n128\n76\n234\n135\n207\n",
-        "output": "1367\n427\n575\n1403\n5439\n",
-        "label": "随机场景 7",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 9",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/E/09-646e6f6005f4ef7c.bin",
+        "sha256": "646e6f6005f4ef7c872c2e4777c74a2a6295e743a428bf831b4fea50e9efcf1a",
+        "inputBytes": 9137,
+        "outputBytes": 15460,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "5\n139\n166\n145\n8\n226\n",
-        "output": "10647\n4923\n2365\n7\n7353\n",
-        "label": "随机场景 8",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 10",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/E/10-4fa911cca1f9f6d3.bin",
+        "sha256": "4fa911cca1f9f6d335608ac6858bc6185ef6e0794cdb2c316aeaf60edcc0aed8",
+        "inputBytes": 9270,
+        "outputBytes": 15715,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "5\n10\n243\n129\n120\n29\n",
-        "output": "11\n14763\n2107\n95\n473\n",
-        "label": "随机场景 9",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 11",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/E/11-eb9e5c70665c6c2f.bin",
+        "sha256": "eb9e5c70665c6c2f8d9cb45cd3734827218ea32ba2a9c952dc792b4584307d71",
+        "inputBytes": 9382,
+        "outputBytes": 15938,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "5\n114\n118\n25\n30\n94\n",
-        "output": "427\n2439\n231\n23\n1521\n",
-        "label": "随机场景 10",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 12",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/E/12-8c38ba44244decc2.bin",
+        "sha256": "8c38ba44244decc2676d6dc7b28ee4d11e08673f8b050938b46623e602accffc",
+        "inputBytes": 9233,
+        "outputBytes": 15718,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n1\n",
-        "output": "1\n",
+        "input": "",
+        "output": "",
         "label": "模数 1 的定义",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/E/13-fd28a2fcaadd5c99.bin",
+        "sha256": "fd28a2fcaadd5c99e96e5a27b7029a3fba2ea3364926887b74f75a05edf9410f",
+        "inputBytes": 4,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "4\n8\n16\n32\n64\n",
-        "output": "7\n23\n87\n343\n",
+        "input": "",
+        "output": "",
         "label": "二的幂的非循环单位群",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/E/14-a91facbf3f8873e2.bin",
+        "sha256": "a91facbf3f8873e2adff3658ec2f1c4bb90f1acf5feeca485a544e37e9a5782e",
+        "inputBytes": 13,
+        "outputBytes": 12,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "4\n6\n12\n30\n60\n",
-        "output": "3\n7\n23\n47\n",
+        "input": "",
+        "output": "",
         "label": "非互素元素阶为零",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/E/15-6f5ee46ca0de442c.bin",
+        "sha256": "6f5ee46ca0de442c023259f5893887e02e0f1a5dbf316dfe9e68a2ee0be2e9ea",
+        "inputBytes": 13,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       }
     ]
   },
@@ -600,94 +975,169 @@
     "statementFormat": "markdown",
     "tests": [
       {
-        "input": "3\n1\n5\n1 2\n1 3\n1 4\n4 5\n13\n1 2\n2 3\n3 4\n2 5\n5 6\n5 7\n1 8\n8 9\n9 10\n8 11\n11 12\n11 13\n",
-        "output": "0\n3\n7\n",
-        "label": "公开样例 1",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "压力数据 1",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/F/01-13201e1b2a35fe0b.bin",
+        "sha256": "13201e1b2a35fe0bc53a47f24858d3d853497541876f6c33c8fb235a0545c451",
+        "inputBytes": 27786,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n8\n2 1\n3 2\n4 2\n5 1\n6 1\n7 5\n8 7\n",
-        "output": "4\n",
-        "label": "随机场景 1",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 2",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/F/02-c6ac2bec691630ab.bin",
+        "sha256": "c6ac2bec691630ab5e7195d85c1e61f2481fd01ce040c01518b2de7028668b0b",
+        "inputBytes": 54896,
+        "outputBytes": 5,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n6\n2 1\n3 1\n4 2\n5 3\n6 1\n",
-        "output": "3\n",
-        "label": "随机场景 2",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 3",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/F/03-eabe7f322f5969e6.bin",
+        "sha256": "eabe7f322f5969e6863ade264ca975eba132523633aa90fd0af604d02a835d7a",
+        "inputBytes": 184681,
+        "outputBytes": 5,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n2 1\n3 2\n4 2\n",
-        "output": "3\n",
-        "label": "随机场景 3",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 4",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/F/04-45508a9c7da2cfe3.bin",
+        "sha256": "45508a9c7da2cfe3a107e558ac2f5ec21dcf2669fa6671dad857fc60191c6b01",
+        "inputBytes": 381202,
+        "outputBytes": 6,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n6\n2 1\n3 1\n4 2\n5 2\n6 3\n",
-        "output": "4\n",
-        "label": "随机场景 4",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 5",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/F/05-a0c0c3c46dc8de9f.bin",
+        "sha256": "a0c0c3c46dc8de9f5152dfd53a2d97342a2654b30a713c7f73c3e252b9b796c1",
+        "inputBytes": 577788,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n2 1\n3 2\n4 1\n",
-        "output": "2\n",
-        "label": "随机场景 5",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 6",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/F/06-4fd1c81085fd7790.bin",
+        "sha256": "4fd1c81085fd7790ded38dff0aacf0cdf5c8e5a084a9b95d0e4955e8ac6204d9",
+        "inputBytes": 388898,
+        "outputBytes": 6,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n2\n2 1\n",
-        "output": "1\n",
-        "label": "随机场景 6",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 7",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/F/07-684f1ac9a754e2fc.bin",
+        "sha256": "684f1ac9a754e2fc33cae95618315adb8b2796d5e0a98d1d45d2badc1703b049",
+        "inputBytes": 566682,
+        "outputBytes": 6,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n7\n2 1\n3 1\n4 3\n5 3\n6 5\n7 6\n",
-        "output": "3\n",
-        "label": "随机场景 7",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 8",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/F/08-191357a4862fae42.bin",
+        "sha256": "191357a4862fae4287dbb2cbec1768c66bd93bf3022ee10bf77011afb16409f2",
+        "inputBytes": 557014,
+        "outputBytes": 6,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n8\n2 1\n3 1\n4 1\n5 1\n6 4\n7 6\n8 1\n",
-        "output": "6\n",
-        "label": "随机场景 8",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 9",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/F/09-ba618d4848072944.bin",
+        "sha256": "ba618d4848072944ff138dd46f8704fcc9751ad5ef7e04b8bdd14eebc6fbedac",
+        "inputBytes": 577788,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n3\n2 1\n3 1\n",
-        "output": "2\n",
-        "label": "随机场景 9",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 10",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/F/10-f5ae9efdfb290ac9.bin",
+        "sha256": "f5ae9efdfb290ac9bcbe9c16527b0734cd678f4614a644f71fc7f0bd49ae9597",
+        "inputBytes": 388898,
+        "outputBytes": 6,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n9\n2 1\n3 2\n4 1\n5 1\n6 4\n7 4\n8 7\n9 2\n",
-        "output": "5\n",
-        "label": "随机场景 10",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 11",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/F/11-9a4ce406d1cdb7c3.bin",
+        "sha256": "9a4ce406d1cdb7c3c1f1a6247310ef456ff1f3e4c77121b9ce353693c4f02207",
+        "inputBytes": 566670,
+        "outputBytes": 6,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n9\n2 1\n3 2\n4 2\n5 1\n6 2\n7 5\n8 2\n9 7\n",
-        "output": "6\n",
-        "label": "随机场景 11",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 12",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/F/12-96eeacac68a20f9d.bin",
+        "sha256": "96eeacac68a20f9dfe641c40dd15fc55d2094980325749ab3fda47d305bd720d",
+        "inputBytes": 557071,
+        "outputBytes": 6,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n1\n",
-        "output": "0\n",
+        "input": "",
+        "output": "",
         "label": "单顶点无需折叠",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/F/13-c800dc88127deddc.bin",
+        "sha256": "c800dc88127deddcde551d6e2a92632fa3b1fb91a4f13312bb077f87cef62378",
+        "inputBytes": 4,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n10\n2 1\n3 2\n4 3\n5 4\n6 5\n7 6\n8 7\n9 8\n10 9\n",
-        "output": "4\n",
+        "input": "",
+        "output": "",
         "label": "长链重复折叠",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/F/14-e7d718bad6f4dc73.bin",
+        "sha256": "e7d718bad6f4dc73ad6add736fe1b9f28bc1cecafd5c8020d47587109dad6885",
+        "inputBytes": 42,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n10\n1 2\n1 3\n1 4\n1 5\n1 6\n1 7\n1 8\n1 9\n1 10\n",
-        "output": "9\n",
+        "input": "",
+        "output": "",
         "label": "多条直径可选择的星形树",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/F/15-f80b42eea8450df9.bin",
+        "sha256": "f80b42eea8450df9454f0c57d8bb337831f18f166851959dc80a84037cb111a2",
+        "inputBytes": 42,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       }
     ]
   },
@@ -712,94 +1162,169 @@
     "statementFormat": "markdown",
     "tests": [
       {
-        "input": "3\n1\n2\n4\n",
-        "output": "2\n2\n7 7\n6 7\n77 112 117 117\n46 99 116 117\n",
-        "label": "公开样例 1",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "压力数据 1",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/G/01-7f9e162954289d38.bin",
+        "sha256": "7f9e162954289d385ae52ea740465e556e01385d4645ee4263b549fd256a5eb5",
+        "inputBytes": 17,
+        "outputBytes": 59370,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n2\n",
-        "output": "7 7\n6 7\n",
-        "label": "随机场景 1",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 2",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/G/02-c1fc2732da406226.bin",
+        "sha256": "c1fc2732da40622682ae33084f16b7b98468b17e523bc1218472ff2005fd19b9",
+        "inputBytes": 7,
+        "outputBytes": 158181,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "3\n1\n3\n2\n",
-        "output": "2\n2\n24 28 28\n17 27 28\n7 7\n6 7\n",
-        "label": "随机场景 2",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 3",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/G/03-8927112a1f51d8a4.bin",
+        "sha256": "8927112a1f51d8a49fe9f984f6429ccafe7db52061f61683f0c8949151f2299d",
+        "inputBytes": 8,
+        "outputBytes": 356002,
+        "maxOutputBytes": 2472584
       },
       {
-        "input": "1\n1\n",
-        "output": "2\n2\n",
-        "label": "随机场景 3",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 4",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/G/04-d80a80136bd7ef39.bin",
+        "sha256": "d80a80136bd7ef39d073ddd819dc68b7a7482c48a4bfd0b200db8d47ce808cff",
+        "inputBytes": 20,
+        "outputBytes": 692245,
+        "maxOutputBytes": 3817556
       },
       {
-        "input": "1\n4\n",
-        "output": "77 112 117 117\n46 99 116 117\n",
-        "label": "随机场景 4",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 5",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/G/05-f1aa5809b31aa33f.bin",
+        "sha256": "f1aa5809b31aa33f7d2da9f4461f5a5d1ec9c275001604ed1efa27ee9cc524bb",
+        "inputBytes": 8,
+        "outputBytes": 1186793,
+        "maxOutputBytes": 5795748
       },
       {
-        "input": "2\n2\n1\n",
-        "output": "7 7\n6 7\n2\n2\n",
-        "label": "随机场景 5",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 6",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/G/06-2ec52f23085c686d.bin",
+        "sha256": "2ec52f23085c686dcdd081ff0561465470b9e4a67305c997df42b7f9fc010bd1",
+        "inputBytes": 8,
+        "outputBytes": 1779978,
+        "maxOutputBytes": 8168488
       },
       {
-        "input": "2\n1\n1\n",
-        "output": "2\n2\n2\n2\n",
-        "label": "随机场景 6",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 7",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/G/07-d48280854f959274.bin",
+        "sha256": "d48280854f959274b8b46ee3a09b09ac0a1f2dc0d6ae72bac2c888ecc5b930db",
+        "inputBytes": 20,
+        "outputBytes": 2768693,
+        "maxOutputBytes": 12123348
       },
       {
-        "input": "3\n4\n3\n2\n",
-        "output": "77 112 117 117\n46 99 116 117\n24 28 28\n17 27 28\n7 7\n6 7\n",
-        "label": "随机场景 7",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 8",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/G/08-6301f457abf3b369.bin",
+        "sha256": "6301f457abf3b36969490668287cd21d0bebba4f0883c791d72731771f2043de",
+        "inputBytes": 9,
+        "outputBytes": 3955468,
+        "maxOutputBytes": 16870448
       },
       {
-        "input": "2\n4\n3\n",
-        "output": "77 112 117 117\n46 99 116 117\n24 28 28\n17 27 28\n",
-        "label": "随机场景 8",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 9",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/G/09-6c5927566e949085.bin",
+        "sha256": "6c5927566e949085ef678c23bcf56ba0b4e3af6700998ca48679ed2623b1555a",
+        "inputBytes": 9,
+        "outputBytes": 5933255,
+        "maxOutputBytes": 24781596
       },
       {
-        "input": "3\n2\n2\n5\n",
-        "output": "7 7\n6 7\n7 7\n6 7\n238 424 490 496 496\n122 343 469 495 496\n",
-        "label": "随机场景 9",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 10",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/G/10-835e7eeca0adc9cd.bin",
+        "sha256": "835e7eeca0adc9cdc93a5de8f2356c6594f15906ec470f6e4ba3c97ae3af4b71",
+        "inputBytes": 23,
+        "outputBytes": 7911117,
+        "maxOutputBytes": 32693044
       },
       {
-        "input": "2\n1\n5\n",
-        "output": "2\n2\n238 424 490 496 496\n122 343 469 495 496\n",
-        "label": "随机场景 10",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 11",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/G/11-eed88477c17b0df7.bin",
+        "sha256": "eed88477c17b0df7766fb9add898721231ef529670806aa13cb1b0dd4de393cb",
+        "inputBytes": 9,
+        "outputBytes": 19777237,
+        "maxOutputBytes": 80157524
       },
       {
-        "input": "3\n4\n5\n1\n",
-        "output": "77 112 117 117\n46 99 116 117\n238 424 490 496 496\n122 343 469 495 496\n2\n2\n",
-        "label": "随机场景 11",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 12",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/G/12-f788eec1d57c5343.bin",
+        "sha256": "f788eec1d57c534304bb6bf7a4d8bff96f2acbc686697e264aaab6da52f4bfbe",
+        "inputBytes": 10,
+        "outputBytes": 19776518,
+        "maxOutputBytes": 80154648
       },
       {
-        "input": "3\n1\n2\n3\n",
-        "output": "2\n2\n7 7\n6 7\n24 28 28\n17 27 28\n",
+        "input": "",
+        "output": "",
         "label": "单点自环和两条平行边",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/G/13-e846bf6afd3712c9.bin",
+        "sha256": "e846bf6afd3712c9599ea847dfc9a254b6095e26706b3b7f5c709c23b47c1316",
+        "inputBytes": 8,
+        "outputBytes": 30,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "3\n3\n2\n1\n",
-        "output": "24 28 28\n17 27 28\n7 7\n6 7\n2\n2\n",
+        "input": "",
+        "output": "",
         "label": "每组重置且边顶点覆盖不同",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/G/14-e8a9155bf381f526.bin",
+        "sha256": "e8a9155bf381f52656648fb13754680339d71d3d188b6c9a1ca4ffd623398a98",
+        "inputBytes": 8,
+        "outputBytes": 30,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "2\n4\n1\n",
-        "output": "77 112 117 117\n46 99 116 117\n2\n2\n",
+        "input": "",
+        "output": "",
         "label": "跨越环尾的区间",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/G/15-03aaa0d6af388a59.bin",
+        "sha256": "03aaa0d6af388a59347bc9b72116f1d1da09208e3efb5c0f446e97ccc6597367",
+        "inputBytes": 6,
+        "outputBytes": 33,
+        "maxOutputBytes": 2097152
       }
     ]
   },
@@ -824,94 +1349,169 @@
     "statementFormat": "markdown",
     "tests": [
       {
-        "input": "1\n2\n0 1\n",
-        "output": "! 0 1\n",
-        "label": "随机场景 1",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 1",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/H/01-c4d792f3ce81e34e.bin",
+        "sha256": "c4d792f3ce81e34e907d9cb76f191254c54b25d0a3f4e6c093a81543b2341cea",
+        "inputBytes": 1208,
+        "outputBytes": 1200,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n9\n2 1 4 5 0 8 7 6 3\n",
-        "output": "! 2 1 4 5 0 8 7 6 3\n",
-        "label": "随机场景 2",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 2",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/H/02-42175a3e74380f67.bin",
+        "sha256": "42175a3e74380f67f2f8b911b5c40db1790890de177d759ceafebf5f4746dfd1",
+        "inputBytes": 2744,
+        "outputBytes": 2736,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n8\n2 6 1 7 3 0 4 5\n",
-        "output": "! 2 6 1 7 3 0 4 5\n",
-        "label": "随机场景 3",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 3",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/H/03-2570d73e951d539a.bin",
+        "sha256": "2570d73e951d539ab7b4e9771386fc0355c4aa618cd71252b0ae1e3649799563",
+        "inputBytes": 5816,
+        "outputBytes": 5808,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n11\n2 8 5 9 7 1 0 3 10 4 6\n",
-        "output": "! 2 8 5 9 7 1 0 3 10 4 6\n",
-        "label": "随机场景 4",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 4",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/H/04-bff944bde8d2b837.bin",
+        "sha256": "bff944bde8d2b83734a7c0d8880d6dc07106787d167dde5446e145e8cf210b0f",
+        "inputBytes": 5828,
+        "outputBytes": 5820,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n9\n0 5 2 6 8 4 1 3 7\n",
-        "output": "! 0 5 2 6 8 4 1 3 7\n",
-        "label": "随机场景 5",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 5",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/H/05-17fcf421fff187c9.bin",
+        "sha256": "17fcf421fff187c9ef78e91df3af9b923c265d13a2d71709328fa947fccca8b0",
+        "inputBytes": 5840,
+        "outputBytes": 5832,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n8\n4 3 7 5 2 0 1 6\n",
-        "output": "! 4 3 7 5 2 0 1 6\n",
-        "label": "随机场景 6",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 6",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/H/06-10e4ee95ec02b81b.bin",
+        "sha256": "10e4ee95ec02b81b84008f1b62ba56a77fd0702f48112fc05194cf4eb7401700",
+        "inputBytes": 11672,
+        "outputBytes": 11664,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n12\n1 3 2 6 10 0 8 5 9 4 11 7\n",
-        "output": "! 1 3 2 6 10 0 8 5 9 4 11 7\n",
-        "label": "随机场景 7",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 7",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/H/07-69b5a7a71545bd90.bin",
+        "sha256": "69b5a7a71545bd9045a5fe72b2daa30badbac6ea1ac91a1ce994a692270a7938",
+        "inputBytes": 38953,
+        "outputBytes": 38920,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n12\n1 0 4 10 3 7 2 8 5 6 11 9\n",
-        "output": "! 1 0 4 10 3 7 2 8 5 6 11 9\n",
-        "label": "随机场景 8",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 8",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/H/08-035ecc0c2086223c.bin",
+        "sha256": "035ecc0c2086223ce9091239cc7616e14f6d05ac146bb03f21e46944909cbf72",
+        "inputBytes": 38953,
+        "outputBytes": 38920,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n6\n0 2 4 3 1 5\n",
-        "output": "! 0 2 4 3 1 5\n",
-        "label": "随机场景 9",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 9",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/H/09-b82f790a3b9ba365.bin",
+        "sha256": "b82f790a3b9ba3659d9fd6d4e48925acc5c948abc5acd8c5074ab91344a83e97",
+        "inputBytes": 38953,
+        "outputBytes": 38920,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n11\n0 7 1 4 2 6 3 10 8 9 5\n",
-        "output": "! 0 7 1 4 2 6 3 10 8 9 5\n",
-        "label": "随机场景 10",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 10",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/H/10-4e9b410c6c0ce686.bin",
+        "sha256": "4e9b410c6c0ce686135fa123eab1f96a751ee22932a63a3e77f23ada4d187b51",
+        "inputBytes": 38953,
+        "outputBytes": 38920,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n11\n0 3 7 5 2 6 4 10 8 1 9\n",
-        "output": "! 0 3 7 5 2 6 4 10 8 1 9\n",
-        "label": "随机场景 11",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 11",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/H/11-89ec69f8b87b3c49.bin",
+        "sha256": "89ec69f8b87b3c490363e8f3fe486d523a0d0c3a083b7b9ecb1054122856e9e9",
+        "inputBytes": 38953,
+        "outputBytes": 38920,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n6\n2 0 5 4 1 3\n",
-        "output": "! 2 0 5 4 1 3\n",
-        "label": "随机场景 12",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 12",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/H/12-93eafbd1cda27b85.bin",
+        "sha256": "93eafbd1cda27b853652fbd84829422e19606260e3556be973005df6259a5475",
+        "inputBytes": 38953,
+        "outputBytes": 38920,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n1\n0\n",
-        "output": "! 0\n",
+        "input": "",
+        "output": "",
         "label": "n=1 无需查询",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/H/13-9fc875371324cfa6.bin",
+        "sha256": "9fc875371324cfa6dbf4238e6377e406d0926af5564d184afc576ac10768f91f",
+        "inputBytes": 6,
+        "outputBytes": 4,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n3\n0 2 1\n",
-        "output": "! 0 2 1\n",
+        "input": "",
+        "output": "",
         "label": "非二的幂与异或掩码",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/H/14-27b0ee3c0b5b8ef9.bin",
+        "sha256": "27b0ee3c0b5b8ef9bebd5706a51458911064871c11f10cc93a528bc6a32874aa",
+        "inputBytes": 10,
+        "outputBytes": 8,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n8\n0 1 2 5 6 3 4 7\n",
-        "output": "! 0 1 2 5 6 3 4 7\n",
+        "input": "",
+        "output": "",
         "label": "二的幂与查询上限",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/H/15-f266f1d4c40c7347.bin",
+        "sha256": "f266f1d4c40c73478b220205d45d5fb8747158b72dbe1455dbce68b252ad3168",
+        "inputBytes": 20,
+        "outputBytes": 18,
+        "maxOutputBytes": 2097152
       }
     ]
   },
@@ -936,94 +1536,169 @@
     "statementFormat": "markdown",
     "tests": [
       {
-        "input": "2\n3\n2 2 3\n0\n0\n6\n3 6 2 3\n2 4 5\n0\n0\n0\n0\n",
-        "output": "374341634\n694091779\n",
-        "label": "公开样例 1",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "十万节点、长链和高分支树、叶序连边期望",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/I/01-27eda6daaf10e02e.bin",
+        "sha256": "27eda6daaf10e02ef254890b74e19d6774771cff2f4e100616ca41de3b4a41c2",
+        "inputBytes": 19901,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n3 2 3 4\n0\n0\n0\n",
-        "output": "218365954\n",
-        "label": "随机场景 1",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万节点、长链和高分支树、叶序连边期望",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/I/02-a09c766585abd507.bin",
+        "sha256": "a09c766585abd507bbf309f8340eb020e334b0289374c53f218ba8e7437e6acf",
+        "inputBytes": 54898,
+        "outputBytes": 9,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n7\n2 2 3\n1 4\n2 5 6\n1 7\n0\n0\n0\n",
-        "output": "853966852\n",
-        "label": "随机场景 2",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万节点、长链和高分支树、叶序连边期望",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/I/03-8dc198111d41b6aa.bin",
+        "sha256": "8dc198111d41b6aaffef42bcc8a7075be56e38d307849d59514675220a715182",
+        "inputBytes": 132900,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n5\n3 2 3 5\n1 4\n0\n0\n0\n",
-        "output": "795475971\n",
-        "label": "随机场景 3",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万节点、长链和高分支树、叶序连边期望",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/I/04-a0ba673e25ec3265.bin",
+        "sha256": "a0ba673e25ec3265193a79f6e04e33797901ad520e4d33ac86014c12db4f09f8",
+        "inputBytes": 268943,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n8\n5 2 3 4 5 7\n0\n0\n1 6\n0\n0\n1 8\n0\n",
-        "output": "97972227\n",
-        "label": "随机场景 4",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万节点、长链和高分支树、叶序连边期望",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/I/05-9100db7e92f9fae3.bin",
+        "sha256": "9100db7e92f9fae34b6c19d9699ef3f8a15b8303ddee54c7deb82c175e346259",
+        "inputBytes": 468904,
+        "outputBytes": 9,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n6\n4 2 3 4 5\n0\n1 6\n0\n0\n0\n",
-        "output": "674594819\n",
-        "label": "随机场景 5",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万节点、长链和高分支树、叶序连边期望",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/I/06-c352d3291a8dd123.bin",
+        "sha256": "c352d3291a8dd1231731960ddabb3ab9c42743de0a7579b175062920d5c25d8c",
+        "inputBytes": 708900,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n6\n3 2 3 5\n1 6\n1 4\n0\n0\n0\n",
-        "output": "382140419\n",
-        "label": "随机场景 6",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万节点、长链和高分支树、叶序连边期望",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/I/07-58592f0e676c7995.bin",
+        "sha256": "58592f0e676c799576cf51542e5cb6758e6dd2182f45c4a3178c8756a1ab0f92",
+        "inputBytes": 788902,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n6\n2 2 3\n2 4 5\n0\n0\n1 6\n0\n",
-        "output": "382140419\n",
-        "label": "随机场景 7",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万节点、长链和高分支树、叶序连边期望",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/I/08-2618e1dd8fd397b6.bin",
+        "sha256": "2618e1dd8fd397b6cb3078b7bb0118029b468a339b9a0566739cbadc784260d7",
+        "inputBytes": 788995,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n2 2 3\n1 4\n0\n0\n",
-        "output": "935854083\n",
-        "label": "随机场景 8",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万节点、长链和高分支树、叶序连边期望",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/I/09-87165d0432c4b252.bin",
+        "sha256": "87165d0432c4b25291205181b3c908c6fdac6a403270b841e931a0293f6704b9",
+        "inputBytes": 788906,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n7\n4 2 3 4 5\n1 7\n1 6\n0\n0\n0\n0\n",
-        "output": "235913219\n",
-        "label": "随机场景 9",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万节点、长链和高分支树、叶序连边期望",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/I/10-e7d5a71f4554efca.bin",
+        "sha256": "e7d5a71f4554efca9647713292f93335ab1bb736fe9c182dd5213f8ee2d90d14",
+        "inputBytes": 788902,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n8\n4 2 3 4 6\n1 5\n1 7\n1 8\n0\n0\n0\n0\n",
-        "output": "829595652\n",
-        "label": "随机场景 10",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万节点、长链和高分支树、叶序连边期望",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/I/11-8bd105acd3ee29d7.bin",
+        "sha256": "8bd105acd3ee29d7e542c9d098eb685fedca62c317150ae628d0af851ffd45a4",
+        "inputBytes": 788892,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n8\n4 2 3 5 8\n1 4\n0\n2 6 7\n0\n0\n0\n0\n",
-        "output": "42405891\n",
-        "label": "随机场景 11",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万节点、长链和高分支树、叶序连边期望",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/I/12-8fcdbf3d32747201.bin",
+        "sha256": "8fcdbf3d3274720111e7fb1b4f4b5138b8a705891538b7ffbbbe70c525ef0372",
+        "inputBytes": 788995,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n3\n2 2 3\n0\n0\n",
-        "output": "374341634\n",
+        "input": "",
+        "output": "",
         "label": "三点树形成三角形",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/I/13-9e60a015fb36ba44.bin",
+        "sha256": "9e60a015fb36ba443bdd1c4c3bb071699051ad1f7516e8de3ad836d251584718",
+        "inputBytes": 14,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n6\n3 4 3 2\n1 6\n1 5\n0\n0\n0\n",
-        "output": "382140419\n",
+        "input": "",
+        "output": "",
         "label": "DFS 子节点顺序影响叶链",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/I/14-b7700a738bd99fe3.bin",
+        "sha256": "b7700a738bd99fe31c31eb488f9c224f51ec9c427b2e439e6fa9af105155e648",
+        "inputBytes": 26,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n8\n7 2 3 4 5 6 7 8\n0\n0\n0\n0\n0\n0\n0\n",
-        "output": "554566659\n",
+        "input": "",
+        "output": "",
         "label": "所有孩子都是叶子",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/I/15-00a7a0f36c9184a1.bin",
+        "sha256": "00a7a0f36c9184a1ba5cefca49f66e2e6d40137374dda67afc489f89a2f8f16c",
+        "inputBytes": 34,
+        "outputBytes": 10,
+        "maxOutputBytes": 2097152
       }
     ]
   },
@@ -1048,94 +1723,169 @@
     "statementFormat": "markdown",
     "tests": [
       {
-        "input": "5\n6 0\nWrongProblemA\nSameProblemA\nUnreasonableProblemArrangement\nUnreasonableLimitForProblemA\nWeakTestsForProblemA\nBadProblemA\n6 105\nWrongProblemA\nBadProblemC\nwrongProblemB\nWrongProblemN\nWrongProblemAA\nUnreasonableProblemArrangementExtra\n7 49\nSameProblemJ\nUnreasonableProblemArrangement\nUnreasonableLimitForProblemA\nWeakTestsForProblemC\nBadProblemH\nSameProblemj\nBadProblem\n4 140\nWrongProblemJ\nSameProblemA\nUnreasonableProblemArrangement\nBadProblemJ\n2 1\nBadProblemJ\nBadProblemJ\n",
-        "output": "Joker\nJudger\nJudger\nJoker\nJoker\n",
-        "label": "公开样例 1",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "压力数据 1",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/J/01-d0cd2106679546b2.bin",
+        "sha256": "d0cd2106679546b2844217822f89346d947f15e6d68112e1942812ff230e6369",
+        "inputBytes": 19023,
+        "outputBytes": 6,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n13 180\nBadProblem\nBadProblemAA\nUnreasonableProblemArrangementAA\nBadProblemM\nUnreasonableLimitForProblemL\nBadProblemL\nWrongProblemM\nWeakTestsForProblemA\nSameProblem\nSameProblemA\nUnreasonableLimitForProblemA\nUnreasonableProblemArrangement\nBadProblemM\n",
-        "output": "Judger\n",
-        "label": "随机场景 1",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 2",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/J/02-4985363245001d17.bin",
+        "sha256": "4985363245001d17484bd039f0c93caa3c3566f6ee529056860471d18a05cb51",
+        "inputBytes": 18456,
+        "outputBytes": 7,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n2 475\nUnreasonableLimitForProblemA\nSameProblem\n",
-        "output": "Judger\n",
-        "label": "随机场景 2",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 3",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/J/03-5b389d5c29288530.bin",
+        "sha256": "5b389d5c292885304d81e98d50fd44f4fbc2c8326d74b4c72b47b21b722b4901",
+        "inputBytes": 18823,
+        "outputBytes": 7,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n1 416\nUnreasonableLimitForProblem\n",
-        "output": "Judger\n",
-        "label": "随机场景 3",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 4",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/J/04-e13053d928f58fa1.bin",
+        "sha256": "e13053d928f58fa1f00181a31f27bcc54321980d6d3ff7c70cf073a7973fc941",
+        "inputBytes": 19192,
+        "outputBytes": 6,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n13 411\nBadProblemA\nSameProblemM\nWeakTestsForProblemA\nSameProblemAA\nUnreasonableLimitForProblema\nWrongProblem\nSameProblemAA\nSameProblemL\nWeakTestsForProblema\nWeakTestsForProblemA\nUnreasonableProblemArrangementAA\nWrongProblem\nUnreasonableProblemArrangementa\n",
-        "output": "Judger\n",
-        "label": "随机场景 4",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 5",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/J/05-a5e10f391096ecc0.bin",
+        "sha256": "a5e10f391096ecc0d1f39a8827fcbee76927016632ee64a22c460ec571451637",
+        "inputBytes": 19120,
+        "outputBytes": 7,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n8 468\nBadProblemA\nUnreasonableProblemArrangementL\nWrongProblemA\nSameProblem\nUnreasonableLimitForProblemA\nUnreasonableLimitForProblema\nWeakTestsForProblema\nWeakTestsForProblemA\n",
-        "output": "Judger\n",
-        "label": "随机场景 5",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 6",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/J/06-b5390a90bc4351ae.bin",
+        "sha256": "b5390a90bc4351aea84483347e3459fb41b8a078ca850bbedf59ee41257c9db7",
+        "inputBytes": 19004,
+        "outputBytes": 7,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n14 164\nUnreasonableProblemArrangementA\nSameProblema\nUnreasonableLimitForProblema\nSameProblemL\nUnreasonableProblemArrangementL\nUnreasonableProblemArrangementa\nBadProblemM\nSameProblemM\nSameProblem\nSameProblemM\nUnreasonableProblemArrangementa\nBadProblem\nBadProblemAA\nUnreasonableProblemArrangementL\n",
-        "output": "Judger\n",
-        "label": "随机场景 6",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 7",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/J/07-3aba68f65056e3e4.bin",
+        "sha256": "3aba68f65056e3e4532bb93163a724718e0c36643ea1acef2564d832d498e8d9",
+        "inputBytes": 18747,
+        "outputBytes": 6,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n13 0\nWeakTestsForProblema\nWeakTestsForProblemL\nSameProblema\nUnreasonableProblemArrangementM\nWrongProblemA\nWrongProblemAA\nWeakTestsForProblemM\nWeakTestsForProblemM\nWeakTestsForProblemA\nWeakTestsForProblemA\nUnreasonableProblemArrangementa\nSameProblemA\nUnreasonableLimitForProblemA\n",
-        "output": "Joker\n",
-        "label": "随机场景 7",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 8",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/J/08-cc48e1595aae3a9e.bin",
+        "sha256": "cc48e1595aae3a9e67b90c3e54c8422c9050e0654a0333a03d64ece6f2dc7475",
+        "inputBytes": 18828,
+        "outputBytes": 7,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n18 169\nWrongProblemM\nWeakTestsForProblema\nWeakTestsForProblemAA\nUnreasonableProblemArrangementAA\nBadProblema\nSameProblemM\nWeakTestsForProblema\nSameProblemAA\nWeakTestsForProblem\nBadProblemM\nUnreasonableProblemArrangementA\nWrongProblema\nUnreasonableProblemArrangementM\nWeakTestsForProblem\nUnreasonableLimitForProblem\nSameProblemA\nWrongProblem\nUnreasonableLimitForProblemM\n",
-        "output": "Judger\n",
-        "label": "随机场景 8",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 9",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/J/09-e23d93fd9c6ed1e8.bin",
+        "sha256": "e23d93fd9c6ed1e8616efa62b9bd662e283670e77f759ed453d5a83c8d5c4a5b",
+        "inputBytes": 18986,
+        "outputBytes": 7,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n1 223\nWeakTestsForProblemAA\n",
-        "output": "Judger\n",
-        "label": "随机场景 9",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 10",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/J/10-4a37bede315c5d05.bin",
+        "sha256": "4a37bede315c5d05edfff94a0214e72ef6c3f4c9501ecdfdbbc12215be55536d",
+        "inputBytes": 18796,
+        "outputBytes": 6,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n14 177\nSameProblem\nBadProblema\nWeakTestsForProblem\nWeakTestsForProblemL\nWeakTestsForProblem\nSameProblemM\nUnreasonableProblemArrangementa\nWeakTestsForProblema\nUnreasonableLimitForProblemL\nUnreasonableLimitForProblemM\nUnreasonableLimitForProblemL\nUnreasonableLimitForProblemM\nBadProblem\nWeakTestsForProblemL\n",
-        "output": "Judger\n",
-        "label": "随机场景 10",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 11",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/J/11-befe9cb7da4ef42b.bin",
+        "sha256": "befe9cb7da4ef42b2b5eb5e18563f46a67cdaa19bc4bb921b96bebb8b8bc88d9",
+        "inputBytes": 18729,
+        "outputBytes": 7,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n10 304\nUnreasonableLimitForProblemAA\nUnreasonableProblemArrangementa\nSameProblem\nSameProblemAA\nUnreasonableProblemArrangementL\nUnreasonableLimitForProblem\nWeakTestsForProblema\nWeakTestsForProblemAA\nWeakTestsForProblemM\nUnreasonableLimitForProblemL\n",
-        "output": "Judger\n",
-        "label": "随机场景 11",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 12",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/J/12-30c805d469032270.bin",
+        "sha256": "30c805d46903227068bf56c257e0dfd697e60a4eef75d28d164040bf2e03adb9",
+        "inputBytes": 19042,
+        "outputBytes": 7,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n0 0\n",
-        "output": "Judger\n",
+        "input": "",
+        "output": "",
         "label": "没有评价",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/J/13-fd4b75fc095392e8.bin",
+        "sha256": "fd4b75fc095392e89de40403350d8d45c9b5609461cac737d66a39a8bcb0472c",
+        "inputBytes": 6,
+        "outputBytes": 7,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4 100\nWrongProblemA\nWrongProblemM\nWrongProblema\nWrongProblemAA\n",
-        "output": "Judger\n",
+        "input": "",
+        "output": "",
         "label": "大小写、题号范围和严格大于",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/J/14-cb1c93241b2694be.bin",
+        "sha256": "cb1c93241b2694be5264a305876e026f6c4a3947f43c37c64472f90d69997db8",
+        "inputBytes": 65,
+        "outputBytes": 7,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n9 8\nBadProblemL\nBadProblemL\nBadProblemL\nBadProblemL\nBadProblemL\nBadProblemL\nBadProblemL\nBadProblemL\nBadProblemL\n",
-        "output": "Joker\n",
+        "input": "",
+        "output": "",
         "label": "重复评价每次都计分",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/J/15-ba778b1ba5af1b9a.bin",
+        "sha256": "ba778b1ba5af1b9a58702ca976a6f6da03f5e99688d680404a816929ec08819b",
+        "inputBytes": 114,
+        "outputBytes": 6,
+        "maxOutputBytes": 2097152
       }
     ]
   },
@@ -1160,94 +1910,169 @@
     "statementFormat": "markdown",
     "tests": [
       {
-        "input": "2\n3\n0 1 3\n3\n1\n2\n5\n9\n0 0 1 1 2 3 3 4 5\n7\n4\n5\n6\n7\n8\n9\n10\n",
-        "output": "3\n8\n",
-        "label": "公开样例 1",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "压力数据 1",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/K/01-94081dedad8ea33f.bin",
+        "sha256": "94081dedad8ea33f662ef5b01a5b2789164de394f1580aae3cf8709cee6684fc",
+        "inputBytes": 45280,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n6\n29 4 2 8 30 19\n8\n38\n38\n36\n3\n7\n12\n23\n26\n",
-        "output": "0\n",
-        "label": "随机场景 1",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 2",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/K/02-b890c99ffd1e59e5.bin",
+        "sha256": "b890c99ffd1e59e59607c4496238a3ea2ac11b11c6ec9781362a9eb46a6da3da",
+        "inputBytes": 78872,
+        "outputBytes": 4,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n10\n26 7 30 2 8 13 17 16 4 21\n8\n21\n5\n12\n20\n14\n23\n30\n22\n",
-        "output": "0\n",
-        "label": "随机场景 2",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 3",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/K/03-764960239133deb3.bin",
+        "sha256": "764960239133deb36d25acd0f530ae53a73f95147d089cac04f6ffecc924d049",
+        "inputBytes": 149237,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n5\n5 18 3 21 20\n8\n29\n12\n11\n14\n31\n22\n15\n32\n",
-        "output": "0\n",
-        "label": "随机场景 3",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 4",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/K/04-3692c05e6f557785.bin",
+        "sha256": "3692c05e6f557785b35250ebc88bca5d10b3a9b96139e88a5fa4189f52432d2a",
+        "inputBytes": 268171,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n1\n0\n8\n17\n6\n2\n28\n12\n7\n4\n24\n",
-        "output": "0\n",
-        "label": "随机场景 4",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 5",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/K/05-1d88cb6a5db937bb.bin",
+        "sha256": "1d88cb6a5db937bbce94baf6757a4d55482ec72bddcf4b8ff56ea7524c464ac5",
+        "inputBytes": 444008,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n2\n16 13\n8\n2\n5\n18\n15\n31\n21\n17\n28\n",
-        "output": "0\n",
-        "label": "随机场景 5",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 6",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/K/06-cf1825f1baf82276.bin",
+        "sha256": "cf1825f1baf8227677d70706b6d31e8910b3514944470a11517863101ef98833",
+        "inputBytes": 649431,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n2\n21 27\n8\n25\n28\n20\n19\n13\n40\n25\n26\n",
-        "output": "0\n",
-        "label": "随机场景 6",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 7",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/K/07-263453249c6b3230.bin",
+        "sha256": "263453249c6b3230ac7050835af9dccc667a1ee6598b776907f27bd9c1ab5c13",
+        "inputBytes": 998429,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n4 10 14 4\n8\n24\n33\n10\n40\n39\n8\n27\n22\n",
-        "output": "1\n",
-        "label": "随机场景 7",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 8",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/K/08-8aebfb4ad72b3f88.bin",
+        "sha256": "8aebfb4ad72b3f88c8926883cffd49ef3e20c6b967f409247fc837869cf7e6e4",
+        "inputBytes": 1418362,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n10\n27 8 10 7 18 6 8 7 12 28\n8\n9\n5\n3\n3\n6\n6\n16\n35\n",
-        "output": "0\n",
-        "label": "随机场景 8",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 9",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/K/09-97adcde5fa9818cb.bin",
+        "sha256": "97adcde5fa9818cb540468bb94bdf334278112338f7d036018c915eba219b9d7",
+        "inputBytes": 2111161,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n7\n24 9 11 28 15 15 17\n8\n21\n7\n16\n37\n9\n4\n26\n34\n",
-        "output": "1\n",
-        "label": "随机场景 9",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 10",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/K/10-28d124b470d3a079.bin",
+        "sha256": "28d124b470d3a0797ea7f98badca77b8be1ce09fceb840a596b645933ec7998b",
+        "inputBytes": 2810197,
+        "outputBytes": 4,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n9\n26 13 29 25 7 1 13 28 16\n8\n22\n38\n32\n4\n6\n40\n0\n37\n",
-        "output": "0\n",
-        "label": "随机场景 10",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 11",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/K/11-a823374c8d1ec351.bin",
+        "sha256": "a823374c8d1ec35162acc0e8bde224eb94c5296c3a0e741bf25c1462d85595b3",
+        "inputBytes": 3508564,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n7\n10 16 21 21 18 10 19\n8\n1\n40\n13\n23\n5\n11\n33\n34\n",
-        "output": "0\n",
-        "label": "随机场景 11",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "压力数据 12",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/K/12-93c4008a601a0602.bin",
+        "sha256": "93c4008a601a0602cf52cbd27c718db8660f030c27e0490267207c45c9338586",
+        "inputBytes": 3514414,
+        "outputBytes": 3,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n3\n0 0 0\n3\n0\n1\n2\n",
-        "output": "2\n",
+        "input": "",
+        "output": "",
         "label": "重复元素不能生成所有值",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/K/13-5693eda13688c343.bin",
+        "sha256": "5693eda13688c34362c3d2bebad132d2b71863e525c602b56014e02dc73508b8",
+        "inputBytes": 18,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n3\n1000000000 0 1\n3\n0\n1000000000\n999999999\n",
-        "output": "2\n",
+        "input": "",
+        "output": "",
         "label": "最大 k 与变换后负数",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/K/14-e5c8066f3fddfcf9.bin",
+        "sha256": "e5c8066f3fddfcf9d1ff7e7c61344f8fd1ce7683bb9945cec7ffed98232b8c65",
+        "inputBytes": 44,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n8\n0 1 2 3 4 5 6 7\n4\n0\n7\n7\n14\n",
-        "output": "0\n",
+        "input": "",
+        "output": "",
         "label": "重复查询答案异或抵消",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/K/15-276679b8e01557ff.bin",
+        "sha256": "276679b8e01557ff71af0837c2537288cb722b144484dcb8561a859985de8aab",
+        "inputBytes": 31,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       }
     ]
   },
@@ -1272,94 +2097,169 @@
     "statementFormat": "markdown",
     "tests": [
       {
-        "input": "7\n4\n3 4 2 1\n1\n7\n5\n8 0 9 0 1\n7\n5 1 9 0 0 9 9\n4\n1 1000 1000 1\n6\n4 0 9 0 1 9\n3\n1000000000 1000000000 1000000000\n",
-        "output": "13\n7\n20\n30\n7\n24\n5000000000\n",
-        "label": "公开样例 1",
-        "kind": "sample"
+        "input": "",
+        "output": "",
+        "label": "十万长度、64 位路径和与绕圈方向",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/L/01-045cc19dd78080d6.bin",
+        "sha256": "045cc19dd78080d60694841684faf83a491853886c1ce44a5aca6f46ea6a35f9",
+        "inputBytes": 8464,
+        "outputBytes": 11,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n18\n5 9 11 23 5 30 12 7 29 22 19 7 26 30 26 6 23 9\n",
-        "output": "243\n",
-        "label": "随机场景 1",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万长度、64 位路径和与绕圈方向",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/L/02-31f232eb3d04d82f.bin",
+        "sha256": "31f232eb3d04d82f32b985fe0be7079db14a2b1d2e20aad815ae7b3c643339ae",
+        "inputBytes": 79072,
+        "outputBytes": 13,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n16\n13 12 11 26 25 30 30 7 11 24 6 11 11 18 23 14\n",
-        "output": "339\n",
-        "label": "随机场景 2",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万长度、64 位路径和与绕圈方向",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/L/03-82d6c3fab014ef30.bin",
+        "sha256": "82d6c3fab014ef30e5852f0babafd164d664167cee831145031b8c7492dee3b4",
+        "inputBytes": 177951,
+        "outputBytes": 13,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n25\n24 15 4 8 5 17 13 21 22 17 21 23 19 8 6 6 7 25 10 25 16 10 27 12 30\n",
-        "output": "346\n",
-        "label": "随机场景 3",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万长度、64 位路径和与绕圈方向",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/L/04-c794e6f9ccbf7194.bin",
+        "sha256": "c794e6f9ccbf7194ffb3b2b15cce98738bc6f31c1bda96c156469835995fe43d",
+        "inputBytes": 92508,
+        "outputBytes": 11,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n16\n28 15 15 5 19 8 25 0 21 25 19 17 5 3 17 4\n",
-        "output": "197\n",
-        "label": "随机场景 4",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万长度、64 位路径和与绕圈方向",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/L/05-c6be3b686ee4466c.bin",
+        "sha256": "c6be3b686ee4466c101d5b8e2851f0053847fb204fc2b6c309ea0a228f21f986",
+        "inputBytes": 593389,
+        "outputBytes": 14,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n7\n29 7 6 4 16 5 9\n",
-        "output": "118\n",
-        "label": "随机场景 5",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万长度、64 位路径和与绕圈方向",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/L/06-7fc82f0d840113da.bin",
+        "sha256": "7fc82f0d840113dadbc6ca60d6b5c15f3856e9ab47de143db309d4dc2fbf39cd",
+        "inputBytes": 889937,
+        "outputBytes": 14,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n23\n13 18 0 11 17 26 12 13 18 23 8 11 27 29 19 25 12 13 0 22 22 24 18\n",
-        "output": "282\n",
-        "label": "随机场景 6",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万长度、64 位路径和与绕圈方向",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/L/07-3b49e3a107eae0d9.bin",
+        "sha256": "3b49e3a107eae0d9ae12637eda2e2bedd7d6fd0039f36e5daa358acd9f2ccadc",
+        "inputBytes": 252956,
+        "outputBytes": 11,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n11\n0 8 30 8 28 26 0 23 6 4 25\n",
-        "output": "80\n",
-        "label": "随机场景 7",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万长度、64 位路径和与绕圈方向",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/L/08-6a093f6bf9e34dea.bin",
+        "sha256": "6a093f6bf9e34dea27cae0d97df5fa8244072d2cb2affa7c28a428733659b83b",
+        "inputBytes": 988997,
+        "outputBytes": 14,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n12\n24 3 4 16 27 23 14 7 14 0 1 21\n",
-        "output": "100\n",
-        "label": "随机场景 8",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万长度、64 位路径和与绕圈方向",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/L/09-e3d3276a4fd7cc73.bin",
+        "sha256": "e3d3276a4fd7cc73b9ffbebb00460afff871c2e56143e1600584f36b5696dbb3",
+        "inputBytes": 988793,
+        "outputBytes": 14,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n2\n24 1\n",
-        "output": "49\n",
-        "label": "随机场景 9",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万长度、64 位路径和与绕圈方向",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/L/10-1c62cec24077bc5f.bin",
+        "sha256": "1c62cec24077bc5fe001679ecda45106212b9716bc221a8bf3ea985f0f58eaba",
+        "inputBytes": 245009,
+        "outputBytes": 11,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n14\n8 19 7 12 26 21 15 29 22 12 2 28 1 29\n",
-        "output": "260\n",
-        "label": "随机场景 10",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万长度、64 位路径和与绕圈方向",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/L/11-027610b853e86098.bin",
+        "sha256": "027610b853e86098a7641b2a05eec907e8ebd554545a568d0a6de384dad002ee",
+        "inputBytes": 988802,
+        "outputBytes": 14,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n12\n3 24 19 7 10 30 28 23 22 5 15 15\n",
-        "output": "201\n",
-        "label": "随机场景 11",
-        "kind": "regular"
+        "input": "",
+        "output": "",
+        "label": "十万长度、64 位路径和与绕圈方向",
+        "kind": "regular",
+        "file": "test-data/icpc-online-2026-2/L/12-a16bf490a254f044.bin",
+        "sha256": "a16bf490a254f044297745a5a3c9512fd26f428ba3f8f42e724083f967f02d3d",
+        "inputBytes": 988884,
+        "outputBytes": 14,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n1\n7\n",
-        "output": "7\n",
+        "input": "",
+        "output": "",
         "label": "起点终点是同一格",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/L/13-91b58cd72daf4a94.bin",
+        "sha256": "91b58cd72daf4a94db37df8177b75539aa8af82fe6e0c81f161522e0621663a2",
+        "inputBytes": 6,
+        "outputBytes": 2,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n30\n1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000\n",
-        "output": "59000000000\n",
+        "input": "",
+        "output": "",
         "label": "路径总和超过 32 位",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/L/14-fc4668e79812bc65.bin",
+        "sha256": "fc4668e79812bc65f52ff794d2d55bb5ca270fda885277709112602cf93bb3f0",
+        "inputBytes": 335,
+        "outputBytes": 12,
+        "maxOutputBytes": 2097152
       },
       {
-        "input": "1\n4\n0 1000000000 0 1000000000\n",
-        "output": "3000000000\n",
+        "input": "",
+        "output": "",
         "label": "零权与循环移位方向",
-        "kind": "trick"
+        "kind": "trick",
+        "file": "test-data/icpc-online-2026-2/L/15-3f28e66717e8fa1a.bin",
+        "sha256": "3f28e66717e8fa1a46725099a300651787de40a7dddba64b0c0ed67054244e33",
+        "inputBytes": 30,
+        "outputBytes": 11,
+        "maxOutputBytes": 2097152
       }
     ]
   }

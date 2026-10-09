@@ -1,7 +1,7 @@
 import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.mjs';
 import './hidden-track.js';
 let runtime;
-self.onmessage=async ({data:{source,input,interactive}})=>{
+self.onmessage=async ({data:{source,input,interactive,maxOutputBytes=2*1024*1024}})=>{
   let start=0;
   try{
     postMessage({type:'phase',phase:'loading'});
@@ -9,13 +9,17 @@ self.onmessage=async ({data:{source,input,interactive}})=>{
     const judge=interactive?new globalThis.HiddenTrackJudge(input):null;
     runtime.globals.set('_source',source);runtime.globals.set('_input',judge?judge.stdin:input);
     runtime.globals.set('_interactive',!!judge);
+    runtime.globals.set('_stdout_limit',Math.max(2*1024*1024,Math.min(128*1024*1024,maxOutputBytes)));
     runtime.globals.set('_judge_write',text=>judge?.write(text)||'');
     postMessage({type:'phase',phase:'running'});start=performance.now();
     const answer=await runtime.runPythonAsync(`
 import sys, io, traceback, json
 class LimitedOutput(io.StringIO):
+    def __init__(self, limit=2 * 1024 * 1024):
+        super().__init__()
+        self.limit = limit
     def write(self, text):
-        if self.tell() + len(text) > 2 * 1024 * 1024:
+        if self.tell() + len(text) > self.limit:
             raise RuntimeError('OUTPUT_LIMIT')
         return super().write(text)
 class InteractiveInput(io.TextIOWrapper):
@@ -33,9 +37,9 @@ class InteractiveOutput(LimitedOutput):
         _stdin.append(str(_judge_write(text)))
         return result
 _stdin = InteractiveInput(_input) if _interactive else io.TextIOWrapper(io.BytesIO(_input.encode()))
-_out, _err = LimitedOutput(), LimitedOutput()
+_out, _err = LimitedOutput(_stdout_limit), LimitedOutput()
 if _interactive:
-    _out = InteractiveOutput()
+    _out = InteractiveOutput(_stdout_limit)
 _oldin, _oldout, _olderr = sys.stdin, sys.stdout, sys.stderr
 sys.stdin, sys.stdout, sys.stderr = _stdin, _out, _err
 _status, _error = 'OK', ''

@@ -4,6 +4,11 @@ export interface TestCase {
   output: string;
   label: string;
   kind: "sample" | "regular" | "trick";
+  file?: string;
+  sha256?: string;
+  inputBytes?: number;
+  outputBytes?: number;
+  maxOutputBytes?: number;
 }
 export interface Problem {
   id: string;
@@ -43,6 +48,7 @@ export interface RunResult {
   output: string;
   error?: string;
   time: number;
+  expected?: string;
 }
 export interface Submission {
   id: string;

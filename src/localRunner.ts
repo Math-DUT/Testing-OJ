@@ -1,6 +1,8 @@
 import type { RunResult } from "./types";
 const API = "http://127.0.0.1:27121";
 const KEY = "testing-oj:v1:local-runner-token";
+let maxInputBytes = 2 * 1024 * 1024;
+let maxOutputLimit = 2 * 1024 * 1024;
 export function acceptLocalRunnerLink() {
   const url = new URL(location.href),
     token = url.searchParams.get("local-runner");
@@ -23,6 +25,8 @@ export async function localRunnerHealth(): Promise<string | null> {
     });
     if (!response.ok) return null;
     const data = await response.json();
+    maxInputBytes = data.maxInputBytes || 2 * 1024 * 1024;
+    maxOutputLimit = data.maxOutputBytes || 2 * 1024 * 1024;
     return data.pypy3 ? data.version : null;
   } catch {
     return null;
@@ -46,7 +50,11 @@ export async function executePyPy(
   source: string,
   input: string,
   interactive: boolean,
+  maxOutputBytes = 2 * 1024 * 1024,
 ): Promise<RunResult> {
+  if (new TextEncoder().encode(input).byteLength > maxInputBytes || maxOutputBytes > maxOutputLimit)
+    return { status: "ERROR", output: "", time: 0,
+      error: "本机助手版本较旧，请在设置中重新下载并启动助手。" };
   controller = new AbortController();
   const current = controller;
   const id = crypto.randomUUID();
@@ -56,7 +64,7 @@ export async function executePyPy(
     const response = await fetch(API + "/run", {
       method: "POST",
       headers: headers(),
-      body: JSON.stringify({ source, input, interactive, id }),
+      body: JSON.stringify({ source, input, interactive, id, maxOutputBytes }),
       signal: current.signal,
     });
     if (!response.ok) throw Error(`本机助手连接失败（${response.status}）`);

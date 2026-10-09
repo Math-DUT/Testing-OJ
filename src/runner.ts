@@ -19,20 +19,21 @@ export function execute(
   input: string,
   onPhase: (phase: string) => void,
   interactive = false,
+  maxOutputBytes = 2 * 1024 * 1024,
 ): Promise<RunResult> {
   if (language === "pypy3") {
     active?.terminate();
     active = null;
     workerLanguage = null;
     onPhase("running");
-    return executePyPy(source, input, interactive);
+    return executePyPy(source, input, interactive, maxOutputBytes);
   }
   const family = codeLanguage(language);
   if (!active || workerLanguage !== family) {
     stopRunner();
     active = new Worker(
       new URL(
-        `${import.meta.env.BASE_URL}runtime/${family === "cpp" ? "cpp-worker.js" : "python-worker.js"}?v=20261009-clang22`,
+        `${import.meta.env.BASE_URL}runtime/${family === "cpp" ? "cpp-worker.js" : "python-worker.js"}?v=20261009-stress`,
         location.href,
       ),
       { type: family === "python" ? "module" : "classic" },
@@ -91,6 +92,7 @@ export function execute(
       source,
       input,
       interactive,
+      maxOutputBytes,
       standard: cppStandard(language),
     });
   });

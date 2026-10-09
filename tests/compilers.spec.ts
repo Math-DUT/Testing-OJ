@@ -84,6 +84,15 @@ test("real local PyPy3 executes, reports WA/CE/TLE and enforces the interactive 
     });
     await page.goto(`/?local-runner=${token}#problem/C`);
     expect(page.url()).not.toContain(token);
+    const large = await page.evaluate(async () => {
+      const helper = await import("/src/localRunner.ts");
+      await helper.localRunnerHealth();
+      const input = "1".repeat(3 * 1024 * 1024);
+      const result = await helper.executePyPy("import sys\ns=sys.stdin.read()\nprint('x'*len(s))", input, false, 8 * 1024 * 1024);
+      return { status: result.status, size: result.output.length, error: result.error };
+    });
+    expect(large.status, large.error).toBe("OK");
+    expect(large.size).toBeGreaterThan(3 * 1024 * 1024);
     await page.getByLabel("语言").selectOption("pypy3");
     await page
       .locator(".cm-content")
@@ -136,6 +145,16 @@ test("real local PyPy3 executes, reports WA/CE/TLE and enforces the interactive 
       "隐藏排列重建错误",
     );
     await expect(page.locator("iframe")).toHaveCount(0);
+    await page.route("http://127.0.0.1:27121/health", route => route.fulfill({
+      contentType: "application/json", body: JSON.stringify({ pypy3: true, version: "old" }),
+    }));
+    const outdated = await page.evaluate(async () => {
+      const helper = await import("/src/localRunner.ts");
+      await helper.localRunnerHealth();
+      return await helper.executePyPy("print(1)", "", false, 8 * 1024 * 1024);
+    });
+    expect(outdated.status).toBe("ERROR");
+    expect(outdated.error).toContain("重新下载");
   } finally {
     child?.kill();
   }

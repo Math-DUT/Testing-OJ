@@ -43,7 +43,8 @@ import type {
   FontSettings,
 } from "./types";
 import { execute, stopRunner } from "./runner";
-import { checkOutput } from "./checkers";
+import { loadTestCase, outputPreview } from "./testData";
+import { judgeOutput, stopJudge } from "./judge";
 import ResizeHandle from "./ResizeHandle";
 import {
   cleanLayout,
@@ -142,9 +143,10 @@ const codeTheme = EditorView.theme({
   ".cm-focused": { outline: "none" },
 });
 const phaseText: Record<string, string> = {
-  loading: "加载运行环境…",
+  loading: "加载中…",
   compiling: "编译中…",
   running: "运行中…",
+  checking: "校验输出…",
 };
 
 export default function App() {
@@ -206,6 +208,7 @@ export default function App() {
   const [zen, setZen] = useState(read("zen", false));
   const upload = useRef<HTMLInputElement>(null);
   const runRef = useRef<(submit: boolean) => void>(() => {});
+  const runSerial = useRef(0);
   const problem = problems.find((p) => route === `problem/${p.id}`);
   const history = submissions.filter((s) => s.contestId === contest.id);
   const draftKey = (id: string, lang: Language, cid = contest.id) =>
@@ -246,7 +249,9 @@ export default function App() {
   };
   useEffect(() => {
     const handler = () => {
+      runSerial.current++;
       stopRunner();
+      stopJudge();
       setBusy("");
       setPath(location.hash);
       setResult(null);
@@ -334,7 +339,7 @@ export default function App() {
       setCode(readCode(problem.id, language));
       setInput(
         (problem.checker === "hidden-track"
-          ? problem.tests?.[0]
+          ? { input: "1\n3\n0 2 1\n" }
           : problem.samples[0]
         )?.input || "",
       );
@@ -375,6 +380,12 @@ export default function App() {
     if (session) setSession({ ...session, end: Date.now() });
     notify("比赛已结束，记录已保存。");
   };
+  const cancelRun = () => {
+    runSerial.current++;
+    stopRunner();
+    stopJudge();
+    setBusy("");
+  };
   const run = async (submit: boolean) => {
     if (!problem || busy) return;
     changeLayout("editorEnabled", true);
@@ -392,6 +403,7 @@ export default function App() {
       return;
     }
     setResult(null);
+    const serial = ++runSerial.current;
     setBusy("loading");
     setTestProgress({ current: 0, total: tests.length });
     const results: RunResult[] = [];
@@ -400,27 +412,36 @@ export default function App() {
     try {
       for (const test of tests) {
         setTestProgress({ current: results.length + 1, total: tests.length });
+        setBusy("loading");
+        const loaded = await loadTestCase(test as import("./types").TestCase);
+        if (serial !== runSerial.current) return;
         const answer = await execute(
           language,
           code,
-          test.input,
+          loaded.input,
           setBusy,
           problem.checker === "hidden-track",
+          loaded.maxOutputBytes,
         );
-        if (answer.status === "CANCELLED") return;
-        if (answer.status === "OK")
+        if (answer.status === "CANCELLED" || serial !== runSerial.current) return;
+        if (answer.status === "OK") {
+          setBusy("checking");
           answer.status =
-            testMode === "custom" && !test.output.trim()
+            testMode === "custom" && !loaded.output.trim()
               ? "RUN"
-              : checkOutput(
+              : await judgeOutput(
                     problem.checker,
-                    test.input,
+                    loaded.input,
                     answer.output,
-                    test.output,
+                    loaded.output,
                   )
                 ? "PASS"
                 : "WA";
-        results.push(answer);
+        }
+        if (serial !== runSerial.current) return;
+        results.push({ ...answer, output: outputPreview(answer.output),
+          error: answer.error ? outputPreview(answer.error) : undefined,
+          expected: answer.status === "WA" ? outputPreview(loaded.output) : undefined });
         if (["CE", "RE", "TLE", "OLE", "ERROR"].includes(answer.status)) {
           while (results.length < tests.length)
             results.push({
@@ -458,8 +479,14 @@ export default function App() {
             : "自测记录已保存。",
         );
       }
+    } catch (error) {
+      if (serial === runSerial.current) {
+        const message = error instanceof Error ? error.message : "测试数据加载失败。";
+        notify(message);
+        setResult([{ status: "ERROR", output: "", error: message, time: 0 }]);
+      }
     } finally {
-      setBusy("");
+      if (serial === runSerial.current) setBusy("");
     }
   };
   runRef.current = run;
@@ -1217,7 +1244,7 @@ export default function App() {
                               changeLayout("editorEnabled", true);
                               setInput(
                                 problem.checker === "hidden-track"
-                                  ? problem.tests![0].input
+                                  ? "1\n3\n0 2 1\n"
                                   : s.input,
                               );
                               setExpected(
@@ -1383,11 +1410,10 @@ export default function App() {
                         </span>
                         <button
                           className="button quiet"
-                          disabled={!!busy}
-                          onClick={() => run(false)}
+                          onClick={() => busy ? cancelRun() : run(false)}
                         >
-                          <Play size={14} />
-                          运行
+                          {busy ? <Square size={14} /> : <Play size={14} />}
+                          {busy ? "停止" : "运行"}
                         </button>
                         <button
                           className="button primary"
@@ -1488,11 +1514,7 @@ export default function App() {
                                         预期输出
                                       </div>
                                       <pre>
-                                        {testMode === "samples"
-                                          ? (problem.tests || problem.samples)[
-                                              i
-                                            ].output
-                                          : expected}
+                                        {r.expected ?? expected}
                                       </pre>
                                     </>
                                   )}

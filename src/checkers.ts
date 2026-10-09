@@ -1,11 +1,19 @@
 const tokens = (s: string) => s.trim().split(/\s+/).filter(Boolean);
 function integers(s: string): number[] {
-  return tokens(s).map((x) => {
-    if (!/^-?\d+$/.test(x)) throw Error();
-    const n = Number(x);
-    if (!Number.isSafeInteger(n)) throw Error();
-    return n;
-  });
+  const out: number[] = [];
+  let i = 0;
+  while (i < s.length) {
+    while (i < s.length && /\s/.test(s[i])) i++;
+    if (i === s.length) break;
+    let sign = 1, value = 0, digits = 0;
+    if (s[i] === "-") { sign = -1; i++; }
+    while (i < s.length && s.charCodeAt(i) >= 48 && s.charCodeAt(i) <= 57) {
+      value = value * 10 + s.charCodeAt(i++) - 48; digits++;
+    }
+    if (!digits || !Number.isSafeInteger(value) || (i < s.length && !/\s/.test(s[i]))) throw Error();
+    out.push(sign * value);
+  }
+  return out;
 }
 export function checkOutput(
   checker: string,
@@ -65,22 +73,21 @@ export function checkOutput(
         b = integers(output);
       let i = 1,
         j = 0;
-      const gcd = (x: bigint, y: bigint): bigint => (y ? gcd(y, x % y) : x);
+      const gcd = (x: number, y: number): number => (y ? gcd(y, x % y) : x);
       for (let tc = 0; tc < a[0]; tc++) {
         const n = a[i++],
-          p = b.slice(j, j + n);
+          p = b.slice(j, j + n), seen = new Uint8Array(n + 1);
         j += n;
         if (
           p.length !== n ||
-          new Set(p).size !== n ||
-          p.some((x) => x < 1 || x > n)
+          p.some((x) => x < 1 || x > n || seen[x]++ > 0)
         )
           return false;
-        let value = 1n;
+        let value = 1;
         for (let k = 0; k < n; k++) {
-          const s = BigInt(p[k] + p[(k + 1) % n]);
-          value = (value / gcd(value, s)) * s;
-          if (value > BigInt(20 * n)) return false;
+          const s = p[k] + p[(k + 1) % n], factor = value / gcd(value, s);
+          if (factor > 20 * n / s) return false;
+          value = factor * s;
         }
       }
       return j === b.length;
@@ -92,11 +99,15 @@ export function checkOutput(
       let i = 1,
         j = 0,
         k = 0;
-      const inv = (p: number[]) =>
-        p.reduce(
-          (sum, x, i) => sum + p.slice(i + 1).filter((y) => y < x).length,
-          0,
-        );
+      const inv = (p: number[]) => {
+        const bit = new Int32Array(p.length + 1);
+        let sum = 0;
+        for (let i = p.length - 1; i >= 0; i--) {
+          for (let x = p[i] - 1; x > 0; x -= x & -x) sum += bit[x];
+          for (let x = p[i]; x < bit.length; x += x & -x) bit[x]++;
+        }
+        return sum;
+      };
       for (let tc = 0; tc < a[0]; tc++) {
         const n = a[i++],
           m = a[i++],
@@ -165,16 +176,10 @@ export function checkOutput(
           p.some((x, t) => x === 1 && p[t + 1] === 1)
         )
           return false;
-        if (
-          p.some(
-            (x, t) =>
-              x === 0 &&
-              p
-                .slice(d[t] === "L" ? 0 : t + 1, d[t] === "L" ? t : n)
-                .reduce((s, y) => s + y, 0) !== counts[t],
-          )
-        )
-          return false;
+        const prefix = new Int32Array(n + 1);
+        for (let t = 0; t < n; t++) prefix[t + 1] = prefix[t] + p[t];
+        for (let t = 0; t < n; t++)
+          if (!p[t] && (d[t] === "L" ? prefix[t] : prefix[n] - prefix[t + 1]) !== counts[t]) return false;
       }
       return j === b.length;
     }
@@ -194,25 +199,27 @@ export function checkOutput(
       )
         return false;
       let i = 2;
-      for (let tc = 0; tc < n; tc++) {
-        const len = a[i++],
-          set = new Set([...a.slice(i, i + len), ...added]);
-        i += len;
-        if (!set.has(0)) return false;
-        const basis = Array(m).fill(0);
-        let rank = 0;
-        for (let x of set) {
-          for (let bit = m - 1; bit >= 0; bit--) {
-            if (!((x >> bit) & 1)) continue;
-            if (basis[bit]) x ^= basis[bit];
-            else {
-              basis[bit] = x;
-              rank++;
-              break;
-            }
-          }
+      const addedSet = new Set(added), addedBasis = Array(m).fill(0);
+      let addedRank = 0;
+      const insert = (basis: number[], value: number) => {
+        for (let bit = m - 1; bit >= 0; bit--) {
+          if (!((value >> bit) & 1)) continue;
+          if (basis[bit]) value ^= basis[bit];
+          else { basis[bit] = value; return 1; }
         }
-        if (set.size !== 2 ** rank) return false;
+        return 0;
+      };
+      for (const value of added) addedRank += insert(addedBasis, value);
+      for (let tc = 0; tc < n; tc++) {
+        const len = a[i++], basis = addedBasis.slice();
+        let rank = addedRank, size = added.length, zero = addedSet.has(0);
+        for (let j = 0; j < len; j++) {
+          const value = a[i++];
+          if (!addedSet.has(value)) size++;
+          if (value === 0) zero = true;
+          rank += insert(basis, value);
+        }
+        if (!zero || size !== 2 ** rank) return false;
       }
       return i === a.length;
     }
@@ -354,7 +361,19 @@ export function checkOutput(
       }
       return j === b.length;
     }
-    return tokens(output).join(" ") === tokens(expected).join(" ");
+    // Compare tokens without allocating millions of small strings.
+    if (output === expected) return true;
+    let i = 0, j = 0;
+    while (true) {
+      while (i < output.length && /\s/.test(output[i])) i++;
+      while (j < expected.length && /\s/.test(expected[j])) j++;
+      if (i === output.length || j === expected.length)
+        return i === output.length && j === expected.length;
+      while (i < output.length && !/\s/.test(output[i])) {
+        if (output[i++] !== expected[j++]) return false;
+      }
+      if (j < expected.length && !/\s/.test(expected[j])) return false;
+    }
   } catch {
     return false;
   }

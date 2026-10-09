@@ -8,12 +8,28 @@ class HiddenTrackJudge {
     this.paths = [];
     for (let tc = 0; tc < a[0]; tc++) {
       const n = a[i++], p = a.slice(i, i + n); i += n;
-      if (!Number.isSafeInteger(n) || n < 1 || n > 10000) throw Error('隐藏排列格式不正确');
+      if (!Number.isSafeInteger(n) || n < 1 || n > 1000) throw Error('隐藏排列格式不正确');
       if (p.length !== n || new Set(p).size !== n || p.some(x => !Number.isInteger(x) || x < 0 || x >= n) || (n > 1 && p[0] >= p[n-1]))
         throw Error('隐藏排列格式不正确');
       this.paths.push(p);
     }
     if (!this.paths.length || i !== a.length) throw Error('隐藏排列格式不正确');
+    if (this.paths.reduce((sum,p)=>sum+p.length,0)>10000) throw Error('隐藏排列总长度超出范围');
+    this.graphs = this.paths.map(p => {
+      const k=Math.ceil(Math.log2(p.length)), spectrum=new Int32Array(2**k);
+      const neighbors=Array.from({length:p.length},()=>[]);
+      for(let j=1;j<p.length;j++) {
+        spectrum[p[j-1]^p[j]]++;
+        neighbors[p[j-1]].push(p[j]); neighbors[p[j]].push(p[j-1]);
+      }
+      for(let step=1;step<spectrum.length;step*=2)
+        for(let start=0;start<spectrum.length;start+=2*step)
+          for(let j=0;j<step;j++) {
+            const x=spectrum[start+j],y=spectrum[start+j+step];
+            spectrum[start+j]=x+y;spectrum[start+j+step]=x-y;
+          }
+      return {neighbors,baseline:Array.from(spectrum,x=>(p.length-1-x)/2)};
+    });
     this.index = 0; this.queries = 0; this.pending = ''; this.error = '';
     this.stdin = `${this.paths.length}\n${this.paths[0].length}\n`;
   }
@@ -38,11 +54,11 @@ class HiddenTrackJudge {
         const member = x => {
           let bits = x & m, parity = 0;
           while (bits) { parity ^= 1; bits &= bits - 1; }
-          return parity ^ Number(x === v);
+          return parity;
         };
-        let crossing = 0;
-        for (let i=1; i<n; i++) crossing += member(p[i-1]) !== member(p[i]);
-        response += `${crossing % 3}\n`;
+        const graph=this.graphs[this.index];let crossing=graph.baseline[m];
+        if(v!==-1)for(const w of graph.neighbors[v])crossing+=member(v)===member(w)?1:-1;
+        response += `${((crossing % 3)+3)%3}\n`;
       } else if (symbol === '!') {
         if (a.length !== n || a.some((x,i) => x !== p[i])) { response += this.fail('隐藏排列重建错误'); continue; }
         this.index++; this.queries = 0;

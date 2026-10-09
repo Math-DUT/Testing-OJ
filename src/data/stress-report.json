@@ -1,0 +1,417 @@
+{
+  "files": 585,
+  "problems": [
+    {
+      "contest": "lncpc-2025",
+      "problem": "A",
+      "maxima": {
+        "cases": 1,
+        "n": 5000,
+        "total": 5000
+      },
+      "inputBytes": 461707,
+      "compressedBytes": 223754
+    },
+    {
+      "contest": "lncpc-2025",
+      "problem": "B",
+      "maxima": {
+        "cases": 50000,
+        "m": 10000000,
+        "total": 0
+      },
+      "inputBytes": 4482856,
+      "compressedBytes": 1068836
+    },
+    {
+      "contest": "lncpc-2025",
+      "problem": "C",
+      "maxima": {},
+      "inputBytes": 150,
+      "compressedBytes": 770
+    },
+    {
+      "contest": "lncpc-2025",
+      "problem": "D",
+      "maxima": {
+        "n": 100
+      },
+      "inputBytes": 7892,
+      "compressedBytes": 1855
+    },
+    {
+      "contest": "lncpc-2025",
+      "problem": "E",
+      "maxima": {
+        "cases": 1,
+        "n": 100000,
+        "total": 100000
+      },
+      "inputBytes": 6376909,
+      "compressedBytes": 1137388
+    },
+    {
+      "contest": "lncpc-2025",
+      "problem": "F",
+      "maxima": {
+        "cases": 1,
+        "rounds": 1000000,
+        "m": 1000000,
+        "total": 1000000
+      },
+      "inputBytes": 32540337,
+      "compressedBytes": 12486510
+    },
+    {
+      "contest": "lncpc-2025",
+      "problem": "G",
+      "maxima": {
+        "cases": 1,
+        "n": 250,
+        "total": 250
+      },
+      "inputBytes": 10013,
+      "compressedBytes": 1711
+    },
+    {
+      "contest": "lncpc-2025",
+      "problem": "H",
+      "maxima": {
+        "n": 500000,
+        "q": 500000
+      },
+      "inputBytes": 41611622,
+      "compressedBytes": 19728046
+    },
+    {
+      "contest": "lncpc-2025",
+      "problem": "I",
+      "maxima": {
+        "cases": 1,
+        "n": 1000000,
+        "total": 1000000
+      },
+      "inputBytes": 30077735,
+      "compressedBytes": 11495034
+    },
+    {
+      "contest": "lncpc-2025",
+      "problem": "J",
+      "maxima": {
+        "n": 300000,
+        "q": 300000
+      },
+      "inputBytes": 29286393,
+      "compressedBytes": 12866064
+    },
+    {
+      "contest": "lncpc-2025",
+      "problem": "K",
+      "maxima": {
+        "cases": 1,
+        "length": 3000000,
+        "total": 3000000
+      },
+      "inputBytes": 7254100,
+      "compressedBytes": 521695
+    },
+    {
+      "contest": "lncpc-2025",
+      "problem": "L",
+      "maxima": {
+        "cases": 1,
+        "n": 2000,
+        "total": 2000
+      },
+      "inputBytes": 110435,
+      "compressedBytes": 14152997
+    },
+    {
+      "contest": "lncpc-2025",
+      "problem": "M",
+      "maxima": {
+        "n": 1000000
+      },
+      "inputBytes": 72324301,
+      "compressedBytes": 33691982
+    },
+    {
+      "contest": "icpc-online-2026-1",
+      "problem": "A",
+      "maxima": {
+        "cases": 1,
+        "n": 1000000,
+        "total": 1000000
+      },
+      "inputBytes": 31588540,
+      "compressedBytes": 5333074
+    },
+    {
+      "contest": "icpc-online-2026-1",
+      "problem": "B",
+      "maxima": {
+        "n": 262143,
+        "v": 262143
+      },
+      "inputBytes": 4863231,
+      "compressedBytes": 1548147
+    },
+    {
+      "contest": "icpc-online-2026-1",
+      "problem": "C",
+      "maxima": {
+        "cases": 1,
+        "n": 1000000,
+        "constraints": 5556,
+        "total": 1000000
+      },
+      "inputBytes": 23523847,
+      "compressedBytes": 12666501
+    },
+    {
+      "contest": "icpc-online-2026-1",
+      "problem": "D",
+      "maxima": {
+        "n": 100000
+      },
+      "inputBytes": 3134786,
+      "compressedBytes": 557852
+    },
+    {
+      "contest": "icpc-online-2026-1",
+      "problem": "E",
+      "maxima": {
+        "cases": 10000,
+        "n": 512,
+        "total": 5120000
+      },
+      "inputBytes": 194248,
+      "compressedBytes": 792309
+    },
+    {
+      "contest": "icpc-online-2026-1",
+      "problem": "F",
+      "maxima": {
+        "n": 50,
+        "m": 13
+      },
+      "inputBytes": 41028,
+      "compressedBytes": 14560
+    },
+    {
+      "contest": "icpc-online-2026-1",
+      "problem": "G",
+      "maxima": {
+        "n": 90,
+        "m": 300
+      },
+      "inputBytes": 27333,
+      "compressedBytes": 11970
+    },
+    {
+      "contest": "icpc-online-2026-1",
+      "problem": "H",
+      "maxima": {
+        "q": 200000,
+        "length": 200000,
+        "patternCharacters": 200000
+      },
+      "inputBytes": 14001693,
+      "compressedBytes": 3851356
+    },
+    {
+      "contest": "icpc-online-2026-1",
+      "problem": "I",
+      "maxima": {
+        "n": 1000000000,
+        "q": 5
+      },
+      "inputBytes": 729,
+      "compressedBytes": 1412
+    },
+    {
+      "contest": "icpc-online-2026-1",
+      "problem": "J",
+      "maxima": {
+        "n": 100000,
+        "q": 100000
+      },
+      "inputBytes": 15018711,
+      "compressedBytes": 3868643
+    },
+    {
+      "contest": "icpc-online-2026-1",
+      "problem": "K",
+      "maxima": {
+        "cases": 1,
+        "n": 500000,
+        "total": 500000
+      },
+      "inputBytes": 15392394,
+      "compressedBytes": 3577124
+    },
+    {
+      "contest": "icpc-online-2026-1",
+      "problem": "L",
+      "maxima": {
+        "n": 499999,
+        "characters": 500000
+      },
+      "inputBytes": 5670652,
+      "compressedBytes": 3402293
+    },
+    {
+      "contest": "icpc-online-2026-1",
+      "problem": "M",
+      "maxima": {
+        "n": 100000,
+        "q": 100000,
+        "characters": 1000000
+      },
+      "inputBytes": 10458245,
+      "compressedBytes": 4045437
+    },
+    {
+      "contest": "icpc-online-2026-1",
+      "problem": "N",
+      "maxima": {
+        "n": 1000000
+      },
+      "inputBytes": 19524386,
+      "compressedBytes": 1896840
+    },
+    {
+      "contest": "icpc-online-2026-2",
+      "problem": "A",
+      "maxima": {
+        "n": 200000,
+        "m": 20,
+        "elements": 1000000
+      },
+      "inputBytes": 17046647,
+      "compressedBytes": 9008648
+    },
+    {
+      "contest": "icpc-online-2026-2",
+      "problem": "B",
+      "maxima": {
+        "cases": 5,
+        "n": 60001,
+        "total": 300000
+      },
+      "inputBytes": 14228399,
+      "compressedBytes": 5670512
+    },
+    {
+      "contest": "icpc-online-2026-2",
+      "problem": "C",
+      "maxima": {
+        "cases": 1,
+        "n": 200000,
+        "q": 200000,
+        "total": 200000
+      },
+      "inputBytes": 44891082,
+      "compressedBytes": 23846577
+    },
+    {
+      "contest": "icpc-online-2026-2",
+      "problem": "D",
+      "maxima": {
+        "height": 18,
+        "q": 524287
+      },
+      "inputBytes": 31168935,
+      "compressedBytes": 15281322
+    },
+    {
+      "contest": "icpc-online-2026-2",
+      "problem": "E",
+      "maxima": {
+        "cases": 1000,
+        "modulus": 1000000000,
+        "total": 0
+      },
+      "inputBytes": 78616,
+      "compressedBytes": 60512
+    },
+    {
+      "contest": "icpc-online-2026-2",
+      "problem": "F",
+      "maxima": {
+        "cases": 1,
+        "n": 50000,
+        "total": 50000
+      },
+      "inputBytes": 4829462,
+      "compressedBytes": 2242466
+    },
+    {
+      "contest": "icpc-online-2026-2",
+      "problem": "G",
+      "maxima": {
+        "cases": 3,
+        "n": 1000000,
+        "total": 1000000
+      },
+      "inputBytes": 170,
+      "compressedBytes": 30920313
+    },
+    {
+      "contest": "icpc-online-2026-2",
+      "problem": "H",
+      "maxima": {
+        "cases": 10,
+        "n": 1000,
+        "total": 10000
+      },
+      "inputBytes": 266862,
+      "compressedBytes": 110753
+    },
+    {
+      "contest": "icpc-online-2026-2",
+      "problem": "I",
+      "maxima": {
+        "cases": 1,
+        "n": 100000,
+        "total": 100000
+      },
+      "inputBytes": 6388112,
+      "compressedBytes": 2205325
+    },
+    {
+      "contest": "icpc-online-2026-2",
+      "problem": "J",
+      "maxima": {
+        "cases": 1,
+        "reviews": 1000,
+        "total": 1000
+      },
+      "inputBytes": 226931,
+      "compressedBytes": 20219
+    },
+    {
+      "contest": "icpc-online-2026-2",
+      "problem": "K",
+      "maxima": {
+        "cases": 1,
+        "n": 5000,
+        "q": 500000,
+        "total": 5000
+      },
+      "inputBytes": 15996219,
+      "compressedBytes": 2829843
+    },
+    {
+      "contest": "icpc-online-2026-2",
+      "problem": "L",
+      "maxima": {
+        "cases": 1,
+        "n": 100000,
+        "total": 100000
+      },
+      "inputBytes": 6295133,
+      "compressedBytes": 2751103
+    }
+  ]
+}

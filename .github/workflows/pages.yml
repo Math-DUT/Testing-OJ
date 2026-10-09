@@ -21,6 +21,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: node scripts/validate-tests.mjs
+      - run: python scripts/test-data/validate-constraints.py
+      - run: mkdir -p tmp
+      - run: g++ -std=c++17 -O2 scripts/test-data/fast-oracles.cpp -o tmp/fast-oracles.exe
+      - run: python scripts/test-data/verify-stress.py
       - run: node scripts/validate-runtime.mjs
       - run: npm run build
       - uses: actions/configure-pages@v5

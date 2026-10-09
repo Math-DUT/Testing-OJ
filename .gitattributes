@@ -3,6 +3,7 @@
 *.png binary
 *.tar binary
 *.gz binary
+*.bin binary
 *.a binary
 *.zip binary
 # Runtime receipts refer to exact vendored bytes on every checkout platform.

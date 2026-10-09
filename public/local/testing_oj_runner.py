@@ -18,6 +18,7 @@ import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 MAX_BYTES = 2 * 1024 * 1024
+MAX_INPUT_BYTES = 128 * 1024 * 1024
 RUNS = {}
 LOCK = threading.Lock()
 
@@ -35,11 +36,20 @@ class HiddenTrack:
             n = a[i]
             p = a[i + 1:i + 1 + n]
             i += n + 1
-            if not 1 <= n <= 10000 or sorted(p) != list(range(n)) or (n > 1 and p[0] >= p[-1]):
+            if not 1 <= n <= 1000 or sorted(p) != list(range(n)) or (n > 1 and p[0] >= p[-1]):
                 raise ValueError("隐藏排列格式不正确")
             self.paths.append(p)
         if i != len(a):
             raise ValueError("隐藏排列格式不正确")
+        if sum(map(len, self.paths)) > 10000:
+            raise ValueError("隐藏排列总长度超出范围")
+        self.graphs = []
+        for p in self.paths:
+            neighbors = [[] for _ in p]
+            for x,y in zip(p,p[1:]):
+                neighbors[x].append(y)
+                neighbors[y].append(x)
+            self.graphs.append((neighbors, {}))
         self.index = self.queries = 0
         self.pending = self.error = ""
         self.stdin = str(len(self.paths)) + "\n" + str(len(self.paths[0])) + "\n"
@@ -75,8 +85,13 @@ class HiddenTrack:
                     response += self.fail("超过 n·ceil(log2(n)) 次查询限制")
                     continue
                 m, v = a
-                b = [((x & m).bit_count() & 1) ^ (x == v) for x in p]
-                response += str(sum(x != y for x, y in zip(b, b[1:])) % 3) + "\n"
+                neighbors, cache = self.graphs[self.index]
+                if m not in cache:
+                    cache[m] = sum(((x ^ y) & m).bit_count() & 1 for x,y in zip(p,p[1:]))
+                crossing = cache[m]
+                if v != -1:
+                    crossing += sum(1 - 2 * (((v ^ w) & m).bit_count() & 1) for w in neighbors[v])
+                response += str(crossing % 3) + "\n"
             elif symbol == "!":
                 if a != p:
                     response += self.fail("隐藏排列重建错误")
@@ -97,7 +112,8 @@ class HiddenTrack:
         return {"status": "WA" if self.error else "PASS", "error": self.error}
 
 
-def run_program(executable, source, input_text, interactive=False, run_id=""):
+def run_program(executable, source, input_text, interactive=False, run_id="", max_output_bytes=MAX_BYTES):
+    max_output_bytes = max(MAX_BYTES, min(MAX_INPUT_BYTES, int(max_output_bytes)))
     judge = HiddenTrack(input_text) if interactive else None
     with tempfile.TemporaryDirectory(prefix="testing-oj-") as directory:
         path = Path(directory) / "main.py"
@@ -164,7 +180,7 @@ def run_program(executable, source, input_text, interactive=False, run_id=""):
                     finished += 1
                     continue
                 count[channel - 1] += len(data)
-                if count[channel - 1] > MAX_BYTES:
+                if count[channel - 1] > (max_output_bytes if channel == 1 else MAX_BYTES):
                     status = "OLE"
                     proc.kill()
                     break
@@ -256,7 +272,7 @@ def main():
             if not self.authorized():
                 self.reply(403, {})
                 return
-            self.reply(200 if self.path == "/health" else 404, {"pypy3": True, "version": probe.strip()})
+            self.reply(200 if self.path == "/health" else 404, {"pypy3": True, "version": probe.strip(), "maxInputBytes": MAX_INPUT_BYTES, "maxOutputBytes": MAX_INPUT_BYTES})
 
         def do_POST(self):
             if not self.authorized():
@@ -264,7 +280,7 @@ def main():
                 return
             try:
                 length = int(self.headers.get("Content-Length", 0))
-                if not 0 < length <= 4 * MAX_BYTES:
+                if not 0 < length <= 2 * MAX_INPUT_BYTES:
                     raise ValueError("请求过大")
                 data = json.loads(self.rfile.read(length))
                 if self.path == "/cancel":
@@ -277,9 +293,9 @@ def main():
                 if self.path != "/run":
                     self.reply(404, {})
                     return
-                if any(not isinstance(data.get(k), str) or len(data[k].encode("utf-8")) > MAX_BYTES for k in ("source", "input")):
+                if any(not isinstance(data.get(k), str) or len(data[k].encode("utf-8")) > (MAX_BYTES if k == "source" else MAX_INPUT_BYTES) for k in ("source", "input")):
                     raise ValueError("代码或输入过大")
-                self.reply(200, run_program(args.pypy, data["source"], data["input"], data.get("interactive") is True, str(data.get("id", ""))))
+                self.reply(200, run_program(args.pypy, data["source"], data["input"], data.get("interactive") is True, str(data.get("id", "")), data.get("maxOutputBytes", MAX_BYTES)))
             except Exception as error:
                 self.reply(400, {"status": "ERROR", "output": "", "time": 0, "error": str(error)})
 

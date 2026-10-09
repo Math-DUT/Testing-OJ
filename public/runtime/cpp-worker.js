@@ -3,7 +3,8 @@ importScripts('./cpp22/toolchain.js', './hidden-track.js');
 let toolchain, compiled, lastSource = '', lastStandard = '', stage = 'loading';
 const MAX_OUTPUT = 2 * 1024 * 1024;
 const phase = (value) => { stage = value; postMessage({type: 'phase', phase: value}); };
-self.onmessage = async ({data: {source, input, interactive, standard = '17'}}) => {
+self.onmessage = async ({data: {source, input, interactive, standard = '17', maxOutputBytes = MAX_OUTPUT}}) => {
+  const stdoutLimit = Math.max(MAX_OUTPUT, Math.min(128 * 1024 * 1024, maxOutputBytes));
   let output = '', stderr = '', start = 0;
   try {
     if (!['17', '20', '23'].includes(standard)) throw Error('不支持的 C++ 标准');
@@ -30,7 +31,7 @@ self.onmessage = async ({data: {source, input, interactive, standard = '17'}}) =
       stdin: () => { const chunk = pendingInput; pendingInput = ''; return chunk || null; },
       stdout: (chunk) => {
         output += chunk;
-        if (output.length > MAX_OUTPUT) throw Error('OUTPUT_LIMIT');
+        if (output.length > stdoutLimit) throw Error('OUTPUT_LIMIT');
         if (judge) pendingInput += judge.write(chunk);
       },
       stderr: (chunk) => { stderr += chunk; if (stderr.length > MAX_OUTPUT) throw Error('OUTPUT_LIMIT'); },
