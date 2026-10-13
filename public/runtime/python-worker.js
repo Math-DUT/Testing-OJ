@@ -1,12 +1,13 @@
-import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.mjs';
+import { loadPyodide } from './pyodide/pyodide.mjs';
 import './hidden-track.js';
+import './menji.js';
 let runtime;
 self.onmessage=async ({data:{source,input,interactive,maxOutputBytes=2*1024*1024}})=>{
   let start=0;
   try{
     postMessage({type:'phase',phase:'loading'});
-    runtime ||= await loadPyodide({indexURL:'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/'});
-    const judge=interactive?new globalThis.HiddenTrackJudge(input):null;
+    runtime ||= await loadPyodide({indexURL:new URL('./pyodide/',self.location.href).href});
+    const judge=interactive==='menji'?new globalThis.MenjiJudge(input):interactive?new globalThis.HiddenTrackJudge(input):null;
     runtime.globals.set('_source',source);runtime.globals.set('_input',judge?judge.stdin:input);
     runtime.globals.set('_interactive',!!judge);
     runtime.globals.set('_stdout_limit',Math.max(2*1024*1024,Math.min(128*1024*1024,maxOutputBytes)));

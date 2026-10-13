@@ -112,9 +112,101 @@ class HiddenTrack:
         return {"status": "WA" if self.error else "PASS", "error": self.error}
 
 
+class Menji:
+    """Adaptive binary-tree ball-query judge; target 0 chooses the larger side."""
+    def __init__(self, text):
+        tokens = text.split()
+        if any(not token.isdigit() for token in tokens):
+            raise ValueError("交互场景必须包含有效整数")
+        a = list(map(int, tokens))
+        if not a or not 1 <= a[0] <= 100:
+            raise ValueError("测试组数超出范围")
+        self.cases = []
+        i, total = 1, 0
+        for _ in range(a[0]):
+            n = a[i]; i += 1; total += n
+            if not 2 <= n <= 30000 or total > 30000:
+                raise ValueError("树的规模超出范围")
+            parents = a[i:i+n-1]; i += n-1
+            if len(parents) != n-1:
+                raise ValueError("父节点数量不正确")
+            graph, children = [[] for _ in range(n)], [0]*n
+            for v, parent in enumerate(parents, 1):
+                p = parent-1
+                if not 0 <= p < v:
+                    raise ValueError("父节点必须先于子节点")
+                children[p] += 1
+                if children[p] > 2:
+                    raise ValueError("必须是二叉树")
+                graph[p].append(v); graph[v].append(p)
+            hidden = a[i]; i += 1
+            if not 0 <= hidden <= n:
+                raise ValueError("隐藏节点应为 0（自适应）或 1..n")
+            self.cases.append((n, parents, graph, hidden))
+        if i != len(a):
+            raise ValueError("交互场景包含多余数据")
+        self.index = self.queries = 0
+        self.pending = self.error = ""
+        self.stdin = str(len(self.cases))+"\n"+self.start_case()
+
+    def start_case(self):
+        if self.index == len(self.cases):
+            return ""
+        n, parents, _, hidden = self.cases[self.index]
+        self.candidates = [hidden-1] if hidden else list(range(n))
+        return f"{n}\n"+" ".join(map(str, parents))+"\n"
+
+    def fail(self, message):
+        self.error = self.error or message
+        return "-1\n"
+
+    def write(self, text):
+        self.pending += text
+        response = ""
+        while "\n" in self.pending:
+            line, self.pending = self.pending.split("\n", 1)
+            if not line.strip() or self.error:
+                continue
+            parts = line.split(); symbol = parts.pop(0)
+            if self.index == len(self.cases):
+                response += self.fail("全部回答后仍有多余输出"); continue
+            if any(not token.isdigit() for token in parts):
+                response += self.fail("交互输出包含无效整数"); continue
+            values = list(map(int, parts)); n, _, graph, _ = self.cases[self.index]
+            if symbol == "?":
+                if len(values) != 2 or not 1 <= values[0] <= n or not 0 <= values[1] <= n:
+                    response += self.fail("信号参数超出范围"); continue
+                self.queries += 1
+                if self.queries > 40:
+                    response += self.fail("超过每组 40 次信号限制"); continue
+                u, k = values; distance = [-1]*n; distance[u-1] = 0; queue_ = [u-1]
+                for v in queue_:
+                    for w in graph[v]:
+                        if distance[w] < 0:
+                            distance[w] = distance[v]+1; queue_.append(w)
+                yes = [v for v in self.candidates if distance[v] <= k]
+                no = [v for v in self.candidates if distance[v] > k]
+                answer = int(len(yes) >= len(no)); self.candidates = yes if answer else no
+                response += f"{answer}\n"
+            elif symbol == "!":
+                if len(values) != 1 or self.candidates != [values[0]-1]:
+                    response += self.fail("隐藏节点尚未唯一确定或答案不正确"); continue
+                self.index += 1; self.queries = 0; response += self.start_case()
+            else:
+                response += self.fail("交互输出必须以 ? 或 ! 开头")
+        self.stdin += response
+        return response
+
+    def finish(self):
+        if self.pending.strip(): self.write("\n")
+        if not self.error and self.index != len(self.cases):
+            self.error = "程序结束前没有回答全部测试组"
+        return {"status": "WA" if self.error else "PASS", "error": self.error}
+
+
 def run_program(executable, source, input_text, interactive=False, run_id="", max_output_bytes=MAX_BYTES):
     max_output_bytes = max(MAX_BYTES, min(MAX_INPUT_BYTES, int(max_output_bytes)))
-    judge = HiddenTrack(input_text) if interactive else None
+    judge = Menji(input_text) if interactive == "menji" else HiddenTrack(input_text) if interactive else None
     with tempfile.TemporaryDirectory(prefix="testing-oj-") as directory:
         path = Path(directory) / "main.py"
         path.write_text(source, encoding="utf-8")
@@ -272,7 +364,7 @@ def main():
             if not self.authorized():
                 self.reply(403, {})
                 return
-            self.reply(200 if self.path == "/health" else 404, {"pypy3": True, "version": probe.strip(), "maxInputBytes": MAX_INPUT_BYTES, "maxOutputBytes": MAX_INPUT_BYTES})
+            self.reply(200 if self.path == "/health" else 404, {"pypy3": True, "version": probe.strip(), "maxInputBytes": MAX_INPUT_BYTES, "maxOutputBytes": MAX_INPUT_BYTES, "protocols": ["hidden-track", "menji"]})
 
         def do_POST(self):
             if not self.authorized():
@@ -295,7 +387,7 @@ def main():
                     return
                 if any(not isinstance(data.get(k), str) or len(data[k].encode("utf-8")) > (MAX_BYTES if k == "source" else MAX_INPUT_BYTES) for k in ("source", "input")):
                     raise ValueError("代码或输入过大")
-                self.reply(200, run_program(args.pypy, data["source"], data["input"], data.get("interactive") is True, str(data.get("id", "")), data.get("maxOutputBytes", MAX_BYTES)))
+                self.reply(200, run_program(args.pypy, data["source"], data["input"], data.get("interactive") if data.get("interactive") in (True, "menji") else False, str(data.get("id", "")), data.get("maxOutputBytes", MAX_BYTES)))
             except Exception as error:
                 self.reply(400, {"status": "ERROR", "output": "", "time": 0, "error": str(error)})
 

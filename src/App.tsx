@@ -42,7 +42,8 @@ import type {
   RunResult,
   FontSettings,
 } from "./types";
-import { execute, stopRunner } from "./runner";
+import { stopRunner } from "./runner";
+import { executeProblem, isInteractive, localScenario } from "./problemRunner";
 import { loadTestCase, outputPreview } from "./testData";
 import { judgeOutput, stopJudge } from "./judge";
 import ResizeHandle from "./ResizeHandle";
@@ -338,13 +339,13 @@ export default function App() {
     if (problem) {
       setCode(readCode(problem.id, language));
       setInput(
-        (problem.checker === "hidden-track"
-          ? { input: "1\n3\n0 2 1\n" }
+        (isInteractive(problem.checker)
+          ? { input: localScenario(problem) }
           : problem.samples[0]
         )?.input || "",
       );
       setExpected(
-        problem.checker === "hidden-track"
+        isInteractive(problem.checker)
           ? ""
           : problem.samples[0]?.output || "",
       );
@@ -415,12 +416,12 @@ export default function App() {
         setBusy("loading");
         const loaded = await loadTestCase(test as import("./types").TestCase);
         if (serial !== runSerial.current) return;
-        const answer = await execute(
+        const answer = await executeProblem(
+          problem.checker,
           language,
           code,
           loaded.input,
           setBusy,
-          problem.checker === "hidden-track",
           loaded.maxOutputBytes,
         );
         if (answer.status === "CANCELLED" || serial !== runSerial.current) return;
@@ -1108,7 +1109,7 @@ export default function App() {
                     <span className="connection-dot" />
                     代码在你的浏览器内运行
                     <br />
-                    每题 15 个自测点，其中 3 个 trick。
+                    {problems.some(p => p.testScope === "samples") ? "公开样例自测；交互和通信题使用本地协议。" : "每题 15 个自测点，其中 3 个 trick。"}
                   </p>
                 </aside>
               </div>
@@ -1215,6 +1216,7 @@ export default function App() {
                       target="_blank"
                       rel="noreferrer"
                       className="original-link"
+                      title={problem.statementLanguage === "zh-CN" ? "QOJ 中文译文；原始英文题面见 PDF" : undefined}
                     >
                       原题
                       <ChevronRight size={12} />
@@ -1243,12 +1245,12 @@ export default function App() {
                             onClick={() => {
                               changeLayout("editorEnabled", true);
                               setInput(
-                                problem.checker === "hidden-track"
-                                  ? "1\n3\n0 2 1\n"
+                                isInteractive(problem.checker)
+                                  ? localScenario(problem)
                                   : s.input,
                               );
                               setExpected(
-                                problem.checker === "hidden-track"
+                                isInteractive(problem.checker)
                                   ? ""
                                   : s.output,
                               );
@@ -1257,7 +1259,7 @@ export default function App() {
                             }}
                           >
                             <Play size={12} />
-                            {problem.checker === "hidden-track"
+                            {isInteractive(problem.checker)
                               ? "交互自测"
                               : "载入"}
                           </button>
@@ -1479,7 +1481,7 @@ export default function App() {
                               {testProgress.current} / {testProgress.total}
                             </span>
                             <small>
-                              首次加载 C++ 约 29 MB，Python 约 12 MB。
+                              首次加载 C++ 约 29 MB，Python 约 14 MB。
                             </small>
                           </div>
                         ) : result ? (
@@ -1508,7 +1510,7 @@ export default function App() {
                                   <pre className="error-output">{r.error}</pre>
                                 )}
                                 {r.status === "WA" &&
-                                  problem.checker !== "hidden-track" && (
+                                  !isInteractive(problem.checker) && (
                                     <>
                                       <div className="output-label">
                                         预期输出
@@ -1527,11 +1529,11 @@ export default function App() {
                         ) : testMode === "custom" ? (
                           <div
                             ref={customInputs}
-                            className={`custom-inputs ${problem.checker === "hidden-track" ? "single" : ""}`}
+                            className={`custom-inputs ${isInteractive(problem.checker) ? "single" : ""}`}
                           >
                             <label>
-                              {problem.checker === "hidden-track"
-                                ? "隐藏排列 · T，n，排列（0 起始）"
+                              {isInteractive(problem.checker)
+                                ? problem.checker === "menji" ? "隐藏节点 · T，n，父节点，X（0 = 自适应）" : "隐藏排列 · T，n，排列（0 起始）"
                                 : "标准输入"}
                               <textarea
                                 aria-label="标准输入"
@@ -1540,7 +1542,7 @@ export default function App() {
                                 spellCheck={false}
                               />
                             </label>
-                            {problem.checker !== "hidden-track" && (
+                            {!isInteractive(problem.checker) && (
                               <ResizeHandle
                                 label="输入与输出分隔线"
                                 axis="x"
@@ -1556,7 +1558,7 @@ export default function App() {
                                 }
                               />
                             )}
-                            {problem.checker !== "hidden-track" && (
+                            {!isInteractive(problem.checker) && (
                               <label>
                                 预期输出 <span>可留空</span>
                                 <textarea
@@ -1762,7 +1764,7 @@ export default function App() {
             <span className="connection-dot" />
             Browser runtime
           </span>
-          <span className="status-scope">15 个自测点 · 3 个 trick</span>
+          <span className="status-scope">{problem?.testScope === "samples" ? `公开样例 · ${problem.tests?.length ?? problem.samples.length} 组` : problem?.testScope === "protocol" ? `协议自测 · ${problem.tests?.length ?? 0} 组` : problems.some(p => p.testScope === "samples") ? "公开样例自测" : "15 个自测点 · 3 个 trick"}</span>
           <span className="status-spacer" />
           <span>{languageLabel(language)}</span>
           <span>UTF-8</span>

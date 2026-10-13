@@ -4,6 +4,8 @@
 *.tar binary
 *.gz binary
 *.bin binary
+*.wasm binary
+public/runtime/pyodide/* -text
 *.a binary
 *.zip binary
 # Runtime receipts refer to exact vendored bytes on every checkout platform.

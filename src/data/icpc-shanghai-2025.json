@@ -1,0 +1,601 @@
+[
+  {
+    "id": "A",
+    "title": "Menji, we miss you!",
+    "englishTitle": "Menji, we miss you!",
+    "timeLimit": 1000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/15314",
+    "qoj": "https://qoj.ac/problem/15314",
+    "codeforces": "",
+    "markdown": "这是一个交互式问题。\n\nMenji 迷路了，大家都很想念他。你的任务是找到他！\n\n有一棵由 $n$ 个节点组成的二叉树 $T$，树 $T$ 的每条边长度均为 $1$。Menji 躲在某个节点 $X$。你已知这棵树的结构，但你不知道 $X$ 的具体位置。\n\n为了找到 $X$，你可以发送信号。你可以选择一个节点 $u$ 并选择一个信号强度 $k$，然后从节点 $u$ 发送一个强度为 $k$ 的信号。如果 $u$ 与 $X$ 之间的距离不超过 $k$，Menji 就会收到该信号并返回一个信号，此时你也会收到信号。否则，你将什么也收不到。\n\n发送信号很慢，而你时间紧迫，因此请在不超过 $40$ 次信号发送内确定 Menji 的位置。\n\n## 交互\n\n输入包含多个测试用例。输入的第一行包含一个整数 $T$ ($1 \\le T \\le 100$)，表示测试用例的数量。\n\n对于每个测试用例，第一行包含一个整数 $n$ ($2 \\le n \\le 3 \\times 10^4$)，表示树中的节点数。\n\n第二行包含 $n - 1$ 个整数 $fa_2, fa_3, \\dots, fa_n$ ($1 \\le fa_i < i$)，其中 $fa_i$ 是节点 $i$ 在树上的双亲节点。树以节点 $1$ 为根。\n\n保证该树是一棵二叉树，即不存在 $1 < i < j < k \\le n$ 使得 $fa_i = fa_j = fa_k$。\n\n要发送信号，请按以下格式打印单行：\n\n* `? u k`：表示你在节点 $u$ 处产生一个强度为 $k$ 的信号。你需要确保 $1 \\le u \\le n, 0 \\le k \\le n$。然后你需要读取一个整数 $o$ ($o \\in \\{0, 1\\}$)。如果你收到了信号（等价于 $dis(u, X) \\le k$），则 $o = 1$，否则 $o = 0$。\n\n要报告答案，请按以下格式打印单行：\n\n* `! u`：表示你已经找到了 $X = u$。在打印此内容后，你需要继续处理下一个测试用例，如果没有更多测试用例，则程序终止。\n\n对于每个测试用例，你最多可以发送 $40$ 次信号。报告答案不计入发送信号的次数。\n\n如果你发送了超过 $40$ 次信号，或者你发送的信号格式错误，或者你报告的答案不正确，交互将立即结束，你将获得 Wrong answer 的评测结果。\n\n请注意，交互器是**自适应的（adaptive）**，这意味着只要与约束条件以及之前查询的回答保持一致，答案可能会根据你的查询而改变。\n\n保证所有测试用例的 $n$ 之和不超过 $3 \\times 10^4$。\n\n在打印每行后，请不要忘记输出换行符并刷新输出缓冲区。你可以使用 C++ 中的 `fflush(stdout)` 或 `cout.flush()`，Java 中的 `System.out.flush()`，以及 Python 中的 `stdout.flush()` 来刷新流。",
+    "samples": [
+      {
+        "input": "2\n7\n1 1 2 2 3 3\n1\n0\n0\n7\n1 1 2 2 3 3\n0\n1\n",
+        "output": "? 2 1\n? 3 2\n? 4 0\n! 5\n? 2 1\n? 3 0\n! 3\n"
+      }
+    ],
+    "checker": "menji",
+    "pdf": "./pdf/icpc-shanghai-2025/A.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "zh-CN",
+    "testScope": "protocol",
+    "tests": [
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/01-a8b02281fb143e7b.bin",
+        "sha256": "a8b02281fb143e7ba539cf1cdaaeea44a6896edaefb813b11ea7fad027383c3d",
+        "inputBytes": 18,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/02-55d95582e3b0a664.bin",
+        "sha256": "55d95582e3b0a66440568a6bc096e213f9869b3c95d9d9cd3ff502ac3b4072cc",
+        "inputBytes": 79,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/03-d74e5dfa90d07a38.bin",
+        "sha256": "d74e5dfa90d07a3898aac6d6a65fe374c144b292c44d1856474421a64311393e",
+        "inputBytes": 178,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/04-32bef98c7c6923f9.bin",
+        "sha256": "32bef98c7c6923f98d628846446e12ce2532fda318148d32148daa220ced77bf",
+        "inputBytes": 404,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/05-2a730425005751c1.bin",
+        "sha256": "2a730425005751c1c56581ea4e9babb310acd4194f60d57ea0fe619262ea3d8c",
+        "inputBytes": 1832,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/06-1e34eb31c83263a1.bin",
+        "sha256": "1e34eb31c83263a1a7bfc585e282261f6a21cfd901bb7909bd858ded3682b6a6",
+        "inputBytes": 3886,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/07-a77541f15b07c7dd.bin",
+        "sha256": "a77541f15b07c7dd2b5fc5ddbee93404f6f411dbb537c8e044432e3acaf4da0b",
+        "inputBytes": 13900,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/08-fe118c1f465f820a.bin",
+        "sha256": "fe118c1f465f820afb6ae78217316756bf430e76ac242599dab30e02dbdd9ac2",
+        "inputBytes": 37790,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/09-ae7feb05aeea1dc7.bin",
+        "sha256": "ae7feb05aeea1dc7fbb23f3b021df2aad49fd370db9425e84dd238e3b9dd268e",
+        "inputBytes": 74312,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/10-8a0a7e294ff2fdaf.bin",
+        "sha256": "8a0a7e294ff2fdaf5b6e5cef831cfcbb6e55c83dd40958aa628fde6e5a635724",
+        "inputBytes": 168898,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/11-5a0269f9196f3213.bin",
+        "sha256": "5a0269f9196f3213a18a9e8a11cc2ee126bc316524db0a9aeddd50bb62d48481",
+        "inputBytes": 157790,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/12-45aa18a5bb0c6fab.bin",
+        "sha256": "45aa18a5bb0c6fab4e156c2de95a344e41ace3ddc426a4702fa84f33b6629fd4",
+        "inputBytes": 160635,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/13-ade2800244869cf4.bin",
+        "sha256": "ade2800244869cf4e6847ad7b31871695f8a94e1bbcc777f51023b06f3b439bc",
+        "inputBytes": 8,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "trick"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/14-73df5f9e1be7210e.bin",
+        "sha256": "73df5f9e1be7210e4a3e0f7668560d8601c8d8402ab030831631447868a1a07d",
+        "inputBytes": 10,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "trick"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shanghai-2025/A/15-63b04396b5c02d89.bin",
+        "sha256": "63b04396b5c02d898a0423246fbf0d2da3cc99056f3ce0d92d71a55638f3a73a",
+        "inputBytes": 18,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "自适应 / 固定隐藏节点、深链和非平衡二叉树",
+        "kind": "trick"
+      }
+    ]
+  },
+  {
+    "id": "B",
+    "title": "Hamu",
+    "englishTitle": "Hamu",
+    "timeLimit": 1000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/15315",
+    "qoj": "https://qoj.ac/problem/15315",
+    "codeforces": "",
+    "markdown": "Dingdong 计划前往 Hamu 国旅行。\n\nHamu 国由 $n$ 个城市和 $m$ 条双向道路组成。在这次旅行之前，Dingdong 已经访问过城市 $i$ 恰好 $a_i$ 次。在这次旅行中，Dingdong 计划从城市 $s$ 进入 Hamu 国。在接下来的每一天，Dingdong 将沿着某条道路前往一个城市并访问该城市一次。在最后一天的访问结束时，Dingdong 应该位于城市 $s$ 并从城市 $s$ 离开 Hamu 国。请注意，在进入 Hamu 国的那天，Dingdong 并不访问城市 $s$。\n\nDingdong 希望在这次旅行之后，结合他之前的访问记录，Hamu 国的每个城市都被他访问了偶数次。Dingdong 的时间有限，在这次旅行中最多只能访问 $5n$ 个城市。请帮助他构建一个可行的旅行计划，或者告诉他这是否是不可能的。\n\n## 输入格式\n\n输入包含多个测试用例。第一行包含一个整数 $T$（$1 \\le T \\le 2 \\times 10^5$），表示测试用例的数量。\n\n对于每个测试用例，第一行包含三个整数 $n, m, s$（$1 \\le n \\le 2 \\times 10^5, 0 \\le m \\le 2 \\times 10^5, 1 \\le s \\le n$），其中 $n$ 是城市数量，$m$ 是道路数量，$s$ 是起点城市的编号。\n\n下一行包含 $n$ 个整数 $a_1, a_2, \\dots, a_n$（$0 \\le a_i \\le 10^9$），表示 Dingdong 之前访问每个城市的次数。\n\n接下来的 $m$ 行每行包含两个整数 $u_i, v_i$（$1 \\le u_i, v_i \\le n$），表示连接城市 $u_i$ 和城市 $v_i$ 的一条无向道路。可能存在重边和自环。换句话说，不保证 $u_i \\neq v_i$，也不保证对于 $i \\neq j$ 有 $(u_i, v_i) \\neq (u_j, v_j)$。\n\n保证所有测试用例中 $n$ 的总和以及 $m$ 的总和分别不超过 $2 \\times 10^5$。\n\n## 输出格式\n\n对于每个测试用例，如果不存在可行的旅行计划，则在一行中输出 `No`。\n\n否则，首先在一行中输出 `Yes`，然后在下一行输出一个整数 $k$（$0 \\le k \\le 5n$），表示这次旅行中的总访问次数。在接下来的一行中，按顺序输出访问的城市编号。\n\n## Note\n\n对于第一个测试用例，沿着路线 $1 \\to 2 \\to 3 \\to 4 \\to 1$ 访问后，城市 $1, 2, 3, 4$ 分别被访问了 $2, 2, 2, 2$ 次，满足要求。",
+    "samples": [
+      {
+        "input": "5\n4 4 1\n1 1 1 1\n1 2\n2 3\n3 4\n4 1\n5 7 1\n9 4 3 11 7\n1 2\n2 5\n2 4\n3 4\n2 3\n1 3\n4 5\n2 2 2\n114 514\n1 2\n1 2\n5 0 1\n114 514 19 19 810\n2 1 1\n3 5\n1 2\n",
+        "output": "Yes\n4\n2 3 4 1\nYes\n6\n2 4 5 2 3 1\nYes\n0\nNo\nYes\n2\n2 1\n"
+      }
+    ],
+    "checker": "hamu",
+    "pdf": "./pdf/icpc-shanghai-2025/B.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "zh-CN",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "5\n4 4 1\n1 1 1 1\n1 2\n2 3\n3 4\n4 1\n5 7 1\n9 4 3 11 7\n1 2\n2 5\n2 4\n3 4\n2 3\n1 3\n4 5\n2 2 2\n114 514\n1 2\n1 2\n5 0 1\n114 514 19 19 810\n2 1 1\n3 5\n1 2\n",
+        "output": "Yes\n4\n2 3 4 1\nYes\n6\n2 4 5 2 3 1\nYes\n0\nNo\nYes\n2\n2 1\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "C",
+    "title": "Singularity",
+    "englishTitle": "Singularity",
+    "timeLimit": 1000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/15316",
+    "qoj": "https://qoj.ac/problem/15316",
+    "codeforces": "",
+    "markdown": "在 2077 年，命题变得非常简单。机器人会通过设定一些随机操作来生成一个问题，然后解决它。命题人只需要检查这个问题是否正确即可。\n\n下面是一个来自 2077 年的问题：\n\n给定一个排列 $p_1, p_2, \\dots, p_n$，保证 $n$ 是偶数。你希望仅使用一种操作来对该排列进行排序：\n\n* `FakeSort(l,r)`：你必须保证 $r - l + 1$ 是偶数。设 $k = r - l + 1$，那么连续子序列 $p_l, p_{l+1}, \\dots, p_r$ 中最大的 $k/2$ 个元素和最小的 $k/2$ 个元素将分别独立地进行排序。也就是说，设 $L_1, L_2, \\dots, L_{k/2}$ 为最大的 $k/2$ 个数的下标，而 $S_1, S_2, \\dots, S_{k/2}$ 为最小的 $k/2$ 个数的下标。我们首先对下标为 $L_1 \\sim L_{k/2}$ 的数进行排序，然后对下标为 $S_1 \\sim S_{k/2}$ 的数进行排序。\n\n这里有一个具体的例子；假设排列为 $p = \\{2, 5, 7, 1, 8, 6, 4, 3\\}$。如果我们调用 `FakeSort(2,7)`：\n\n* $k = r - l + 1 = 6$。连续子序列 $p_l, p_{l+1}, \\dots, p_r$ 为 $\\{5, 7, 1, 8, 6, 4\\}$；我们将独立地对该序列中最大的 3 个数和最小的 3 个数进行排序。\n* $p = \\{2, 5, \\mathbf{7}, 1, \\mathbf{8}, \\mathbf{6}, 4, 3\\}$；最大的 3 个数已加粗。排序后，它们变为 $p = \\{2, 5, \\mathbf{6}, 1, \\mathbf{7}, \\mathbf{8}, 4, 3\\}$。\n* $p = \\{2, \\mathbf{5}, 6, \\mathbf{1}, 7, 8, \\mathbf{4}, 3\\}$；最小的 3 个数已加粗。排序后，它们变为 $p = \\{2, \\mathbf{1}, 6, \\mathbf{4}, 7, 8, \\mathbf{5}, 3\\}$。\n\n因此，在执行 `FakeSort(2,7)` 后，$p = \\{2, 5, 7, 1, 8, 6, 4, 3\\}$ 变为 $\\{2, 1, 6, 4, 7, 8, 5, 3\\}$。\n\n请使用不超过 114 次操作对该排列进行排序，或者判断其不可能被排序。可以证明，如果一个排列可以通过该操作进行排序，则一定存在一种使用不超过 114 次操作的方法。\n\n## 输入格式\n\n输入包含多个测试用例。输入的第一行包含一个整数 $T$ ($1 \\le T \\le 10^3$)，表示测试用例的数量。\n\n对于每个测试用例，第一行包含一个偶数 $n$ ($4 \\le n \\le 10^5$)，表示排列的长度。\n\n第二行包含 $n$ 个整数 $p_1, p_2, \\dots, p_n$ ($1 \\le p_i \\le n$)，表示你需要排序的排列。保证 $p$ 是一个排列。\n\n保证所有测试用例中 $n$ 的总和不超过 $2 \\times 10^5$。\n\n## 输出格式\n\n对于每个测试用例，如果无法对该排列进行排序，输出 `-1`。\n\n否则，输出一个整数 $k$ ($0 \\le k \\le 114$)，表示所使用的操作次数。\n\n在接下来的 $k$ 行中，每行输出 $l, r$ ($1 \\le l \\le r \\le n$，且 $r - l + 1$ 为偶数)，表示执行一次 `FakeSort(l,r)`。",
+    "samples": [
+      {
+        "input": "3\n4\n2 1 4 3\n6\n3 6 5 1 2 4\n8\n3 2 1 7 5 4 6 8\n",
+        "output": "1\n1 4\n-1\n2\n4 7\n1 6\n"
+      }
+    ],
+    "checker": "fake-sort",
+    "pdf": "./pdf/icpc-shanghai-2025/C.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "zh-CN",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "3\n4\n2 1 4 3\n6\n3 6 5 1 2 4\n8\n3 2 1 7 5 4 6 8\n",
+        "output": "1\n1 4\n-1\n2\n4 7\n1 6\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "D",
+    "title": "Not a subset sum",
+    "englishTitle": "Not a subset sum",
+    "timeLimit": 1000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/15317",
+    "qoj": "https://qoj.ac/problem/15317",
+    "codeforces": "",
+    "markdown": "给定一个长度为 $2^n$ 的数组 $a_0, a_1, \\dots, a_{2^n-1}$。对于一个长度为 $n$ 且字符集为 `0`, `1`, `?` 的字符串 $q$（下标从 1 开始），定义“广义子集和” $S(q)$ 为满足以下条件的所有下标 $j$ 的 $a_j$ 之和：\n\n* 对于每个 $1 \\le k \\le n$，如果 $q_k = 0$，则 $j$ 的第 $k$ 位为 0。\n* 对于每个 $1 \\le k \\le n$，如果 $q_k = 1$，则 $j$ 的第 $k$ 位为 1。\n* 如果 $q_k = ?$，则对 $j$ 的第 $k$ 位没有限制。\n\n例如，当 $n = 3$ 且 $q = 0?1$ 时，广义子集和为 $S(q) = a_4 + a_6$（二进制分别为 100 和 110）。注意，第一位是最低位。\n\n你的任务是对于所有长度为 $n$ 且字符集为 `0`, `1`, `?` 的字符串，计算其广义子集和。由于总输出可能很大，你只需要输出所有这些和的按位异或（bitwise XOR）值。\n\n## 输入格式\n\n输入的第一行包含一个整数 $n$（$1 \\le n \\le 16$）。\n\n第二行包含 $2^n$ 个整数 $a_0, a_1, \\dots, a_{2^n-1}$（$0 \\le a_i \\le 9$），表示数组 $a$ 中的元素。\n\n## 输出格式\n\n输出一个整数，表示所有广义子集和的按位异或值。\n\n## Note\n\n以下是样例 2 中查询字符串 $q$ 及其对应的广义子集和 $S(q)$：\n\n* $q = 00, S(q) = a_0 = 2$\n* $q = 10, S(q) = a_1 = 6$\n* $q = ?0, S(q) = a_0 + a_1 = 2 + 6 = 8$\n* $q = 01, S(q) = a_2 = 8$\n* $q = 11, S(q) = a_3 = 8$\n* $q = ?1, S(q) = a_2 + a_3 = 16$\n* $q = 0?, S(q) = a_0 + a_2 = 10$\n* $q = 1?, S(q) = a_1 + a_3 = 14$\n* $q = ??, S(q) = a_0 + a_1 + a_2 + a_3 = 24$\n\n此时很容易验证输出为 0。",
+    "samples": [
+      {
+        "input": "1\n3 5\n",
+        "output": "14\n"
+      },
+      {
+        "input": "2\n2 6 8 8\n",
+        "output": "0\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shanghai-2025/D.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "zh-CN",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "1\n3 5\n",
+        "output": "14\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      },
+      {
+        "input": "2\n2 6 8 8\n",
+        "output": "0\n",
+        "kind": "sample",
+        "label": "公开样例 2"
+      }
+    ]
+  },
+  {
+    "id": "E",
+    "title": "Flower's land 3",
+    "englishTitle": "Flower's land 3",
+    "timeLimit": 1000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/15318",
+    "qoj": "https://qoj.ac/problem/15318",
+    "codeforces": "",
+    "markdown": "磁盘 #1 上存储了一个长度为 $m$ 的二进制字符串 $s_1$。\n\n接下来进行 $n - 1$ 次操作。在第 $i$ 次操作中，选择一个磁盘 $1 \\le p_{i+1} \\le i$，并将该磁盘上的字符串 $s_{p_{i+1}}$ 复制到磁盘 $i + 1$，生成 $s_{i+1}$。然而，在复制过程中，最多可能有 $k$ 个比特位被翻转（即最多在 $k$ 个位置发生错误）。\n\n给你最终的全部 $n$ 个二进制字符串 $s_1, s_2, \\dots, s_n$，每个字符串的长度均为 $m$。你的任务是确定有多少种可能的序列 $p_2, p_3, \\dots, p_n$ 可以导致这种最终配置。\n\n由于答案可能很大，你只需要求出答案对 998244353 取模后的结果。\n\n## 输入格式\n\n输入的第一行包含三个整数 $n, m, k$（$2 \\le n \\le 5000, 4 \\le m \\le 15000, 1 \\le k \\le 3$），含义如题面所述。保证 $m$ 是 4 的倍数。\n\n接下来的 $n$ 行，每行包含一个长度为 $m/4$ 的十六进制字符串 $s'_i$。$s'_i$ 的每个字符是 0–9 或 A–F 之一，其中 A = 10, B = 11, ..., F = 15。\n\n十六进制表示 $s'_i$ 中的每个字符对应二进制字符串 $s_i$ 中的四个连续比特。具体来说，对于每个字符 $s'_{i,j}$，可以证明存在唯一的四元组 $(a, b, c, d)$ 满足 $s'_{i,j} = 8a + 4b + 2c + d$ 且 $a, b, c, d \\in \\{0, 1\\}$。二进制字符串 $s_i$ 中的比特满足 $(s_{i,4j}, s_{i,4j+1}, s_{i,4j+2}, s_{i,4j+3}) = (a, b, c, d)$。\n\n## 输出格式\n\n输出一个整数——满足条件的序列 $(p_2, p_3, \\dots, p_n)$ 的数量对 998244353 取模后的结果。",
+    "samples": [
+      {
+        "input": "5 8 2\n95\n05\nBD\n9C\nBD\n",
+        "output": "6\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shanghai-2025/E.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "zh-CN",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "5 8 2\n95\n05\nBD\n9C\nBD\n",
+        "output": "6\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "F",
+    "title": "Flower's land 4",
+    "englishTitle": "Flower's land 4",
+    "timeLimit": 1500,
+    "memoryLimit": 2048,
+    "source": "https://qoj.ac/problem/15319",
+    "qoj": "https://qoj.ac/problem/15319",
+    "codeforces": "",
+    "markdown": "在二维平面上有 $n$ 条线段。每条线段的起点位于 $x$ 轴的非负半轴上，终点位于 $y$ 轴的非负半轴上。换句话说，其起点坐标为 $(x_i, 0)$，其中 $x_i \\ge 0$；终点坐标为 $(0, y_i)$，其中 $y_i \\ge 0$。\n\n给你 $q$ 次询问。在每次询问中，给定一条线段，其起点位于 $x$ 轴上，终点可以位于第一象限或坐标轴的非负半轴上的任意位置。对于每次询问的线段，判断它是否与任何现有的线段相交。端点处的相交也算作相交。\n\n询问之间是独立的；也就是说，每个询问中给出的线段不会保留到后续的询问中。\n\n## 输入格式\n\n输入包含多组测试数据。输入的第一行包含一个整数 $T$ ($1 \\le T \\le 10^6$)，表示测试数据的组数。\n\n对于每组测试数据：\n\n第一行包含两个整数 $n, q$ ($1 \\le n, q \\le 10^6$)，分别表示现有线段的数量和询问的数量。\n\n接下来的 $n$ 行，每行包含两个整数 $x_i, y_i$ ($0 \\le x_i, y_i \\le 10^9$)，描述一条起点为 $(x_i, 0)$、终点为 $(0, y_i)$ 的线段。\n\n接下来的 $q$ 行，每行包含三个整数 $a_j, b_j, c_j$ ($0 \\le a_j, b_j, c_j \\le 10^9$)，描述一条起点为 $(a_j, 0)$、终点为 $(b_j, c_j)$ 的询问线段。\n\n保证所有测试数据的 $n$ 之和以及 $q$ 之和分别不超过 $10^6$。\n\n## 输出格式\n\n对于每个询问，如果该询问线段与至少一条现有线段相交（包括在端点处相交），则输出 `YES`，否则输出 `NO`。",
+    "samples": [
+      {
+        "input": "1\n3 5\n6 6\n2 6\n6 2\n10 4 4\n10 3 3\n0 1 1\n0 2 2\n5 2 1\n",
+        "output": "NO\nYES\nNO\nYES\nNO\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shanghai-2025/F.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "zh-CN",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "1\n3 5\n6 6\n2 6\n6 2\n10 4 4\n10 3 3\n0 1 1\n0 2 2\n5 2 1\n",
+        "output": "NO\nYES\nNO\nYES\nNO\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "G",
+    "title": "Gemcrate",
+    "englishTitle": "Gemcrate",
+    "timeLimit": 1000,
+    "memoryLimit": 512,
+    "source": "https://qoj.ac/problem/15320",
+    "qoj": "https://qoj.ac/problem/15320",
+    "codeforces": "",
+    "markdown": "Noir 有 $n$ 个宝石。第 $i$ 个宝石上写有一个正整数 $a_i$。Noir 想要将这些宝石分成若干个非空的组。每个宝石恰好属于一个组。\n\n假设第 $i$ 个组包含编号为 $k_{i,1}, k_{i,2}, \\dots, k_{i,p}$ 的宝石，那么 Noir 将第 $i$ 个组的亮度视为 $a_{k_{i,1}} \\oplus a_{k_{i,2}} \\oplus \\dots \\oplus a_{k_{i,p}}$，其中 $\\oplus$ 是按位异或（XOR）运算。记第 $i$ 个组的亮度为 $B_i$。\n\n对于一个包含 $m$ 个组的分组方案，Noir 将该方案的价值视为 $B_1 \\& B_2 \\& \\dots \\& B_m$，其中 $\\&$ 是按位与（AND）运算。\n\nNoir 想要找到所有分组方案中可能的最大价值。\n\n## 输入格式\n\n输入包含多个测试用例。输入的第一行包含一个整数 $T$ ($1 \\le T \\le 10^4$)，表示测试用例的数量。\n\n对于每个测试用例：\n第一行包含一个整数 $n$ ($1 \\le n \\le 5 \\times 10^5$)，表示宝石的数量。\n第二行包含 $n$ 个整数 $a_1, a_2, \\dots, a_n$ ($1 \\le a_i < 2^{60}$)，表示写在宝石上的整数。\n\n保证所有测试用例中 $n$ 的总和不超过 $5 \\times 10^5$。\n\n## 输出格式\n\n对于每个测试用例，输出一个整数，表示所有分组方案中可能的最大价值。\n\n## Note\n\n对于第一个测试用例，一种可能的分组方案是 $[1, 2, 3, 1] = [1, 3], [2, 1]$，其价值为 $B_1 \\& B_2 = (1 \\oplus 3) \\& (2 \\oplus 1) = 2 \\& 3 = 2$。另一种可能的分组方案是 $[1, 2, 3, 1] = [1, 2, 3, 1]$，其价值较低，为 $B_1 = 1 \\oplus 2 \\oplus 3 \\oplus 1 = 1$。可以证明，无法获得大于 2 的价值。\n\n对于第二个测试用例，最佳分组方案是 $[4, 7, 5, 2, 6, 3] = [7], [5, 3], [6], [4, 2]$，其价值为 $7 \\& (5 \\oplus 3) \\& 6 \\& (4 \\oplus 2) = 6$。",
+    "samples": [
+      {
+        "input": "4\n4\n1 2 3 1\n6\n4 7 5 2 6 3\n4\n14 15 9 18\n2\n251508091405 13011908091815\n",
+        "output": "2\n6\n26\n13121614001578\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shanghai-2025/G.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "zh-CN",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "4\n4\n1 2 3 1\n6\n4 7 5 2 6 3\n4\n14 15 9 18\n2\n251508091405 13011908091815\n",
+        "output": "2\n6\n26\n13121614001578\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "H",
+    "title": "AGI",
+    "englishTitle": "AGI",
+    "timeLimit": 1000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/15321",
+    "qoj": "https://qoj.ac/problem/15321",
+    "codeforces": "",
+    "markdown": "Menji 博士是人工智能领域的专家。现在，他正在训练 Bot，一个 AGI（Artificial Game Intelligence，人工游戏智能）。\n\n为了教 Bot 如何玩游戏，他每天都和 Bot 一起玩游戏。今天他们正在玩以下游戏：\n\n游戏开始时有一个包含 $2n$ 个非负整数的序列 $a_1, a_2, \\dots, a_{2n}$，以及一个数字 $S$。初始时，$S = 0$。\n\nMenji 和 Bot 轮流进行操作，Menji 先手：\n\n* 在 Menji 的回合中，他从序列中选择一个数字 $x$，令 $S \\leftarrow S \\oplus x$，并从序列中删除 $x$。注意，$\\oplus$ 表示按位异或（XOR）运算。\n* 在 Bot 的回合中，他从序列中选择一个数字 $x$，并从序列中删除 $x$。\n\n当序列中没有数字剩余时，游戏结束。当且仅当最终 $S = 0$ 时 Menji 获胜；否则 Bot 获胜。\n\nMenji 想知道，如果双方都采取最优策略，谁会赢得游戏。\n\n## 输入格式\n\n输入包含多个测试用例。第一行包含一个整数 $T$ ($1 \\le T \\le 10^5$)，表示测试用例的数量。\n\n对于每个测试用例：\n\n第一行包含一个整数 $n$ ($1 \\le n \\le 10^5$)，如题面所述。\n\n第二行包含 $2n$ 个整数 $a_1, a_2, \\dots, a_{2n}$ ($0 \\le a_i < 2^{30}$)，表示游戏中的整数。\n\n保证所有测试用例中 $n$ 的总和不超过 $2 \\times 10^5$。\n\n## 输出格式\n\n对于每个测试用例，如果 Menji 能赢得游戏，在一行中输出 `Menji`；否则，在一行中输出 `Bot`。\n\n## Note\n\n对于第一个测试用例，无论 Menji 选择什么数字，Bot 总是可以选择一个相同的数字，因此 Menji 最终总是会选择一个 $1$ 和一个 $3$，$S = 1 \\oplus 3 = 2 \\neq 0$，所以 Bot 总是能赢。\n\n对于第二个测试用例，Menji 可以在第一回合选择一个 $1$；无论 Bot 选择什么，Menji 都可以选择另一个 $1$，因此 Menji 总是能得到两个 $1$，$S = 1 \\oplus 1 = 0$，所以 Menji 总是能赢。",
+    "samples": [
+      {
+        "input": "5\n2\n1 1 3 3\n2\n1 1 1 3\n3\n1 1 4 5 1 4\n3\n1 9 1 9 8 10\n6\n1 1 4 5 1 4 1 9 1 9 8 10\n",
+        "output": "Bot\nMenji\nMenji\nMenji\nBot\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shanghai-2025/H.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "zh-CN",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "5\n2\n1 1 3 3\n2\n1 1 1 3\n3\n1 1 4 5 1 4\n3\n1 9 1 9 8 10\n6\n1 1 4 5 1 4 1 9 1 9 8 10\n",
+        "output": "Bot\nMenji\nMenji\nMenji\nBot\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "I",
+    "title": "Round screws",
+    "englishTitle": "Round screws",
+    "timeLimit": 1000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/15322",
+    "qoj": "https://qoj.ac/problem/15322",
+    "codeforces": "",
+    "markdown": "NIT 喜欢圆螺丝。他也喜欢 $\\oplus$ 运算符，因为这让他联想到圆螺丝，其中 $\\oplus$ 表示按位异或（Bitwise-XOR）运算。\n\n定义一个序列 $a_1, a_2, \\dots, a_n$ 的值 $V_a$ 为：\n$$\nV_a = a_1 + a_n + \\sum_{i=1}^{n-1} (a_i \\oplus a_{i+1})\n$$\n\n给定一个序列 $a_1, a_2, \\dots, a_n$，你可以进行任意次数的以下操作：\n\n* 选择一个下标 $i$（$1 \\le i \\le n$），将 $a_i$ 修改为任意非负整数；该操作的代价为 $C$。\n\n你需要最小化序列的值与操作所产生的代价之和。换句话说，设 $p$ 为你进行的操作次数，$V_{a'}$ 为操作后序列 $a$ 的值，你需要最小化 $pC + V_{a'}$。\n\n## 输入格式\n\n输入包含多个测试用例。输入的第一行包含一个整数 $T$（$1 \\le T \\le 100$），表示测试用例的数量。\n\n对于每个测试用例：\n第一行包含两个整数 $n, C$（$2 \\le n \\le 10^5, 0 \\le C < 2^{19}$），分别表示序列的长度和进行一次操作的代价。\n\n第二行包含 $n$ 个整数 $a_1, a_2, \\dots, a_n$（$0 \\le a_i < 2^{18}$），表示序列中的元素。\n\n保证所有测试用例中 $n$ 的总和不超过 $2 \\times 10^5$。\n\n## 输出格式\n\n对于每个测试用例，在一行中输出一个整数，表示 $pC + V_{a'}$ 的最小可能值。\n\n## Note\n\n对于第一个测试用例，达到最小值的一种方法是将序列修改为 $1, \\mathbf{1}, \\mathbf{1}, \\mathbf{0}$；加粗的数字是经过修改的。最终序列的值为 $2$，进行了 $3$ 次操作；总值 + 代价为 $2 + 3 \\times 4 = 14$。\n\n对于第二个测试用例，达到最小值的一种方法是将序列修改为 $6, 6, 6, \\mathbf{6}, \\mathbf{6}, 6, 6, 6$；最终序列的值为 $12 + 2 \\times 6 = 24$。",
+    "samples": [
+      {
+        "input": "3\n4 4\n1 4 5 6\n8 6\n6 6 6 1 1 6 6 6\n6 7\n1 7 2 6 3 5\n",
+        "output": "14\n24\n29\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shanghai-2025/I.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "zh-CN",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "3\n4 4\n1 4 5 6\n8 6\n6 6 6 1 1 6 6 6\n6 7\n1 7 2 6 3 5\n",
+        "output": "14\n24\n29\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "J",
+    "title": "Yet another mailbox problem",
+    "englishTitle": "Yet another mailbox problem",
+    "timeLimit": 1500,
+    "memoryLimit": 512,
+    "source": "https://qoj.ac/problem/15323",
+    "qoj": "https://qoj.ac/problem/15323",
+    "codeforces": "",
+    "markdown": "Yana、Mino、White 和 Huzz 是最好的朋友。\n\n一天，教练让 White、Mino 和 Huzz 准备一场模拟赛。Huzz 设计了一个精妙的搜索题，其复杂度关于 $k$ 是指数级的。他仔细检查了整个题面，除了一个细节：他不小心把 $k \\le 10$ 写成了 $k \\le 5 \\times 10^5$。后来，这道题出现在了模拟赛中。愤怒的参赛者 Yana 找到 Huzz，问这道题该怎么做。但 Huzz 似乎忘记了一些事情，他提供的题面看起来略有不同——\n\n给你一个有 $n$ 个顶点和 $m$ 条边的有向图，其中每条边 $e$ 都被分配了一个介于 1 和 8 之间的整数边权 $w(e)$。\n\n一条路径是一个边序列 $(e_1, e_2, \\dots, e_\\ell)$，满足对于所有 $1 \\le i < \\ell$，$e_i$ 的终点是 $e_{i+1}$ 的起点。路径的长度为 $\\ell$，即它包含的边数。注意，一条路径可以多次包含同一条边。\n\n路径的权值序列是边权序列 $[w(e_1), w(e_2), \\dots, w(e_\\ell)]$。路径之间通过其权值序列的**字典序**进行比较。\n\n只要两条路径使用的边不同，它们就被视为不同的路径，即使它们共享相同的顶点序列和权值序列。例如，如果路径 $(e_1, e_2)$ 和 $(e_3, e_4)$ 的权值序列都是 $[1, 2]$，且都经过顶点 $1 \\to 2 \\to 3$，只要 $e_1 \\neq e_3$ 或 $e_2 \\neq e_4$，它们就仍然是不同的路径。\n\nWhite 想要找到字典序最小的 $k$ 条路径。由于总输出可能过大，你只需要输出每条路径的长度。\n\n## 输入格式\n\n输入的第一行包含三个整数 $n, m, k$ ($2 \\le n \\le 5 \\times 10^5$, $1 \\le m \\le 5 \\times 10^5$, $1 \\le k \\le 5 \\times 10^5$)，分别表示顶点数、边数和所需的路径数量。\n\n接下来的 $m$ 行，每行包含三个整数 $x, y, z$ ($1 \\le x, y \\le n$, $1 \\le z \\le 8$, $x \\neq y$)，表示一条从 $x$ 到 $y$ 的有向边 $e = (x, y)$，其边权为 $w(e) = z$. 给定的边集中可能包含重边。\n\n## 输出格式\n\n输出 $k$ 行。第 $i$ 行应包含一个整数，表示权值序列字典序第 $i$ 小的路径的长度。如果路径总数少于 $i$ 条，则输出 $-1$。\n\n## Note\n\n为了简便起见，用 $e_j$ 表示输入的第 $j$ 条边。\n\n对于第一个样例，字典序最小的 8 条路径为：\n\n* 路径 $(e_1)$，权值序列为 $[1]$。\n* 路径 $(e_3)$，权值序列为 $[1]$。\n* 路径 $(e_5)$，权值序列为 $[1]$。\n* 路径 $(e_5, e_1)$，权值序列为 $[1, 1]$。\n* 路径 $(e_5, e_1, e_4)$，权值序列为 $[1, 1, 2]$。\n* 路径 $(e_5, e_1, e_4, e_5)$，权值序列为 $[1, 1, 2, 1]$。\n* 路径 $(e_5, e_1, e_4, e_5, e_1)$，权值序列为 $[1, 1, 2, 1, 1]$。\n* 路径 $(e_5, e_1, e_4, e_5, e_1, e_4)$，权值序列为 $[1, 1, 2, 1, 1, 2]$。",
+    "samples": [
+      {
+        "input": "5 5 8\n2 1 1\n3 1 2\n4 1 1\n1 5 2\n5 2 1\n",
+        "output": "1\n1\n1\n2\n3\n4\n5\n6\n"
+      },
+      {
+        "input": "3 4 10\n1 2 1\n1 2 1\n2 3 2\n2 3 3\n",
+        "output": "1\n1\n2\n2\n2\n2\n1\n1\n-1\n-1\n"
+      },
+      {
+        "input": "6 5 15\n1 2 3\n2 3 5\n3 4 2\n3 5 1\n5 6 4\n",
+        "output": "1\n2\n1\n1\n2\n3\n4\n3\n1\n1\n2\n3\n2\n-1\n-1\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shanghai-2025/J.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "zh-CN",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "5 5 8\n2 1 1\n3 1 2\n4 1 1\n1 5 2\n5 2 1\n",
+        "output": "1\n1\n1\n2\n3\n4\n5\n6\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      },
+      {
+        "input": "3 4 10\n1 2 1\n1 2 1\n2 3 2\n2 3 3\n",
+        "output": "1\n1\n2\n2\n2\n2\n1\n1\n-1\n-1\n",
+        "kind": "sample",
+        "label": "公开样例 2"
+      },
+      {
+        "input": "6 5 15\n1 2 3\n2 3 5\n3 4 2\n3 5 1\n5 6 4\n",
+        "output": "1\n2\n1\n1\n2\n3\n4\n3\n1\n1\n2\n3\n2\n-1\n-1\n",
+        "kind": "sample",
+        "label": "公开样例 3"
+      }
+    ]
+  },
+  {
+    "id": "K",
+    "title": "No more regrets",
+    "englishTitle": "No more regrets",
+    "timeLimit": 4000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/15324",
+    "qoj": "https://qoj.ac/problem/15324",
+    "codeforces": "",
+    "markdown": "省队选拔结束后，White 陷入了漫长的失落之中。她无法在自己的成绩中看到任何希望。即便如此，White 依然坚持着 NOI 前的最后训练。除了常规训练外，她也开始探索那些在她的 OI 生涯中从未有机会学习的课题——希望在告别之前，不再留下遗憾。\n\n甩开脑海中杂乱的思绪，White 突然将注意力集中在眼前的一道题目上，这是一道朴实而枯燥的数据结构题——\n\nWhite 有一个由 $n$ 个整数组成的序列 $a_1, a_2, \\dots, a_n$。她将对该序列执行 $q$ 次操作。每次操作为以下三种类型之一：\n\n* `1 l r v` — 将区间 $[l, r]$ 内的每个元素加上 $v$。\n* `2 l r v` — 将区间 $[l, r]$ 内的每个元素赋值为 $v$。\n* `3 l r` — 查询 $\\sum_{i=l}^{r} \\left(\\min_{j=l}^{i} a_j\\right) \\times \\left(\\max_{j=l}^{i} a_j\\right) \\pmod{2^{64}}$ 的值。\n\n你的任务是模拟所有操作并输出所有查询的结果。\n\n## 输入格式\n\n输入的第一行包含两个整数 $n, q$ ($1 \\le n, q \\le 2 \\times 10^5$)，分别表示元素的数量和操作的数量。\n\n第二行包含 $n$ 个整数 $a_1, a_2, \\dots, a_n$ ($0 \\le a_i \\le 10^9$)，表示初始元素。\n\n接下来的 $q$ 行，每行描述一个操作，格式为以下三种之一：\n\n* `1 l r v` ($1 \\le l \\le r \\le n$, $-10^9 \\le v \\le 10^9$)，表示区间加操作。\n* `2 l r v` ($1 \\le l \\le r \\le n$, $1 \\le v \\le 10^9$)，表示区间赋值操作。\n* `3 l r` ($1 \\le l \\le r \\le n$)，表示查询操作。\n\n保证在整个过程中，对于每个 $1 \\le i \\le n$，始终满足 $0 \\le a_i \\le 10^9$。\n\n## 输出格式\n\n对于每个查询操作，单行输出一个整数，即查询结果模 $2^{64}$ 的值。\n\n## Note\n\n在第一个样例中：\n\n原始序列为 `2 3 5 4 1`。在第三次操作（`2 4 5 2`）后，序列变为 `2 3 5 2 2`；在第六次操作（`1 1 2 5`）后，序列变为 `7 8 5 2 2`。\n\n对于第一次查询，答案为 $\\sum_{i=1}^{5}\\left(\\min_{j=1}^{i} a_j\\right) \\times \\left(\\max_{j=1}^{i} a_j\\right) = 2 \\times 2 + 2 \\times 3 + 2 \\times 5 + 2 \\times 5 + 1 \\times 5 = 35$。\n\n对于第二次查询，答案为 $\\sum_{i=2}^{4}\\left(\\min_{j=2}^{i} a_j\\right) \\times \\left(\\max_{j=2}^{i} a_j\\right) = 3 \\times 3 + 3 \\times 5 + 3 \\times 5 = 39$。",
+    "samples": [
+      {
+        "input": "5 8\n2 3 5 4 1\n3 1 5\n3 2 4\n2 4 5 2\n3 1 5\n3 2 4\n1 1 2 5\n3 1 5\n3 2 4\n",
+        "output": "35\n39\n40\n34\n177\n120\n"
+      },
+      {
+        "input": "10 20\n1 2 3 4 5 6 7 8 9 10\n1 1 10 1\n3 1 5\n3 2 9\n3 8 10\n1 2 5 10\n3 1 5\n3 2 9\n3 8 10\n1 5 9 -5\n3 1 5\n3 2 9\n3 8 10\n1 2 5 -10\n3 1 5\n3 2 9\n3 8 10\n1 5 9 5\n3 1 5\n3 2 9\n3 8 10\n",
+        "output": "40\n156\n270\n120\n1202\n270\n118\n831\n80\n33\n61\n80\n40\n156\n270\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shanghai-2025/K.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "zh-CN",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "5 8\n2 3 5 4 1\n3 1 5\n3 2 4\n2 4 5 2\n3 1 5\n3 2 4\n1 1 2 5\n3 1 5\n3 2 4\n",
+        "output": "35\n39\n40\n34\n177\n120\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      },
+      {
+        "input": "10 20\n1 2 3 4 5 6 7 8 9 10\n1 1 10 1\n3 1 5\n3 2 9\n3 8 10\n1 2 5 10\n3 1 5\n3 2 9\n3 8 10\n1 5 9 -5\n3 1 5\n3 2 9\n3 8 10\n1 2 5 -10\n3 1 5\n3 2 9\n3 8 10\n1 5 9 5\n3 1 5\n3 2 9\n3 8 10\n",
+        "output": "40\n156\n270\n120\n1202\n270\n118\n831\n80\n33\n61\n80\n40\n156\n270\n",
+        "kind": "sample",
+        "label": "公开样例 2"
+      }
+    ]
+  },
+  {
+    "id": "L",
+    "title": "Yet another permutation problem",
+    "englishTitle": "Yet another permutation problem",
+    "timeLimit": 1500,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/15325",
+    "qoj": "https://qoj.ac/problem/15325",
+    "codeforces": "",
+    "markdown": "Yana、Mino、White 和 Huzz 是最好的朋友。\n\n在终于完成了教练苛刻的任务后，Huzz 赢得了休息的机会。在一个慵懒的下午，世界似乎慢了下来，笼罩在即将来临的黄昏那温暖、金色的薄雾中。微风轻拂，仅仅吹动了在穿过大橡树叶子的阳光中翩翩起舞的微尘。\n\n在这个昏昏欲睡、舒适的空闲中，Huzz 在他的软鲨鱼玩具里发现了一个排列。他决定和朋友们分享这个排列以寻找乐趣。\n\nMino 喜欢拆分。他可以将这个排列拆分为若干个连续的段。\n\nYana 喜欢交换。他可以选择一个连续的段，并交换其中的最大值和最小值。\n\n具体来说，他们可以按任意顺序执行以下两种操作任意次：\n\n* **拆分（split）**：选择一个长度大于 1 的连续段。然后在其内部选择一个位置，将其拆分为两个相邻的连续段。例如，$(a_i, \\dots, a_j)$ 可以被拆分为 $(a_i, \\dots, a_k)$ 和 $(a_{k+1}, \\dots, a_j)$，其中 $i \\le k < j$。\n* **交换（swap）**：选择一个连续段，并交换其中的最大值和最小值。\n\n在执行任意次数的操作后，他们停止操作，并将所有得到的段按其原始顺序合并，从而形成一个新的排列。\n\nWhite 喜欢计数。她想知道——他们总共可以得到多少个不同的排列？\n\n由于结果可能非常大，你只需要求出答案对 998 244 353 取模后的结果。\n\n## 输入格式\n\n第一行包含一个整数 $n$ ($1 \\le n \\le 500$)，表示排列的长度。\n\n第二行包含 $n$ 个整数 $a_1, a_2, \\dots, a_n$ ($1 \\le a_i \\le n$)，表示排列本身。保证 $\\{a_n\\}$ 是一个排列。\n\n## 输出格式\n\n输出一个整数，表示他们可以得到的不同排列的数量对 998 244 353 取模后的结果。\n\n## Note\n\n在第一个样例中，以下是所有可能得到的排列：\n\n(1234), (1243), (1423), (1432), (4123), (4132), (4213), (4231), (4312), (4321)",
+    "samples": [
+      {
+        "input": "4\n1 4 2 3\n",
+        "output": "10\n"
+      },
+      {
+        "input": "7\n5 1 4 2 6 3 7\n",
+        "output": "340\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shanghai-2025/L.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "zh-CN",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "4\n1 4 2 3\n",
+        "output": "10\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      },
+      {
+        "input": "7\n5 1 4 2 6 3 7\n",
+        "output": "340\n",
+        "kind": "sample",
+        "label": "公开样例 2"
+      }
+    ]
+  },
+  {
+    "id": "M",
+    "title": "Yet another 01 problem",
+    "englishTitle": "Yet another 01 problem",
+    "timeLimit": 5000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/15326",
+    "qoj": "https://qoj.ac/problem/15326",
+    "codeforces": "",
+    "markdown": "Yana、Mino、White 和 Huzz 是最好的朋友。\n\nMino 最近感到很迷茫。由于沉迷于过去在 OI 中的失败，他在管理繁忙的学校日程的同时，一直难以规划自己的未来。他的三个朋友建议他评估各项任务的重要性并确定优先级。\n\n假设有 $n$ 个不同的任务，编号为 $1$ 到 $n$。每次，Huzz 选择两个相邻的任务，White 对它们进行比较，Yana 将它们合并为一个任务。Mino 惊讶地发现，这个过程意外地形成了一棵线段树，这棵树不一定从中间分裂。更具体地说，它形成了一棵拥有 $2n - 1$ 个节点的树，其中每个子树都对应一个连续的区间。注意，所有 $n$ 个任务都是叶子节点，而其他 $n - 1$ 个节点每个都有两个子节点。这些由比较产生的节点定义了指向其子节点的边权：指向较小子节点的边权为 $0$，指向较大子节点的边权为 $1$。\n\nMino 非常喜欢计算。他将每个任务的权值定义为从该任务到根节点的路径上所有边权的异或和。他想知道：如果给定这些权值，有多少种方法可以构建这样的树并进行子节点的比较？\n\n同样，Mino 并不擅长 OI，这就是他向你寻求帮助的原因。为了简化问题，你只需要求出答案模 $998,244,353$ 的结果。\n\n## 输入格式\n\n第一行包含一个正整数 $n$ ($1 \\le n \\le 250000$)，表示任务的数量。\n\n第二行包含一个长度为 $n$ 的二进制字符串 $S$，其中 $S_i$ 表示从任务 $i$ 到根节点的路径上所有边权的按位异或和。\n\n## 输出格式\n\n输出一个整数，即答案模 $998,244,353$ 的结果。\n\n## Note\n\n有 6 种构建树并比较子节点的方法：\n\n![](./images/icpc-shanghai-2025-M-problem_15326_1.png)",
+    "samples": [
+      {
+        "input": "4\n0101\n",
+        "output": "6\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shanghai-2025/M.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "zh-CN",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "4\n0101\n",
+        "output": "6\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  }
+]

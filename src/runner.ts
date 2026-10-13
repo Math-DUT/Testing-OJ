@@ -18,7 +18,7 @@ export function execute(
   source: string,
   input: string,
   onPhase: (phase: string) => void,
-  interactive = false,
+  interactive: boolean | "menji" = false,
   maxOutputBytes = 2 * 1024 * 1024,
 ): Promise<RunResult> {
   if (language === "pypy3") {
@@ -33,7 +33,7 @@ export function execute(
     stopRunner();
     active = new Worker(
       new URL(
-        `${import.meta.env.BASE_URL}runtime/${family === "cpp" ? "cpp-worker.js" : "python-worker.js"}?v=20261009-stress`,
+        `${import.meta.env.BASE_URL}runtime/${family === "cpp" ? "cpp-worker.js" : "python-worker.js"}?v=20261013-regionals`,
         location.href,
       ),
       { type: family === "python" ? "module" : "classic" },

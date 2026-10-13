@@ -25,6 +25,8 @@ export interface Problem {
   checker: string;
   pdf?: string;
   statementFormat?: "markdown" | "pdf";
+  statementLanguage?: "en" | "zh-CN";
+  testScope?: "samples" | "stress" | "protocol";
 }
 export interface Contest {
   id: string;

@@ -3,6 +3,7 @@ const API = "http://127.0.0.1:27121";
 const KEY = "testing-oj:v1:local-runner-token";
 let maxInputBytes = 2 * 1024 * 1024;
 let maxOutputLimit = 2 * 1024 * 1024;
+let protocols: string[] = ["hidden-track"];
 export function acceptLocalRunnerLink() {
   const url = new URL(location.href),
     token = url.searchParams.get("local-runner");
@@ -27,6 +28,7 @@ export async function localRunnerHealth(): Promise<string | null> {
     const data = await response.json();
     maxInputBytes = data.maxInputBytes || 2 * 1024 * 1024;
     maxOutputLimit = data.maxOutputBytes || 2 * 1024 * 1024;
+    protocols = data.protocols || ["hidden-track"];
     return data.pypy3 ? data.version : null;
   } catch {
     return null;
@@ -49,10 +51,10 @@ export function stopLocalRunner() {
 export async function executePyPy(
   source: string,
   input: string,
-  interactive: boolean,
+  interactive: boolean | "menji",
   maxOutputBytes = 2 * 1024 * 1024,
 ): Promise<RunResult> {
-  if (new TextEncoder().encode(input).byteLength > maxInputBytes || maxOutputBytes > maxOutputLimit)
+  if (new TextEncoder().encode(input).byteLength > maxInputBytes || maxOutputBytes > maxOutputLimit || (interactive === "menji" && !protocols.includes("menji")))
     return { status: "ERROR", output: "", time: 0,
       error: "本机助手版本较旧，请在设置中重新下载并启动助手。" };
   controller = new AbortController();

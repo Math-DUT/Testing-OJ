@@ -29,3 +29,12 @@ assert.equal(
 console.log(
   "7 pinned runtime assets verified; Clang 22 + full long double stdio",
 );
+const pythonRoot = "public/runtime/pyodide";
+const pythonManifest = JSON.parse(fs.readFileSync(`${pythonRoot}/runtime-manifest.json`, "utf8"));
+assert.equal(pythonManifest.version, "0.27.7");
+for (const asset of pythonManifest.assets) {
+  const bytes = fs.readFileSync(`${pythonRoot}/${asset.file}`);
+  assert.equal(bytes.length, asset.bytes, asset.file);
+  assert.equal(createHash("sha256").update(bytes).digest("hex"), asset.sha256, asset.file);
+}
+console.log("5 pinned Pyodide assets verified; same-origin Python runtime");

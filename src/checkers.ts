@@ -1,3 +1,4 @@
+import { regionalCheck } from "./regionalCheckers";
 const tokens = (s: string) => s.trim().split(/\s+/).filter(Boolean);
 function integers(s: string): number[] {
   const out: number[] = [];
@@ -22,7 +23,9 @@ export function checkOutput(
   expected: string,
 ): boolean {
   try {
-    if (checker === "float-1e-9") {
+    if (["hamu", "fake-sort", "leo"].includes(checker))
+      return regionalCheck(checker, integers(input), tokens(output), tokens(expected)) ?? false;
+    if (checker === "float-1e-9" || checker === "float-1e-6") {
       const a = tokens(output).map(Number),
         b = tokens(expected).map(Number);
       return (
@@ -30,7 +33,7 @@ export function checkOutput(
         a.every(
           (x, i) =>
             Number.isFinite(x) &&
-            Math.abs(x - b[i]) <= 1e-9 * Math.max(1, Math.abs(b[i])),
+            Math.abs(x - b[i]) <= (checker === "float-1e-6" ? 1e-6 : 1e-9) * Math.max(1, Math.abs(b[i])),
         )
       );
     }

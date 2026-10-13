@@ -1,6 +1,8 @@
 import liaoning from "./problems.json";
 import online1 from "./data/icpc-online-2026-1.json";
 import online2 from "./data/icpc-online-2026-2.json";
+import shenyang from "./data/icpc-shenyang-2025.json";
+import shanghai from "./data/icpc-shanghai-2025.json";
 import type { Contest, Problem } from "./types";
 
 export const DEFAULT_CONTEST = "lncpc-2025";
@@ -40,6 +42,30 @@ export const contests: Contest[] = [
     source: "https://qoj.ac/contest/4113",
     sourceLabel: "QOJ",
     problems: online2 as Problem[],
+  },
+  {
+    id: "icpc-shenyang-2025",
+    title: "ICPC 区域赛 2025 · 沈阳站",
+    shortTitle: "2025 沈阳站",
+    englishTitle: "The 2025 ICPC Asia Shenyang Regional Contest",
+    date: "2025-11-16",
+    duration: 5 * 60 * 60 * 1000,
+    pdf: "./pdf/icpc-shenyang-2025/problemset.pdf",
+    source: "https://codeforces.com/gym/106252",
+    sourceLabel: "Codeforces Gym",
+    problems: shenyang as Problem[],
+  },
+  {
+    id: "icpc-shanghai-2025",
+    title: "ICPC 区域赛 2025 · 上海站",
+    shortTitle: "2025 上海站",
+    englishTitle: "The 2025 ICPC Asia Shanghai Regional Contest",
+    date: "2025-11-23",
+    duration: 5 * 60 * 60 * 1000,
+    pdf: "./pdf/icpc-shanghai-2025/problemset.pdf",
+    source: "https://qoj.ac/contest/2645",
+    sourceLabel: "QOJ",
+    problems: shanghai as Problem[],
   },
 ];
 

@@ -14,13 +14,15 @@ async function drag(page: Page, handle: Locator, dx: number, dy: number) {
 const size = async (element: Locator, axis: "width" | "height") =>
   (await element.boundingBox())![axis];
 
-test("all 39 statements render as native text with valid math and direct problem choices", async ({
+test("all 65 statements render as native text with valid math and direct problem choices", async ({
   page,
 }) => {
   for (const [contest, ids] of [
     ["lncpc-2025", "ABCDEFGHIJKLM"],
     ["icpc-online-2026-1", "ABCDEFGHIJKLMN"],
     ["icpc-online-2026-2", "ABCDEFGHIJKL"],
+    ["icpc-shenyang-2025", "ABCDEFGHIJKLM"],
+    ["icpc-shanghai-2025", "ABCDEFGHIJKLM"],
   ]) {
     await page.goto(`/#contest/${contest}/problem/A`);
     await expect(

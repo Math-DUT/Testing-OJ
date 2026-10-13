@@ -1,17 +1,11 @@
 /* Validate every generated construction with independent browser checkers. */
 import fs from "node:fs/promises";
 import vm from "node:vm";
-import ts from "typescript";
+import { loadCheckers } from "./load-checkers.mjs";
 import assert from "node:assert/strict";
 import { gunzipSync } from "node:zlib";
 import { createHash } from "node:crypto";
-const code = await fs.readFile("src/checkers.ts", "utf8");
-const js = ts.transpile(
-  code.replace("export function checkOutput", "function checkOutput"),
-  { target: ts.ScriptTarget.ES2022 },
-);
-const context = vm.createContext({});
-vm.runInContext(js, context);
+const context = await loadCheckers();
 const interactive = vm.createContext({});
 vm.runInContext(
   await fs.readFile("public/runtime/hidden-track.js", "utf8"),

@@ -1,0 +1,595 @@
+[
+  {
+    "id": "A",
+    "title": "Square Kingdom",
+    "englishTitle": "Square Kingdom",
+    "timeLimit": 4000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/14940",
+    "qoj": "https://qoj.ac/problem/14940",
+    "codeforces": "https://codeforces.com/gym/106252/problem/A",
+    "markdown": "In the Square Kingdom, $n$ residents numbered from $1$ to $n$ live alone on top of a tall stone pillar. The height of the pillar for the $i$-th resident is $\\left(i + \\frac{b}{a}\\right)^2$ units above the ground.\n\nSince everyone lives so high up, the only way to visit a neighbor is by using a ladder. The kingdom builds one ladder for every pair of residents. The length of each ladder is exactly the absolute difference in height between the two pillars it connects.\n\nWith $\\frac{n(n-1)}{2}$ ladders in total, it becomes hard to manage them all. You are asked for the length of the $k$-th ladder in ascending order of length. This information will help the kingdom plan repairs, deliveries, and community events.\n\n## Input\n\nThe only line contains four integers $n$ ($2 \\le n \\le 10^{12}$), $k$ ($1 \\le k \\le \\min\\left\\{\\frac{n(n-1)}{2}, 10^{12}\\right\\}$), $a$ ($1 \\le a \\le 10^6$), and $b$ ($0 \\le b \\le 10^{12}$).\n\n## Output\n\nOutput a line containing two integers $p$ and $q$, denoting that the length of the $k$-th ladder in ascending order of length can be represented as $\\frac{p}{q}$ with two integers $p$ and $q$ ($p \\ge 0$, $q \\ge 1$, $\\gcd(p, q) = 1$), where $\\gcd(p, q)$ is the greatest common divisor of $p$ and $q$.",
+    "samples": [
+      {
+        "input": "3 1 3 1\n",
+        "output": "11 3\n"
+      },
+      {
+        "input": "3 2 3 1\n",
+        "output": "17 3\n"
+      },
+      {
+        "input": "3 3 3 1\n",
+        "output": "28 3\n"
+      },
+      {
+        "input": "1414215 1000000000000 1000000 1000000000000\n",
+        "output": "4823373069559 1\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shenyang-2025/A.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "en",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "3 1 3 1\n",
+        "output": "11 3\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      },
+      {
+        "input": "3 2 3 1\n",
+        "output": "17 3\n",
+        "kind": "sample",
+        "label": "公开样例 2"
+      },
+      {
+        "input": "3 3 3 1\n",
+        "output": "28 3\n",
+        "kind": "sample",
+        "label": "公开样例 3"
+      },
+      {
+        "input": "1414215 1000000000000 1000000 1000000000000\n",
+        "output": "4823373069559 1\n",
+        "kind": "sample",
+        "label": "公开样例 4"
+      }
+    ]
+  },
+  {
+    "id": "B",
+    "title": "Buggy Painting Software I",
+    "englishTitle": "Buggy Painting Software I",
+    "timeLimit": 2000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/14941",
+    "qoj": "https://qoj.ac/problem/14941",
+    "codeforces": "https://codeforces.com/gym/106252/problem/B",
+    "markdown": "Sulfox the fennec fox is a coder who loves creating digital art in his spare time. Worn out from a day of debugging, he opens his painting software as usual, only to find the software itself is also riddled with bugs after the latest update, one major issue being that it stutters noticeably whenever he edits a pixel.\n\nThe painting software treats the canvas as an ordered stack of layers. Each layer is a grid of pixels with $n$ rows and $m$ columns, each pixel holding a *visible value* in $\\{0,1,\\ldots,nm\\}$, where $0$ denotes transparent, and positive values are identifiers for $nm$ distinct colors. Since layers may occlude one another, at any position, the visible value of the composite image equals the visible value of the topmost non-transparent pixel among all layers; if all layers are transparent at that position, the visible value is $0$.\n\nSulfox already knows exactly what he wants to draw: a target image denoted by a matrix $(p_{i,j})_{n \\times m}$ of visible values. To finish as quickly as possible, he wants to minimize the total \"lag cost\" caused by the software bug. Starting with no layers, Sulfox may perform the following operations any number of times:\n\n* **Create Layer**: insert a new layer on top for free and initialize it either as a constant color layer with every pixel set to the same chosen color $c$ ($1 \\le c \\le nm$), or as an empty layer with every pixel transparent;\n* **Brush Tool**: spend $a$ to set any single pixel of any layer to any chosen color $c$ ($1 \\le c \\le nm$);\n* **Eraser Tool**: spend $b$ to make any single pixel of any layer transparent.\n\nHelp Sulfox determine the minimum total cost needed to perform operations so that the composite image matches the target image, i.e., the visible values at corresponding positions of both images are equal.\n\n## Input\n\nThe first line of the input contains an integer $T$ ($1 \\le T \\le 10^5$), denoting the number of test cases. For each test case:\n\nThe first line contains four integers $n$, $m$ ($1 \\le n, m \\le 500$), $a$, and $b$ ($1 \\le a, b \\le 10^6$), denoting the image dimensions, the cost of using the Brush Tool, and the cost of using the Eraser Tool, respectively.\n\nThe $i$-th line of the next $n$ lines contains $m$ integers $p_{i,1}, p_{i,2}, \\dots, p_{i,m}$ ($0 \\le p_{i,j} \\le nm$), where $p_{i,j}$ denotes the visible value of the target image at the $i$-th row and the $j$-th column.\n\nIt is guaranteed that the sum of $nm$ over all test cases does not exceed $10^6$.\n\n## Output\n\nFor each test case, output one line containing an integer, representing the minimum total cost.\n\n## Note\n\n ![](./images/icpc-shenyang-2025-B-b8487c148b4e73de6dd9fdd9451ef4de339538d6.png) \n\nFor the first test case of the sample case, Sulfox can first create a layer with color $1$, and then spend $b = 2$ to make the pixel at the first row and the first column transparent.",
+    "samples": [
+      {
+        "input": "3\n1 2 3 2\n0 1\n2 2 1 1\n1 0\n2 3\n3 3 5 3\n2 4 4\n4 1 4\n4 4 2\n",
+        "output": "2\n3\n11\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shenyang-2025/B.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "en",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "3\n1 2 3 2\n0 1\n2 2 1 1\n1 0\n2 3\n3 3 5 3\n2 4 4\n4 1 4\n4 4 2\n",
+        "output": "2\n3\n11\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "C",
+    "title": "Buggy Painting Software II",
+    "englishTitle": "Buggy Painting Software II",
+    "timeLimit": 2000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/14942",
+    "qoj": "https://qoj.ac/problem/14942",
+    "codeforces": "https://codeforces.com/gym/106252/problem/C",
+    "markdown": "**This is a communication problem.**\n\nWell... after surviving the nightmarish stutter in **Problem B. Buggy Painting Software I**, Sulfox soon faces a far more serious bug — his painting software saves any color image in black-and-white format.\n\nHere, a color image supports $m$ distinct colors labeled $1$ through $m$, and can be viewed as a sequence of length $3m$ composed of color labels, where each color appears **exactly three times**. A black-and-white image supports only black (labeled $0$) and white (labeled $1$), and can be viewed as a binary sequence. When saving a color image, the software chooses a non-empty bipartition $(S_0,S_1)$ of $S=\\{1,2,\\dots,m\\}$ (so $S_0 \\cup S_1=S$, $S_0 \\cap S_1=\\varnothing$, and both $S_0$ and $S_1$ are non-empty) and converts the original sequence into a binary sequence of the same length by mapping every color in $S_0$ to $0$ and every color in $S_1$ to $1$. The resulting binary sequence will be the saved black-and-white image.\n\nTo outsmart this bug, Sulfox wants to create $n$ color images with respective integer feature values $x_1, x_2, \\ldots, x_n$ (values may repeat) ranging from $1$ to $m$. Your task is to help Sulfox design these color images so that each image's feature remains identifiable even after the color loss. More specifically, the $i$-th color image ($1 \\le i \\le n$) must satisfy that, no matter how the non-empty bipartition $(S_0, S_1)$ is chosen, its feature value $x_i$ can always be recovered from the saved black-and-white image.\n\nTo verify the correctness of your design, your program will be **run twice** on each test: first for constructing $n$ color images, and then for recovering the original feature values from $n$ black-and-white images. The second run will receive exactly the $n$ binary sequences mapped from each of the $n$ sequences you output in the first run by independently chosen non-empty bipartitions. Apart from that, the second run will receive no additional information from the first run. Your solution passes a test if you correctly recover the corresponding feature value from each black-and-white image.\n\nNote that the applied bipartitions are unpredictable and may be **adaptive** to your design, and different bipartitions may apply to the color images with the same feature value.\n\n## Input\n\nThe first line contains three integers $op$ ($op \\in \\{1, 2\\}$), $n$, and $m$ ($2 \\le n, m \\le 5 \\times 10^5$, $nm \\le 10^6$), denoting which run of the program it is, the number of color images, and the number of distinct colors, respectively. It is guaranteed that $n$ and $m$ remain consistent across both runs.\n\nIf $op=1$, your program must construct the color images. The next $n$ lines follow, where the $i$-th line contains a single integer $x_i$ ($1 \\le x_i \\le m$), representing the feature value for the $i$-th image to be designed.\n\nIf $op=2$, your program must recover the feature values. The next $n$ lines follow, each describing a black-and-white image. Each line contains $3m$ space-separated integers of $0$ or $1$, forming a binary sequence that results from one of your designed color images. These $n$ sequences are given in an **arbitrary order** and do not necessarily correspond to the order in which the feature values were given in the first run.\n\n## Output\n\nIf $op=1$, output $n$ lines, where the $i$-th line describes the designed color image for the $i$-th feature value $x_i$ from the input. Each line contains $3m$ space-separated integers. The sequence on each line must be a valid color image, i.e., a sequence where each integer from $1$ to $m$ appears exactly three times.\n\nIf $op=2$, output $n$ lines. For each of the $n$ binary sequences given in the input, output a single line containing one integer, representing the original feature value recovered from that image. The order of your output must correspond to the order of the binary sequences in the input.\n\n## Note\n\nThe example shows two runs of a certain solution on the sample case.\n\nIn the first run, a simple (and incorrect for general cases) strategy is used: feature value $1$ is designed as consecutive blocks of three identical colors, and feature value $2$ is designed as a repeating pattern of three distinct colors.\n\nIn the second run, the first binary sequence (from bipartition $(S_0=\\{3\\}, S_1=\\{1,2\\})$) is identified by its repeating pattern of three to recover feature value $2$, while the second binary sequence (from bipartition $(S_0=\\{1,3\\}, S_1=\\{2\\})$) is identified by its consecutive blocks of three to recover feature value $1$. Since the judge provides these sequences in a swapped order, the output is $2$ and then $1$.",
+    "samples": [
+      {
+        "input": "1 2 3\n1\n2\n",
+        "output": "1 1 1 2 2 2 3 3 3\n1 2 3 1 2 3 1 2 3\n"
+      },
+      {
+        "input": "2 2 3\n1 1 0 1 1 0 1 1 0\n0 0 0 1 1 1 0 0 0\n",
+        "output": "2\n1\n"
+      }
+    ],
+    "checker": "painting-communication",
+    "pdf": "./pdf/icpc-shenyang-2025/C.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "en",
+    "testScope": "protocol",
+    "tests": [
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/01-865375a216923bb4.bin",
+        "sha256": "865375a216923bb4a8687fd20c0d594722f72a74cc7bbac20b97f90419712fa8",
+        "inputBytes": 14,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/02-774036396c605b1d.bin",
+        "sha256": "774036396c605b1df718f7513a08e129f2c3e55dcf031e2e0a1ccdeacc93c05e",
+        "inputBytes": 21,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/03-224e8cf30fcba250.bin",
+        "sha256": "224e8cf30fcba250d0e1d7824653517202e4a3482d72a2e670f2dd16f9b33a75",
+        "inputBytes": 31,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/04-ed28c9886b470544.bin",
+        "sha256": "ed28c9886b4705440736a3217c8d714bac4be0a74254d24372b5d2e178fa9140",
+        "inputBytes": 60,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/05-7d8713e811b297d5.bin",
+        "sha256": "7d8713e811b297d502eea1614ab9e98308313a548731df4e20f908a25ecd50b3",
+        "inputBytes": 94,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/06-bd2c572740ed2609.bin",
+        "sha256": "bd2c572740ed2609162715d53ee9c6f74b569cafb4df37396f74f9346f35c885",
+        "inputBytes": 148,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/07-28cd91fb059bd6d8.bin",
+        "sha256": "28cd91fb059bd6d879f5065f4a0d990de2f84941f827bc8e6c84970c7c7b4992",
+        "inputBytes": 305,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/08-64eabafdf3bb1792.bin",
+        "sha256": "64eabafdf3bb179252242bbd7d530ec81a9f31c46187c86ad61d0c76cc713c1f",
+        "inputBytes": 1183,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/09-52ec09ec6b64c401.bin",
+        "sha256": "52ec09ec6b64c401e083079774b027f21a462499ee7c1ac2f7e0ec0cc637c374",
+        "inputBytes": 3901,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/10-5d8042c7eb8c1b90.bin",
+        "sha256": "5d8042c7eb8c1b908d66dda024e2027d4108e8f163c11943e6a26a9c74d941ea",
+        "inputBytes": 24,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/11-751ccd4be228f2de.bin",
+        "sha256": "751ccd4be228f2de4728a2e577c069ceca04371b182bba183e54750ea72c9394",
+        "inputBytes": 1000011,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/12-abbfc90704ee30d8.bin",
+        "sha256": "abbfc90704ee30d832b186cf581681682bc6129b5ad4c81636fe89ea8ddfd8a9",
+        "inputBytes": 3903,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "regular"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/13-7f9489755cc8dd66.bin",
+        "sha256": "7f9489755cc8dd66cab7775e240ef4caade06e07b5235ba9c4507c51eeb5a9a6",
+        "inputBytes": 10,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "trick"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/14-97cf2631e0dc1a90.bin",
+        "sha256": "97cf2631e0dc1a9011dc3febefc4f98e578fd1026dc59a4c5f43381b2f5cf1a0",
+        "inputBytes": 12,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "trick"
+      },
+      {
+        "input": "",
+        "output": "",
+        "file": "test-data/icpc-shenyang-2025/C/15-5be9325e04f4fe27.bin",
+        "sha256": "5be9325e04f4fe27c26f66472ee050e790fac4e6b6e345badcdd2e3a191ae9e9",
+        "inputBytes": 16,
+        "outputBytes": 0,
+        "maxOutputBytes": 134217728,
+        "label": "随机特征、乱序恢复、非空颜色划分与规模边界",
+        "kind": "trick"
+      }
+    ]
+  },
+  {
+    "id": "D",
+    "title": "LED Display Renovation",
+    "englishTitle": "LED Display Renovation",
+    "timeLimit": 1000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/14943",
+    "qoj": "https://qoj.ac/problem/14943",
+    "codeforces": "https://codeforces.com/gym/106252/problem/D",
+    "markdown": "You have an LED display capable of showing an $n$-digit integer, where each digit is represented using the standard $7$-segment layout.\n\n ![](./images/icpc-shenyang-2025-D-03832999485b852abd7180c55f4fd76908af5537.png) \n\nInitially, each of the $7$ digit segments in every digit block may be in one of three states:\n\n* Functional (denoted by 'W'): behaves correctly, i.e., it lights up or turns off as required by the digit being displayed;\n* Stuck ON (denoted by '1'): always lit regardless of the digit being displayed;\n* Stuck OFF (denoted by '0'): always unlit regardless of the digit being displayed.\n\nYou can renovate at most $k$ digit segments, i.e., convert at most $k$ digit segments into functional. You need to maximize the number of integers that can be correctly displayed and find the number of ways to achieve the maximum. Note that you can renovate digit segments that are initially functional, and each digit segment can be renovated at most once. Two ways of renovation are considered different if there is at least one digit segment that is renovated in one way but not in the other.\n\nAn integer is correctly displayed if and only if:\n\n* It has no leading zeros, unless the integer is exactly $0$;\n* It is right-aligned on the display: if the integer has $d$ ($1 \\le d \\le n$) digits, then only the rightmost $d$ digit blocks are used, and the leftmost $(n - d)$ blocks should be left blank and show nothing;\n* For each of the $d$ used digit blocks, all $7$ digit segments match the target digit's display pattern when functional segments show the correct state for that digit and faulty segments remain stuck in their state.\n\n## Input\n\nThe first line of the input contains an integer $T$ ($1 \\leq T \\leq 100$), denoting the number of test cases. For each test case:\n\nThe first line contains two integers $n$ ($1 \\le n \\le 9$) and $k$ ($0 \\lt k \\lt 7n$), denoting the number of digits the LED display can show and the number of digit segments you can repair.\n\nThe next $7$ lines each contain a string of exactly $(5n - 1)$ characters, describing the initial state of the LED display in the form of an ASCII image.\n\nThe display consists of $n$ digit blocks, each occupying $4$ columns, separated by single-column gaps. All digit segments are represented by two identical characters of 'W', '0', or '1', and all other positions are filled with the character '.' that are purely for formatting. See the sample input and the notes for details.\n\n## Output\n\nFor each test case, output a line containing two integers, indicating the maximum number of integers that can be correctly displayed by renovating at most $k$ digit segments, as well as the number of ways to achieve the maximum.\n\n## Note\n\nIn each digit block of the LED display in the form of an ASCII image, the digit segments are as follows:\n\n|  |  |  |\n| --- | --- | --- |\n| **Segment** | **Part** | **Positions (row, column)** |\n| $0$ | Top horizontal | $(1, 2)$, $(1, 3)$ |\n| $1$ | Upper-left vertical | $(2, 1)$, $(3, 1)$ |\n| $2$ | Upper-right vertical | $(2, 4)$, $(3, 4)$ |\n| $3$ | Middle horizontal | $(4, 2)$, $(4, 3)$ |\n| $4$ | Lower-left vertical | $(5, 1)$, $(6, 1)$ |\n| $5$ | Lower-right vertical | $(5, 4)$, $(6, 4)$ |\n| $6$ | Bottom horizontal | $(7, 2)$, $(7, 3)$ |\n\nThe display patterns for digits $0, 1, 2, \\ldots, 9$ (1 = lit, 0 = unlit) are as follows:\n\n|  |  |  |\n| --- | --- | --- |\n| **Digit** | **Pattern (segments $0, 1, 2, \\ldots, 6$)** | **Explanation** |\n| $0$ | 1110111 | All except middle |\n| $1$ | 0010010 | Upper-right and lower-right |\n| $2$ | 1011101 | Top, upper-right, middle, lower-left, and bottom |\n| $3$ | 1011011 | Top, upper-right, middle, lower-right, and bottom |\n| $4$ | 0111010 | Upper-left, upper-right, middle, and lower-right |\n| $5$ | 1101011 | Top, upper-left, middle, lower-right, and bottom |\n| $6$ | 1101111 | All except upper-right |\n| $7$ | 1010010 | Top, upper-right, and lower-right |\n| $8$ | 1111111 | All segments |\n| $9$ | 1111011 | All except lower-left |",
+    "samples": [
+      {
+        "input": "2\n3 2\n.00...00...00.\n0..0.0..0.0..1\n0..0.0..0.0..1\n.00...00...00.\n0..W.0..0.0..1\n0..W.0..0.0..1\n.00...00...00.\n9 62\n.WW...WW...WW...WW...WW...WW...WW...WW...WW.\nW..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W\nW..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W\n.WW...WW...WW...WW...WW...WW...WW...WW...WW.\nW..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W\nW..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W\n.WW...WW...WW...WW...WW...WW...WW...WW...WW.\n",
+        "output": "2 23\n1000000000 9223372036854775807\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shenyang-2025/D.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "en",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "2\n3 2\n.00...00...00.\n0..0.0..0.0..1\n0..0.0..0.0..1\n.00...00...00.\n0..W.0..0.0..1\n0..W.0..0.0..1\n.00...00...00.\n9 62\n.WW...WW...WW...WW...WW...WW...WW...WW...WW.\nW..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W\nW..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W\n.WW...WW...WW...WW...WW...WW...WW...WW...WW.\nW..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W\nW..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W.W..W\n.WW...WW...WW...WW...WW...WW...WW...WW...WW.\n",
+        "output": "2 23\n1000000000 9223372036854775807\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "E",
+    "title": "Play It by Ear",
+    "englishTitle": "Play It by Ear",
+    "timeLimit": 1000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/14944",
+    "qoj": "https://qoj.ac/problem/14944",
+    "codeforces": "https://codeforces.com/gym/106252/problem/E",
+    "markdown": "You are playing a popular card game. There are $2n$ distinct cards labeled $1$ through $2n$, shuffled uniformly at random and piled up into a deck. You draw the top $n$ cards as your starting hand, and the remaining deck order is **hidden** from you. Each turn, you choose any one card from your hand, play it by placing it at the bottom of the deck, and then draw the current top card, so your hand size remains $n$.\n\nYou have $m$ quests to complete in order: the $i$-th quest requires you to play the card labeled $a_i$, and it becomes active only after the $(i-1)$-th quest is completed (unless it is the first quest, which is initially active). Playing the card labeled $a_i$ before the $i$-th quest is active **does not count** toward the $i$-th quest. You know any of $a_1, a_2, \\ldots, a_m$ (values may repeat) in advance.\n\nAssuming you play cards under the optimal pure strategy, compute the minimum expected number of turns needed to complete all $m$ quests over the random initial shuffle, modulo $998\\,244\\,353$.\n\nFormally, a *pure strategy* means that at each turn, the card chosen depends only on the observable history, and identical known information (initial hand, respective played and drawn cards in past turns, and quest completion status) deterministically yields the same chosen card. For a pure strategy $\\sigma$ and an initial shuffle $\\pi$, let $f_\\sigma(\\pi)$ be the number of turns needed to complete all $m$ quests when following $\\sigma$; the value to be computed equals $\\left(\\min_{\\sigma} E\\!\\left[f_\\sigma(\\pi)\\right]\\right) \\bmod 998\\,244\\,353$, where the expectation $E[\\cdot]$ is taken over the uniform distribution on all $(2n)!$ possible shuffles of the initial deck.\n\n## Input\n\nThe first line of the input contains an integer $T$ ($1 \\le T \\le 1\\,000$), denoting the number of test cases. For each test case:\n\nThe first line contains two integers $n$ and $m$ ($2 \\le n \\le 5\\,000$, $1 \\le m \\le 2 \\times 10^5$).\n\nThe second line contains $m$ integers $a_1, a_2, \\ldots, a_m$ ($1 \\le a_i \\le 2n$).\n\nIt is guaranteed that the sum of $n$ over all test cases does not exceed $5\\,000$, and the sum of $m$ over all test cases does not exceed $2 \\times 10^5$.\n\n## Output\n\nFor each test case, since the minimum expected number of turns can be denoted by an irreducible fraction $\\frac{p}{q}$, you only need to print an integer $r$ in one line satisfying $0 \\le r \\lt 998\\,244\\,353$ and $r \\cdot q \\equiv p \\pmod{998\\,244\\,353}$. It can be proved that such $r$ exists and is unique.\n\n## Note\n\nFor the first test case of the sample case, an optimal pure strategy is: if the card labeled $1$ is in your initial hand, play it immediately; otherwise repeatedly play any card until you draw it and play it in your next turn. Hence the minimum expected number of turns is $\\frac12 \\times 1+\\frac14 \\times 2+\\frac14 \\times 3=\\frac{7}{4}$.",
+    "samples": [
+      {
+        "input": "3\n2 1\n1\n3 7\n2 5 1 2 6 2 1\n1000 2\n1116 1116\n",
+        "output": "249561090\n299473317\n748684517\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shenyang-2025/E.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "en",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "3\n2 1\n1\n3 7\n2 5 1 2 6 2 1\n1000 2\n1116 1116\n",
+        "output": "249561090\n299473317\n748684517\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "F",
+    "title": "The Bond Beyond Time",
+    "englishTitle": "The Bond Beyond Time",
+    "timeLimit": 2000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/14945",
+    "qoj": "https://qoj.ac/problem/14945",
+    "codeforces": "https://codeforces.com/gym/106252/problem/F",
+    "markdown": "Sulfox the fennec fox has built a maze and invited his two friends, Alice and Bob, to try it. The maze can be abstracted as a simple, connected undirected graph with $n$ vertices and $m$ edges, where Alice and Bob start at two distinct specified vertices.\n\nBefore any player moves, Sulfox must choose a direction for every undirected edge, turning the maze into a directed graph. Then, in an attempt to find each other, both players move in rounds within the oriented maze. In each round, they act simultaneously and independently, neither leaving marks nor communicating; rather, they adopt the \"most brainless\" strategy:\n\n* If a player is currently at a vertex that has one or more outgoing edges, they arbitrarily traverse an outgoing edge to the adjacent vertex;\n* otherwise, if their current vertex has no outgoing edges, they remain at that vertex.\n\nSulfox, being proud of his maze-design skills, wants to orient the passages so that Alice and Bob can never meet. Given the undirected graph and the starting vertices of Alice and Bob, please help Sulfox orient every edge so that no matter how Alice and Bob make their choices in every round, they will never occupy the same vertex at the end of any round. If such orientation does not exist, report it.\n\n## Input\n\nThe first line of the input contains an integer $T$ ($1 \\le T \\le 1\\,000$), denoting the number of test cases. For each test case:\n\nThe first line contains four integers $n$ ($2 \\le n \\le 300$), $m$ ($n - 1 \\le m \\le \\frac{n (n - 1)}{2}$), $x$, and $y$ ($1 \\le x, y \\le n$, $x \\neq y$), denoting the number of vertices and edges in the maze, and the starting vertices of Alice and Bob, respectively.\n\nEach of the next $m$ lines contains two integers $u$ and $v$ ($1 \\le u, v \\le n$), describing an undirected edge connecting vertices $u$ and $v$. It is guaranteed that the given graph is connected and contains no self-loops or multiple edges.\n\nIt is guaranteed that there is at most $1$ test case with $n$ greater than $30$.\n\n## Output\n\nFor each test case:\n\nIf it is possible to orient all edges so that Alice and Bob can never occupy the same vertex at the end of any round, print \"Yes\" (without quotes) in the first line.\n\nThen output $m$ lines, each containing two integers $u'$ and $v'$ ($1 \\le u', v' \\le n$), describing a directed edge from $u'$ to $v'$. The unordered pair $(u', v')$ must correspond to an existing undirected edge in the input. The edges may be printed in any order.\n\nIf no valid orientation exists, output a single line containing \"No\" (without quotes).\n\n## Note\n\nFor the first test case of the sample case, a valid orientation is illustrated as follows. In the first round, Alice must move from vertex $2$ to vertex $1$, while Bob must move from vertex $4$ to vertex $5$. After this round, both players are at vertices with no outgoing edges and will remain there forever, thus never meeting.\n\n ![](./images/icpc-shenyang-2025-F-2346857db37d89bef5f0ef2ff1742ce5a58e2f82.png) \n\nFor the second test case of the sample case, a valid orientation is illustrated as follows. Both players are confined to the cycle $1 \\to 2 \\to 3 \\to 4 \\to 1$. Since they both advance one step along the cycle in each round, Alice will always remain one step behind Bob, thus never meeting.\n\n ![](./images/icpc-shenyang-2025-F-4a3cd27e4ae95589850ec39eb21baf208fd693f1.png) \n\nFor the third test case of the sample case, with only one edge connecting the two vertices, directing it $1 \\to 2$ forces Alice to move to Bob's vertex, whereas directing it $2 \\to 1$ forces Bob to move to Alice's vertex. Since one player always joins the stationary player, a meeting is unavoidable regardless of the orientation.",
+    "samples": [
+      {
+        "input": "3\n5 4 2 4\n1 2\n2 3\n3 4\n4 5\n5 7 1 2\n1 2\n2 3\n3 4\n4 5\n1 5\n3 5\n1 4\n2 1 1 2\n1 2\n",
+        "output": "Yes\n2 1\n3 2\n3 4\n4 5\nYes\n1 2\n2 3\n3 4\n4 1\n5 1\n5 3\n5 4\nNo\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shenyang-2025/F.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "en",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "3\n5 4 2 4\n1 2\n2 3\n3 4\n4 5\n5 7 1 2\n1 2\n2 3\n3 4\n4 5\n1 5\n3 5\n1 4\n2 1 1 2\n1 2\n",
+        "output": "Yes\n2 1\n3 2\n3 4\n4 5\nYes\n1 2\n2 3\n3 4\n4 1\n5 1\n5 3\n5 4\nNo\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "G",
+    "title": "Collision Damage",
+    "englishTitle": "Collision Damage",
+    "timeLimit": 1000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/14946",
+    "qoj": "https://qoj.ac/problem/14946",
+    "codeforces": "https://codeforces.com/gym/106252/problem/G",
+    "markdown": "In a 2D physics-based video game, two characters $P$ and $Q$ move across the battlefield. Each character is represented by a convex polygon that serves as its collision box. When the two collision boxes overlap, the game calculates the area of their intersection as the collision damage.\n\nHowever, due to unpredictable wind currents in the arena, character $Q$ can be displaced by an arbitrary translation vector $\\mathbf{t} = (t_x, t_y)$, but it cannot rotate or flip. You need to calculate the expected collision damage when $Q$ is uniformly and randomly placed such that it actually collides with $P$, i.e., their intersection has a positive area.\n\nMore formally, define $f(\\mathbf{t})$ as the area of the intersection between the polygon representing character $P$ and the polygon representing character $Q$ after being translated along $\\mathbf{t}$. Let $D \\subseteq \\mathbb{R}^2$ be the set of all translation vectors $\\mathbf{t}$ for which $f(\\mathbf{t}) \\gt 0$. It can be shown that $D$ has a positive area, denoted by $|D|$. You need to calculate $\\frac{1}{|D|} \\iint\\limits_{D} f(\\mathbf{t}) \\, d\\mathbf{t}$.\n\n## Input\n\nThe first line of the input contains an integer $T$ ($1 \\le T \\le 300$), denoting the number of test cases. For each test case:\n\n* The first line contains two integers $n$ and $m$ ($3 \\le n, m \\le 1\\,000$), denoting the numbers of vertices of the two convex polygons, respectively.\n* Then $n$ lines follow, each containing two integers $x$ and $y$ ($-10^4 \\le x,y \\le 10^4$), giving the vertex coordinates $(x, y)$ of the polygon representing character $P$.\n* Then $m$ lines follow, each containing two integers $x$ and $y$ ($-10^4 \\le x,y \\le 10^4$), giving the vertex coordinates $(x, y)$ of the polygon representing character $Q$.\n* It is guaranteed that the vertices of a convex polygon are given in counter-clockwise order, and no three of them are collinear.\n\nIt is guaranteed that both the sum of $n$ and the sum of $m$ over all test cases do not exceed $1\\,000$.\n\n## Output\n\nFor each test case, output a line containing a real number, representing the expected collision damage.\n\nYour answer is acceptable if its absolute or relative error does not exceed $10^{-6}$. Formally speaking, suppose that your output is $a$ and the jury's answer is $b$, and your output is accepted if and only if $\\frac{|a - b|}{\\max(1, |b|)} \\leq 10^{-6}$.",
+    "samples": [
+      {
+        "input": "2\n3 3\n0 0\n1 0\n0 1\n0 0\n1 0\n0 1\n3 3\n0 0\n1 0\n0 1\n0 1\n1 0\n1 1\n",
+        "output": "0.083333333333\n0.125000000000\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shenyang-2025/G.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "en",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "2\n3 3\n0 0\n1 0\n0 1\n0 0\n1 0\n0 1\n3 3\n0 0\n1 0\n0 1\n0 1\n1 0\n1 1\n",
+        "output": "0.083333333333\n0.125000000000\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "H",
+    "title": "Cute Young Diagram Counting",
+    "englishTitle": "Cute Young Diagram Counting",
+    "timeLimit": 2000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/14947",
+    "qoj": "https://qoj.ac/problem/14947",
+    "codeforces": "https://codeforces.com/gym/106252/problem/H",
+    "markdown": "A *Young diagram* is a finite set of cells, arranged in left-aligned rows, with the row lengths in non-increasing order. It can be uniquely represented by an unordered integer partition $\\lambda=(\\lambda_1,\\lambda_2,\\ldots,\\lambda_r)$ satisfying $\\lambda_1\\ge\\lambda_2\\ge\\cdots\\ge\\lambda_r\\ge 1$, where $r$ corresponds to the number of rows of the Young diagram, and $\\lambda_i$ corresponds to the number of cells in the $i$-th row for $i = 1,2,\\ldots,r$.\n\nThe *conjugate* of a Young diagram $\\lambda$ is another Young diagram obtained by transposing rows and columns, represented by the conjugate partition $\\lambda^T$. More specifically, if $\\lambda$ has $c=\\lambda_1$ columns, then $\\lambda^T=(\\mu_1,\\mu_2,\\ldots,\\mu_c)$ where $\\mu_j=\\lvert\\{\\,i:\\lambda_i\\ge j\\,\\}\\rvert$ for $j = 1,2,\\ldots,c$.\n\nFor a cell at the $i$-th row and the $j$-th column that belongs to $\\lambda$, let the *subdiagram* anchored at $(i,j)$ be the set of all cells $(x,y)$ of $\\lambda$ with $x\\ge i$ and $y\\ge j$. It is easy to see that, this set is itself a Young diagram when viewed with $(i,j)$ as its top-left corner.\n\nDefine the *cuteness* of a Young diagram $\\lambda$ as the number of distinct Young diagrams that can be obtained from $\\lambda$ by performing the following operation any number (possibly zero) of times: choose any cell $(i,j)$ of the current Young diagram, take the subdiagram anchored at $(i,j)$, and replace it with its conjugate anchored at the same position. The operation is allowed if and only if the overall set of cells still forms a valid Young diagram; otherwise the operation is denied and undone, as illustrated below.\n\n ![](./images/icpc-shenyang-2025-H-b56af9fba7dfe9c285d7488e91c01512169d3312.png) \n\nYou are given a non-increasing sequence of positive integers $a_1,a_2,\\ldots,a_n$. For each $i = 1,2,\\ldots,n$, compute the cuteness of the Young diagram $\\lambda^{(i)}$, modulo $998\\,244\\,353$, where $\\lambda^{(i)}=(a_1,a_2,\\ldots,a_i)$.\n\n## Input\n\nThe first line contains a single integer $n$ ($1 \\le n \\le 10^6$), denoting the length of the given sequence.\n\nThe second line contains $n$ integers $a_1,a_2,\\dots,a_n$ ($1 \\le a_i \\le n$). It is guaranteed that $a_1 \\ge a_2 \\ge \\cdots \\ge a_n$.\n\n## Output\n\nOutput $n$ integers separated by spaces, where the $i$-th integer represents the cuteness of the Young diagram $\\lambda^{(i)}$, modulo $998\\,244\\,353$.\n\n## Note\n\nFor the sample case:\n\n* The distinct Young diagrams that can be obtained from $\\lambda^{(1)}$ are $(3)$ and $(1, 1, 1)$;\n* The distinct Young diagrams that can be obtained from $\\lambda^{(2)}$ are $(3,2)$, $(3, 1, 1)$, and $(2, 2, 1)$;\n* The only Young diagram that can be obtained from $\\lambda^{(3)}$ is $(3,2,1)$ itself.",
+    "samples": [
+      {
+        "input": "3\n3 2 1\n",
+        "output": "2 3 1\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shenyang-2025/H.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "en",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "3\n3 2 1\n",
+        "output": "2 3 1\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "I",
+    "title": "Volunteer Simulator",
+    "englishTitle": "Volunteer Simulator",
+    "timeLimit": 1000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/14948",
+    "qoj": "https://qoj.ac/problem/14948",
+    "codeforces": "https://codeforces.com/gym/106252/problem/I",
+    "markdown": "In an ICPC contest, there are multiple problems, and the contest lasts for a long duration. There are $n$ accepted submissions in total, each representing a successful attempt by a team on a problem. When a team makes an accepted submission for a problem, we say that the team has solved that problem. Note that if a team submits multiple accepted solutions for the same problem, only the first such submission is considered as solving the problem for the first time.\n\nYou need to determine for each submission whether a balloon should be awarded according to the following rules:\n\n* Before the scoreboard freeze (submission time $\\lt 240$ minutes): when a team solves a problem for the first time, award a balloon corresponding to that problem.\n* After the scoreboard freeze (submission time $\\geq 240$ minutes): when a team solves a problem for the first time, award a balloon corresponding to that problem if and only if the team has received **strictly fewer** than $3$ balloons in total so far.\n\n## Input\n\nThe first line of input contains $n$ ($1 \\leq n \\leq 5\\,000$), denoting the number of accepted submissions.\n\nThe next $n$ lines describe the submissions in chronological order. Each submission contains three integers $a$ ($1 \\leq a \\leq 410$), $b$ ($1 \\leq b \\leq 13$), and $c$ ($0 \\leq c \\lt 300$), representing the team ID, the problem ID, and the submission time in minutes, respectively. It is guaranteed that the submission times are non-decreasing.\n\n## Output\n\nFor each submission, output the problem ID if a balloon corresponding to that problem should be awarded, or otherwise output $0$.",
+    "samples": [
+      {
+        "input": "8\n1 1 10\n1 2 20\n1 3 30\n1 4 250\n1 5 260\n1 6 270\n1 7 280\n2 1 290\n",
+        "output": "1\n2\n3\n0\n0\n0\n0\n1\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shenyang-2025/I.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "en",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "8\n1 1 10\n1 2 20\n1 3 30\n1 4 250\n1 5 260\n1 6 270\n1 7 280\n2 1 290\n",
+        "output": "1\n2\n3\n0\n0\n0\n0\n1\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "J",
+    "title": "The Echoes of Chronos",
+    "englishTitle": "The Echoes of Chronos",
+    "timeLimit": 4000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/14949",
+    "qoj": "https://qoj.ac/problem/14949",
+    "codeforces": "https://codeforces.com/gym/106252/problem/J",
+    "markdown": "In the year 3142, deep within the rings of Titan, the last archive of pre-Collapse human memory is sealed inside the Chronos Vault. Its entrance is guarded by the Echo Dial, a quantum-entangled lock composed of $n$ chronal rings arranged in a single filament. Each ring displays a phase value in the range $0$ to $m-1$, indicating its alignment with the cosmic rhythm. Initially, the $i$-th ring shows the value $a_i$.\n\nThe Echo Dial can only be adjusted through resonant tuning, governed by the following rules:\n\n* In a single operation, you may choose any phase value $x \\in [0, m)$ and simultaneously tune all rings currently displaying $x$ either:\n  + forward tuning: $x \\to (x + 1) \\bmod m$, or\n  + backward tuning: $x \\to (x - 1) \\bmod m$.\n* This operation affects every ring in the entire dial that currently resonates at phase $x$, regardless of position.\n\nThe Oracle of Echoes, the vault's sentient guardian, issues $q$ diagnostic trials. Each trial is given as a query $(l, r, v)$ and asks for the minimum number of resonant tuning operations required to set all rings in positions $l$ through $r$ (inclusive) to phase $v$.\n\nAll trials are hypothetical. The Echo Dial always starts from its original initial state for every query, and no trial alters the actual configuration of the dial. As the last Quantum Archivist, your duty is to answer all $q$ queries efficiently.\n\n## Input\n\nThe first line contains three integers $n$, $q$ ($1 \\leq n, q \\leq 2 \\times 10^5$), and $m$ ($1 \\leq m \\leq 10^9$).\n\nThe second line contains $n$ integers $a_1, a_2, \\dots, a_n$ ($0 \\leq a_i \\lt m$), denoting the initial phase of each ring.\n\nEach of the next $q$ lines contains three integers $l$, $r$ ($1 \\leq l \\leq r \\leq n$) and $v$ ($0 \\leq v \\lt m$), describing a diagnostic trial.\n\n## Output\n\nFor each query, output a line containing an integer, denoting the minimum number of operations needed to set all rings in positions $[l, r]$ to phase $v$, assuming the dial starts from its original state and remains unchanged between queries.",
+    "samples": [
+      {
+        "input": "4 6 7\n2 0 2 5\n1 4 3\n2 4 6\n1 3 1\n1 3 5\n3 4 0\n3 3 2\n",
+        "output": "5\n4\n2\n4\n4\n0\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shenyang-2025/J.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "en",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "4 6 7\n2 0 2 5\n1 4 3\n2 4 6\n1 3 1\n1 3 5\n3 4 0\n3 3 2\n",
+        "output": "5\n4\n2\n4\n4\n0\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "K",
+    "title": "Relay Jump",
+    "englishTitle": "Relay Jump",
+    "timeLimit": 1000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/14950",
+    "qoj": "https://qoj.ac/problem/14950",
+    "codeforces": "https://codeforces.com/gym/106252/problem/K",
+    "markdown": "There are $n$ frogs numbered $1$ through $n$, each initially located at an integer lattice point in the Cartesian plane. An external disturbance suddenly stimulates one of the frogs, triggering a chain reaction in which the frogs act according to the rules below.\n\nWhen frog $i$ ($1 \\le i \\le n$) is *stimulated*, it can choose to either:\n\n* jump toward some other frog $j$ ($1 \\le j \\le n$, $j \\neq i$) and instantly land at the reflection of its current position across the point currently occupied by frog $j$ (if frog $i$ coincides with frog $j$ before the jump, then it lands at the coinciding point); immediately after this jump, frog $j$ becomes the next and only frog to be stimulated;\n* or stay where it is, in which case all jumps end and no frog remains stimulated.\n\nA frog may be stimulated multiple times at different moments, while some frogs may never be stimulated.\n\nYou observe that the first stimulated frog is numbered $s$, but there are too many jumps for you to capture the entire process. Fortunately, you recognize every frog, so you record both their initial positions $P_1, P_2, \\ldots, P_n$ and their final positions $Q_1, Q_2, \\ldots, Q_n$ after all jumps have ended. You also notice that all initial positions are **pairwise distinct**, and the final positions are **pairwise distinct** as well.\n\nLet $t$ be the index of the last stimulated frog, i.e., the frog that chooses to stay still when stimulated, after which no more jumps occur. Please find $t$.\n\n## Input\n\nThe first line contains two integers $n$ ($2 \\le n \\le 10^5$) and $s$ ($1 \\le s \\le n$), denoting the number of frogs and the index of the first stimulated frog, respectively.\n\nThe $i$-th of the next $n$ lines contains four integers $px_i$, $py_i$, $qx_i$, and $qy_i$ ($-10^9 \\le px_i, py_i, qx_i, qy_i \\le 10^9$), where $P_i = (px_i, py_i)$ and $Q_i = (qx_i, qy_i)$ represent the initial and final positions of frog $i$ in the plane.\n\nIt is guaranteed that all initial positions $P_1, P_2, \\ldots, P_n$ are pairwise distinct. All final positions $Q_1, Q_2, \\ldots, Q_n$ are pairwise distinct as well, and correspond to some sequence of at most $2 \\times 10^5$ stimulations following the described rules.\n\n## Output\n\nOutput a single integer $t$, denoting the index of the frog that was last stimulated.\n\n## Note\n\nIn the sample case, the corresponding sequence of stimulations is $[1, 2, 3, 2, 1]$.\n\n ![](./images/icpc-shenyang-2025-K-aeca7406cb87264bfae9a27a940d5884a6d897e9.png)",
+    "samples": [
+      {
+        "input": "3 1\n6 3 2 3\n4 3 2 1\n3 4 1 6\n",
+        "output": "1\n"
+      }
+    ],
+    "checker": "tokens",
+    "pdf": "./pdf/icpc-shenyang-2025/K.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "en",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "3 1\n6 3 2 3\n4 3 2 1\n3 4 1 6\n",
+        "output": "1\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "L",
+    "title": "Leo",
+    "englishTitle": "Leo",
+    "timeLimit": 1000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/14951",
+    "qoj": "https://qoj.ac/problem/14951",
+    "codeforces": "https://codeforces.com/gym/106252/problem/L",
+    "markdown": "In a future where digital logic has evolved beyond binary, a new system of signal processing, known as tri-color logic, has become the standard. This system defines four fundamental states in two categories:\n\n* **Colored**: There are three colored states, denoted by $\\text{R}$ (Red), $\\text{G}$ (Green), and $\\text{B}$ (Blue), respectively. Each serves as a distinguishable \"on\" state, analogous to the traditional logic $1$ signal.\n* **Colorless**: The only colorless state is denoted by $*$ (Transparent). It serves as an \"off\" state, analogous to the traditional logic $0$ signal.\n\nSulfox the fennec fox is designing a computing device based on tri-color logic technology, named Leo. It employs a simple combinational logic architecture, so we can regard it as a directed acyclic graph in which each node holds a state from the set $\\{\\text{R}, \\text{G}, \\text{B}, *\\}$. After fixing the machine's input scale to $n$, the graph is constructed as follows:\n\n* Nodes $1, 2, \\dots, n$ are *input nodes*, whose states should be given as the input to the machine. Input nodes have no predecessors.\n* Nodes $n+1, n+2, \\dots, n+m$ are *internal nodes*, whose states are computed based on the states of two predecessors, where the two predecessors of each internal node may be the same and are chosen from nodes with indices strictly less than its own. To ensure the machine's operating speed, $m$ (the number of internal nodes) **must not exceed** $6n$.\n* The internal node $n+m$ is also the only *output node*, whose state is the output of the machine.\n\nEvery internal node is of exactly one of the following two types, depending on how it combines the signals from its two predecessors:\n\n* **Tri-Color AND**: If the states of its predecessors are identical, its own state will be that same state. If they differ, its own state will be $*$.\n* **Tri-Color OR**: If the states of its predecessors are identical, its own state will be that same state. If one predecessor's state is $*$ while the other's is colored, its own state will be the colored one. If they differ and both are colored, its own state will be the colored state that is different from both.\n\nWith everything prepared, we now specify Leo's intended functionality. The states given to the $n$ input nodes will be guaranteed to contain at least one occurrence of each of $\\text{R}$, $\\text{G}$, and $\\text{B}$, where $*$ may appear any number (possibly zero) of times. For every such input, the state of the output node $n+m$ must be identical to **the third distinct colored state encountered** when examining the input nodes from node $1$ to node $n$ (ignoring all $*$). In other words, among $\\text{R}$, $\\text{G}$, and $\\text{B}$ it must output the colored state whose first occurrence has the largest index.\n\nGiven the machine's fixed input scale $n$, please complete the design of the internal nodes, i.e., specify the number of internal nodes and the type and predecessors of each internal node.\n\nTo verify the correctness of your design, for each test, the judge will generate $\\left\\lfloor\\frac{10^7}{n}\\right\\rfloor$ valid input cases, each of which will be provided as your machine's input in turn. Your solution passes a test if your machine's output always meets Leo's intended functionality across all input cases.\n\n## Input\n\nThe only line contains an integer $n$ ($3 \\le n \\le 10^5$), denoting the number of input nodes.\n\n## Output\n\nIn the first line, output an integer $m$ ($1 \\le m \\le 6n$), denoting the number of internal nodes in your design.\n\nThen output $m$ lines, the $i$-th line containing a character $t_i$ ($t_i \\in \\{\\!$ '&' $,$ '|'$\\,\\}$) and two integers $u_i$ and $v_i$ ($1 \\le u_i, v_i \\lt n+i$), denoting the type of the internal node $n+i$ and the indices of its two predecessors, where '&' represents the tri-color AND type and '|' represents the tri-color OR type.\n\nIf there are multiple designs, you may output any of them. Note that you do not have to minimize $m$.\n\n## Note\n\nIt can be proven that the design in the sample case can always find the third encountered distinct colored state for every valid input of $n=4$. For example, the figure below illustrates the machine's computation for the input \"$\\text{R}\\text{G}\\text{R}\\text{B}$\":\n\n ![](./images/icpc-shenyang-2025-L-7568e5b99c6e4512c9eeed71faa0ce29bb6bccb7.png) \n\nThe figure below illustrates the machine's computation for the input \"$\\text{B}\\text{R}\\text{G} *$\":\n\n ![](./images/icpc-shenyang-2025-L-0442b3d3e0ed77ab0afcbdcb4e24ee457065e864.png)",
+    "samples": [
+      {
+        "input": "4\n",
+        "output": "5\n| 1 2\n& 3 5\n| 4 6\n& 4 7\n| 6 8\n"
+      }
+    ],
+    "checker": "leo",
+    "pdf": "./pdf/icpc-shenyang-2025/L.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "en",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "4\n",
+        "output": "5\n| 1 2\n& 3 5\n| 4 6\n& 4 7\n| 6 8\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      }
+    ]
+  },
+  {
+    "id": "M",
+    "title": "The End?",
+    "englishTitle": "The End?",
+    "timeLimit": 1000,
+    "memoryLimit": 1024,
+    "source": "https://qoj.ac/problem/14952",
+    "qoj": "https://qoj.ac/problem/14952",
+    "codeforces": "https://codeforces.com/gym/106252/problem/M",
+    "markdown": "At the 2025 League of Legends Season 15 World Championship, T1 battled KT Rolster in a full five-game series, ultimately defeating KT with a 3-2 score to claim the championship. This match was exceptionally significant, giving birth to multiple new historical records.\n\nAs T1's star mid-laner, Faker has now achieved six World Championship titles in his personal career with this victory, further cementing his status as the \"Greatest Player of All Time\" in League of Legends. Besides Faker, his teammates Oner, Gumayusi, and Keria also accomplished the remarkable feat of securing three consecutive World Championship titles. Meanwhile, the newly joined top-laner Doran filled the gap in his personal accolades by winning his first World Championship.\n\nThe journey for the LPL region, however, was full of drama. The highly-touted first seed Bilibili Gaming (BLG) suffered a surprising upset loss to the North American team 100 Thieves in the very first round of the Swiss Stage. They were then eliminated in the crucial qualification match by Top Esports (TES), stopping at the Top 16 as a first seed and becoming one of the major upsets of the tournament. TES itself was swept 3-0 by T1 in the semi-finals, leaving the LPL region absent from the finals. Has the LPL reached its conclusion?\n\nWhen we look back at the journey of the two finalist teams, everything began with the life-or-death knockout stage. The eight-team single-elimination bracket stipulated that teams were placed into the bracket based on their performance in the Swiss Stage, entering a series of head-to-head battles where the loser was immediately eliminated. The entire stage consisted of three rounds: the quarter-finals, where eight teams were narrowed down to four; the semi-finals, where these four teams produced two finalists; and the finals, where one ultimate champion was crowned from these two teams.\n\nFor Season 16, can our Team 1 win the championship? Please find the maximum probability of Team 1 winning the entire tournament.\n\nMore specifically, there are $8$ teams participating in a single-elimination tournament. Each team $i$ has two strength values $a_i$ and $b_i$.\n\nBefore the tournament starts, you need to assign each team to a distinct seed from $1$ to $8$. The tournament follows the standard single-elimination bracket format:\n\n* Round 1: seed $1$ vs seed $2$, seed $3$ vs seed $4$, seed $5$ vs seed $6$, seed $7$ vs seed $8$\n* Round 2: winner of $(1,2)$ vs winner of $(3,4)$, winner of $(5,6)$ vs winner of $(7,8)$\n* Round 3 (Final): winner of upper bracket $(1,2,3,4)$ vs winner of lower bracket $(5,6,7,8)$\n\nWhen two teams compete against each other, the team with the smaller seed number uses its $a$-value as its strength, and the team with the larger seed number uses its $b$-value as its strength. If a team with strength $x$ competes against a team with strength $y$, the probability that the first team wins is $\\frac{x}{x + y}$.\n\nYou need to find the maximum probability of team $1$ winning the entire tournament, considering all possible assignments of teams to seeds.\n\n## Input\n\nThe input consists of $8$ lines. The $i$-th line contains two integers $a_i$ and $b_i$ ($1 \\le a_i, b_i \\le 100$), denoting the two strength values of team $i$.\n\n## Output\n\nOutput a line containing a real number, denoting the maximum probability that team $1$ wins the tournament.\n\nYour answer is acceptable if its absolute or relative error does not exceed $10^{-6}$. Formally speaking, suppose that your output is $a$ and the jury's answer is $b$, and your output is accepted if and only if $\\frac{|a - b|}{\\max(1, |b|)} \\leq 10^{-6}$.",
+    "samples": [
+      {
+        "input": "10 80\n20 70\n30 60\n40 50\n50 40\n60 30\n70 20\n80 10\n",
+        "output": "0.329505822460368\n"
+      },
+      {
+        "input": "100 100\n100 100\n100 100\n100 100\n100 100\n100 100\n100 100\n100 100\n",
+        "output": "0.125000000000000\n"
+      }
+    ],
+    "checker": "float-1e-6",
+    "pdf": "./pdf/icpc-shenyang-2025/M.pdf",
+    "statementFormat": "markdown",
+    "statementLanguage": "en",
+    "testScope": "samples",
+    "tests": [
+      {
+        "input": "10 80\n20 70\n30 60\n40 50\n50 40\n60 30\n70 20\n80 10\n",
+        "output": "0.329505822460368\n",
+        "kind": "sample",
+        "label": "公开样例 1"
+      },
+      {
+        "input": "100 100\n100 100\n100 100\n100 100\n100 100\n100 100\n100 100\n100 100\n",
+        "output": "0.125000000000000\n",
+        "kind": "sample",
+        "label": "公开样例 2"
+      }
+    ]
+  }
+]

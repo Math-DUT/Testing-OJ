@@ -5,7 +5,7 @@ test("contest tabs, saved fonts, automatic Zen and mobile layouts", async ({
 }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
-  await expect(page.getByRole("tab")).toHaveCount(3);
+  await expect(page.getByRole("tab")).toHaveCount(5);
   await page.screenshot({ path: "tmp/preview/contests.png", fullPage: true });
   await page.getByRole("tab", { name: "2026 网络赛 I", exact: true }).click();
   await expect(page.getByRole("tabpanel")).toContainText("14 道题");

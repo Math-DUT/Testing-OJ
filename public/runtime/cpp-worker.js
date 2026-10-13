@@ -1,5 +1,5 @@
 /* Clang 22.1.8 + WASI SDK 33. See cpp22/THIRD-PARTY-NOTICES.md. */
-importScripts('./cpp22/toolchain.js', './hidden-track.js');
+importScripts('./cpp22/toolchain.js', './hidden-track.js', './menji.js');
 let toolchain, compiled, lastSource = '', lastStandard = '', stage = 'loading';
 const MAX_OUTPUT = 2 * 1024 * 1024;
 const phase = (value) => { stage = value; postMessage({type: 'phase', phase: value}); };
@@ -24,7 +24,12 @@ self.onmessage = async ({data: {source, input, interactive, standard = '17', max
       compiled = build.result;
       lastSource = source; lastStandard = standard;
     }
-    const judge = interactive ? new HiddenTrackJudge(input) : null;
+    let judge;
+    try { judge = interactive === 'menji' ? new MenjiJudge(input) : interactive ? new HiddenTrackJudge(input) : null; }
+    catch (e) {
+      postMessage({type:'result',result:{status:'ERROR',output:'',error:e.message||String(e),time:0}});
+      return;
+    }
     let pendingInput = judge ? judge.stdin : input;
     phase('running'); start = performance.now();
     const result = await toolchain.execute(compiled, {
