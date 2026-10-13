@@ -33,10 +33,10 @@ If no valid orientation exists, output a single line containing "No" (without qu
 
 For the first test case of the sample case, a valid orientation is illustrated as follows. In the first round, Alice must move from vertex $2$ to vertex $1$, while Bob must move from vertex $4$ to vertex $5$. After this round, both players are at vertices with no outgoing edges and will remain there forever, thus never meeting.
 
- ![](./images/icpc-shenyang-2025-F-2346857db37d89bef5f0ef2ff1742ce5a58e2f82.png) 
+![](./images/icpc-shenyang-2025-F-2346857db37d89bef5f0ef2ff1742ce5a58e2f82.png)
 
 For the second test case of the sample case, a valid orientation is illustrated as follows. Both players are confined to the cycle $1 \to 2 \to 3 \to 4 \to 1$. Since they both advance one step along the cycle in each round, Alice will always remain one step behind Bob, thus never meeting.
 
- ![](./images/icpc-shenyang-2025-F-4a3cd27e4ae95589850ec39eb21baf208fd693f1.png) 
+![](./images/icpc-shenyang-2025-F-4a3cd27e4ae95589850ec39eb21baf208fd693f1.png)
 
 For the third test case of the sample case, with only one edge connecting the two vertices, directing it $1 \to 2$ forces Alice to move to Bob's vertex, whereas directing it $2 \to 1$ forces Bob to move to Alice's vertex. Since one player always joins the stationary player, a meeting is unavoidable regardless of the orientation.

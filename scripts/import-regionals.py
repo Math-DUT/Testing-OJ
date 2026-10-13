@@ -53,6 +53,7 @@ def native_html(article, source, cid, letter):
     text=re.sub(r'\${6}(.*?)\${6}',lambda m:'\n\n$$\n'+m[1].strip()+'\n$$\n\n',text,flags=re.S)
     text=re.sub(r'\${3}(.*?)\${3}',lambda m:'$'+m[1].strip()+'$',text,flags=re.S)
     text=re.sub(r'\$\$(.*?)\$\$',lambda m:'$$\n'+m[1].strip()+'\n$$',text,flags=re.S)
+    text='\n'.join(line.strip() if line.lstrip().startswith('![') else line for line in text.splitlines())
     return text.strip().replace('\n\n## 说明\n\n','\n\n## Note\n\n')
 
 def import_problem(task):

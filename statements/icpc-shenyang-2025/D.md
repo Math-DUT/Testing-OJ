@@ -2,7 +2,7 @@
 
 You have an LED display capable of showing an $n$-digit integer, where each digit is represented using the standard $7$-segment layout.
 
- ![](./images/icpc-shenyang-2025-D-03832999485b852abd7180c55f4fd76908af5537.png) 
+![](./images/icpc-shenyang-2025-D-03832999485b852abd7180c55f4fd76908af5537.png)
 
 Initially, each of the $7$ digit segments in every digit block may be in one of three states:
 

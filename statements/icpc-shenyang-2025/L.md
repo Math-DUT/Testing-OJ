@@ -38,8 +38,8 @@ If there are multiple designs, you may output any of them. Note that you do not 
 
 It can be proven that the design in the sample case can always find the third encountered distinct colored state for every valid input of $n=4$. For example, the figure below illustrates the machine's computation for the input "$\text{R}\text{G}\text{R}\text{B}$":
 
- ![](./images/icpc-shenyang-2025-L-7568e5b99c6e4512c9eeed71faa0ce29bb6bccb7.png) 
+![](./images/icpc-shenyang-2025-L-7568e5b99c6e4512c9eeed71faa0ce29bb6bccb7.png)
 
 The figure below illustrates the machine's computation for the input "$\text{B}\text{R}\text{G} *$":
 
- ![](./images/icpc-shenyang-2025-L-0442b3d3e0ed77ab0afcbdcb4e24ee457065e864.png)
+![](./images/icpc-shenyang-2025-L-0442b3d3e0ed77ab0afcbdcb4e24ee457065e864.png)

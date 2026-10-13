@@ -29,4 +29,4 @@ Output a single integer $t$, denoting the index of the frog that was last stimul
 
 In the sample case, the corresponding sequence of stimulations is $[1, 2, 3, 2, 1]$.
 
- ![](./images/icpc-shenyang-2025-K-aeca7406cb87264bfae9a27a940d5884a6d897e9.png)
+![](./images/icpc-shenyang-2025-K-aeca7406cb87264bfae9a27a940d5884a6d897e9.png)

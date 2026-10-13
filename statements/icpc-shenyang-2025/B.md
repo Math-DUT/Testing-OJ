@@ -28,6 +28,6 @@ For each test case, output one line containing an integer, representing the mini
 
 ## Note
 
- ![](./images/icpc-shenyang-2025-B-b8487c148b4e73de6dd9fdd9451ef4de339538d6.png) 
+![](./images/icpc-shenyang-2025-B-b8487c148b4e73de6dd9fdd9451ef4de339538d6.png)
 
 For the first test case of the sample case, Sulfox can first create a layer with color $1$, and then spend $b = 2$ to make the pixel at the first row and the first column transparent.

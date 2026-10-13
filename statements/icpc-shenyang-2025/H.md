@@ -8,7 +8,7 @@ For a cell at the $i$-th row and the $j$-th column that belongs to $\lambda$, le
 
 Define the *cuteness* of a Young diagram $\lambda$ as the number of distinct Young diagrams that can be obtained from $\lambda$ by performing the following operation any number (possibly zero) of times: choose any cell $(i,j)$ of the current Young diagram, take the subdiagram anchored at $(i,j)$, and replace it with its conjugate anchored at the same position. The operation is allowed if and only if the overall set of cells still forms a valid Young diagram; otherwise the operation is denied and undone, as illustrated below.
 
- ![](./images/icpc-shenyang-2025-H-b56af9fba7dfe9c285d7488e91c01512169d3312.png) 
+![](./images/icpc-shenyang-2025-H-b56af9fba7dfe9c285d7488e91c01512169d3312.png)
 
 You are given a non-increasing sequence of positive integers $a_1,a_2,\ldots,a_n$. For each $i = 1,2,\ldots,n$, compute the cuteness of the Young diagram $\lambda^{(i)}$, modulo $998\,244\,353$, where $\lambda^{(i)}=(a_1,a_2,\ldots,a_i)$.
 
