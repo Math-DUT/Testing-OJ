@@ -4,7 +4,7 @@ Shenyang uses the native Codeforces statement; Shanghai uses QOJ's Chinese
 translation, checked against the original English PDF. Source PDFs are retained.
 Existing contests and generated pressure data are never overwritten.
 """
-import concurrent.futures, json, pathlib, re, runpy, time
+import concurrent.futures, json, os, pathlib, re, runpy, time
 from urllib.parse import urljoin
 import pymupdf
 from bs4 import BeautifulSoup
@@ -14,6 +14,7 @@ from markdownify import markdownify
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CACHE = ROOT / 'tmp/sources/regional-2025'
 CACHE.mkdir(parents=True, exist_ok=True)
+PROXY=os.environ.get('HTTPS_PROXY') or os.environ.get('HTTP_PROXY')
 pdf_samples=runpy.run_path(str(ROOT/'scripts/import-online.py'))['pdf_samples']
 
 TITLES = {
@@ -28,7 +29,7 @@ def fetch(url, name, required=True):
     target=CACHE/name
     if target.exists():return target.read_bytes()
     for attempt in range(5):
-        response=requests.get(url,proxy='http://127.0.0.1:7890',impersonate='chrome',timeout=60)
+        response=requests.get(url,proxy=PROXY,impersonate='chrome',timeout=60)
         if response.status_code==404 and not required:return None
         if response.status_code==429:
             print('Source rate limit; retrying after backoff:',name,flush=True)
@@ -41,7 +42,8 @@ def native_html(article, source, cid, letter):
     for image in article.find_all('img'):
         url=urljoin(source,image['src']);filename=f'{cid}-{letter}-{pathlib.Path(url.split("?")[0]).name}'
         target=ROOT/'public/images'/filename
-        if not target.exists():target.write_bytes(requests.get(url,proxy='http://127.0.0.1:7890',impersonate='chrome',timeout=60).content)
+        if not target.exists():
+            response=requests.get(url,proxy=PROXY,impersonate='chrome',timeout=60);response.raise_for_status();target.write_bytes(response.content)
         image['src']='./images/'+filename
     for section in article.select('.section-title'):
         section.name='h2';section.attrs={}
@@ -105,7 +107,7 @@ def import_problem(task):
             language='zh-CN'
         else:
             markdown=(ROOT/f'statements/{cid}/{letter}.md').read_text(encoding='utf8').split('\n\n',1)[1].strip()
-            language='en'
+            language='zh-CN' if re.search(r'[\u4e00-\u9fff]',markdown) else 'en'
     checker={'shenyang':{'C':'painting-communication','L':'leo','M':'float-1e-6'},
              'shanghai':{'A':'menji','B':'hamu','C':'fake-sort'}}[city].get(letter,'tokens')
     result=dict(id=letter,title=title,englishTitle=title,timeLimit=round(seconds*1000),memoryLimit=memory,
@@ -119,6 +121,7 @@ def import_problem(task):
     return city,index,result
 
 if __name__=='__main__':
+    fetch('https://codeforces.com/gym/106252/problems','shenyang-problems.html')
     tasks=[(city,i,title) for city,titles in TITLES.items() for i,title in enumerate(titles)]
     with concurrent.futures.ThreadPoolExecutor(max_workers=1) as ex:results=list(ex.map(import_problem,tasks))
     for city in TITLES:
